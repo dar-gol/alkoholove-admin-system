@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Kozel",
+    "type": "beer"
+  },
+  {
+    "id": 2,
+    "name": "Harnaś",
+    "type": "beer"
+  }
+]
