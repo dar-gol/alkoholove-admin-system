@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
-function App() {
+import AlcoholDetails from './containers/AlcoholDetails/alcoholDetails';
+import AddAlcohol from './containers/AddAlcohol/addAlcohol';
+import User from './containers/user';
+import Login from './containers/Login/Login';
+import Home from './containers/Home/home';
+
+import { Main } from './styles/global.styled';
+
+import useLogin from './utils/hooks/useLogin';
+
+const App = () => {
+  const { checkLogin } = useLogin();
+  useEffect(() => {
+    checkLogin();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Main>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="user" element={<User />} />
+        <Route path="home" element={<Home />} />
+        <Route path="/alcohols/add" element={<AddAlcohol />} />
+        <Route path="/alcohols/edit/:alcoholBarcode" element={<Home />} />
+        <Route path="/alcohols/:alcoholBarcode" element={<AlcoholDetails />} />
 
+        <Route path="*" element={<Navigate to="/home" replace />} />
+      </Routes>
+    </Main>
+  );
+};
 export default App;
