@@ -27,6 +27,10 @@ const BoolInput = ({ name, show_name }: IProps) => {
             isClearable
             placeholder="Wybierz wartość"
             options={options}
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 20,
+            })}
           />
         )}
       />

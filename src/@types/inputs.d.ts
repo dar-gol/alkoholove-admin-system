@@ -11,14 +11,15 @@ export interface IProps {
   name: string;
   show_name: string;
   api?: string;
-  search?: string;
+  onCreate?: (inputValue: string) => void;
+  isMulti?: boolean;
 }
 
 export interface IFactory {
   name: string;
   show_name: string;
-  type: 'simple' | 'more' | 'select' | 'boolean';
-  search?: string;
+  type: 'simple' | 'more' | 'select' | 'boolean' | 'region';
   api?: string | undefined;
   key?: string;
+  isMulti?: boolean;
 }

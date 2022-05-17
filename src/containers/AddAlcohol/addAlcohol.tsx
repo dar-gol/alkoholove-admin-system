@@ -10,7 +10,8 @@ import { post, postMultipart } from '../../utils/fetch';
 import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
 import FileInput from '../../components/FileInput/fileInput';
-import { Form } from './addAlcohol.styled';
+import { Form, Container, Title } from './addAlcohol.styled';
+import { BtnPrimary } from '../../styles/global.styled';
 
 const isObject = (obj: any) =>
   typeof obj === 'object' && !Array.isArray(obj) && obj !== null;
@@ -20,6 +21,7 @@ const AddAlcohol = () => {
   const methods = useForm({});
 
   const submit = (data: any) => {
+    console.log(data);
     Object.entries(data).forEach(([key, value]: [key: any, value: any]) => {
       if (value instanceof FileList) {
         console.log('FileList');
@@ -70,15 +72,21 @@ const AddAlcohol = () => {
     <>
       <Header />
       <Breadcrumb />
-      <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(submit)}>
-          {ADD_INPUTS.map((input) => (
-            <InputFactory {...input} key={input.name} />
-          ))}
-          <FileInput />
-          <input type="submit" />
-        </Form>
-      </FormProvider>
+      <Container>
+        <Title>Formularz dodawania alkoholu</Title>
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(submit)}>
+            {ADD_INPUTS.map((input) => (
+              <InputFactory {...input} key={input.name} />
+            ))}
+            <FileInput />
+            <BtnPrimary type="submit" margin="20px 0">
+              {' '}
+              Dodaj alkohol
+            </BtnPrimary>
+          </Form>
+        </FormProvider>
+      </Container>
     </>
   );
 };

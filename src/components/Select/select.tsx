@@ -4,15 +4,16 @@ import AsyncCreatableSelect from 'react-select/async-creatable';
 import { IProps, Option } from '../../@types/inputs';
 import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
+import { Col } from '../../styles/global.styled';
 import { API } from '../../utils/constant';
 import { get, post } from '../../utils/fetch';
 
-const Select = ({ name, show_name, api, search }: IProps) => {
+const Select = ({ name, show_name, api, onCreate, isMulti }: IProps) => {
   const { user } = useContext(UserContext) as UserContextType;
   const { control } = useFormContext();
 
   const promiseOptions = async (inputValue: string) => {
-    const searchUrl = search && inputValue ? `?name=${inputValue}` : '';
+    const searchUrl = inputValue ? `?name=${inputValue}` : '';
     const res = await get({
       url: `${API}/${api}${searchUrl}`,
       header: {
@@ -39,7 +40,7 @@ const Select = ({ name, show_name, api, search }: IProps) => {
   };
 
   return user.access_token ? (
-    <div>
+    <Col flex="1">
       <p>{show_name}:</p>
       <Controller
         name={name}
@@ -50,14 +51,18 @@ const Select = ({ name, show_name, api, search }: IProps) => {
             isClearable
             defaultOptions
             placeholder="Wprowadz dane"
-            isMulti={name !== 'region_id'}
+            isMulti={isMulti}
             // cacheOptions
             loadOptions={promiseOptions}
-            onCreateOption={createOption}
+            onCreateOption={onCreate || createOption}
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 20,
+            })}
           />
         )}
       />
-    </div>
+    </Col>
   ) : (
     <div />
   );

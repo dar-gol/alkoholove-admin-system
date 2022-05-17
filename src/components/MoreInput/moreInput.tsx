@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { IProps } from '../../@types/inputs';
+import {
+  BtnPrimary,
+  BtnSecondary,
+  Col,
+  InputText,
+  Row,
+} from '../../styles/global.styled';
 
 const MoreInput = ({ name, show_name }: IProps) => {
   const { register } = useFormContext();
@@ -8,24 +15,28 @@ const MoreInput = ({ name, show_name }: IProps) => {
     name,
   });
 
+  useEffect(() => {
+    append('');
+  }, []);
+
   return (
     <div>
       <p>{show_name}: </p>
-      <ul>
+      <Col gap="10px">
         {fields.map((item, index) => (
-          <li key={item.id}>
-            <input {...register(`${name}[${index}]`, { required: true })} />
+          <Row key={item.id} gap="20px" flex="1">
+            <InputText {...register(`${name}[${index}]`, { required: true })} />
             {!!index && (
-              <button type="button" onClick={() => remove(index)}>
+              <BtnSecondary type="button" onClick={() => remove(index)}>
                 Usuń
-              </button>
+              </BtnSecondary>
             )}
-          </li>
+          </Row>
         ))}
-      </ul>
-      <button type="button" onClick={() => append('')}>
+      </Col>
+      <BtnPrimary margin="20px 0 0 0" type="button" onClick={() => append('')}>
         Dodaj
-      </button>
+      </BtnPrimary>
     </div>
   );
 };

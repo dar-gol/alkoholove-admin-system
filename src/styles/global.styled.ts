@@ -21,6 +21,10 @@ type BlockType = {
   responsive?: boolean;
 };
 
+type Button = {
+  margin?: string;
+};
+
 const Btn = css`
   height: 40px;
   padding: 0 20px;
@@ -73,9 +77,10 @@ export const InputText = styled.input`
   }
 `;
 
-export const BtnPrimary = styled.button`
+export const BtnPrimary = styled.button<Button>`
   ${Heading4()};
   ${Btn}
+  margin: ${({ margin }) => margin || ''};
   color: ${({ theme }) => theme.palette.white};
   background: ${({ theme }) => theme.palette.btnPrimary};
 `;
