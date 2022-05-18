@@ -21,7 +21,6 @@ const AddAlcohol = () => {
   const methods = useForm({});
 
   const submit = (data: any) => {
-    console.log(data);
     Object.entries(data).forEach(([key, value]: [key: any, value: any]) => {
       if (value instanceof FileList) {
         console.log('FileList');

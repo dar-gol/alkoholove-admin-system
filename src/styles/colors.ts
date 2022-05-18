@@ -15,6 +15,7 @@ const Colors = {
     input: '#FFF',
     black: '#282727',
     white: '#FFFFFF',
+    grey: '#C4C4C4',
   },
   dark: {
     title: '#FFFFFF',
@@ -31,6 +32,7 @@ const Colors = {
     input: '#FFF',
     black: '#282727',
     white: '#FFFFFF',
+    grey: '#C4C4C4',
   },
 };
 

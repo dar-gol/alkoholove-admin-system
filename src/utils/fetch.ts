@@ -57,3 +57,14 @@ export const getText = ({ url, header }: IGet) =>
       ...header,
     },
   }).then((data) => data.blob());
+
+export const del = ({ url, header }: IGet) =>
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      ...header,
+    },
+  });

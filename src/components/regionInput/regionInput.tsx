@@ -8,7 +8,7 @@ import Select from '../Select/select';
 import SimpleInput from '../SimpleInput/simpleInput';
 import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
-import { ModalContainer, ModalTitle } from './regionInput.styled';
+import { ModalContainer, ModalTitle } from '../modal/Modal.styled';
 
 const RegionInput = () => {
   const { user } = useContext(UserContext) as UserContextType;
@@ -40,7 +40,7 @@ const RegionInput = () => {
       </BtnSecondary>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <FormProvider {...form}>
-          <ModalContainer
+          <form
             onSubmit={(e) => {
               e.stopPropagation();
               form.handleSubmit(submitModal)(e);
@@ -60,7 +60,7 @@ const RegionInput = () => {
                 Wyjdź
               </BtnSecondary>
             </Row>
-          </ModalContainer>
+          </form>
         </FormProvider>
       </Modal>
     </Row>

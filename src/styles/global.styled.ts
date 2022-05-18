@@ -85,9 +85,10 @@ export const BtnPrimary = styled.button<Button>`
   background: ${({ theme }) => theme.palette.btnPrimary};
 `;
 
-export const BtnSecondary = styled.button`
+export const BtnSecondary = styled.button<Button>`
   ${Heading4()};
   ${Btn}
+  margin: ${({ margin }) => margin || ''};
   background: ${({ theme }) => theme.palette.btnSecondary};
 `;
 
