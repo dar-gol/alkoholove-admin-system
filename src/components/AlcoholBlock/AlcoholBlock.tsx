@@ -28,7 +28,7 @@ const AlcoholBlock = ({
   update,
 }: {
   alcohol: IAlcohol;
-  update: () => void;
+  update: (id: number) => void;
 }) => {
   const { user } = useContext(UserContext) as UserContextType;
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -51,8 +51,7 @@ const AlcoholBlock = ({
         Authorization: `Bearer ${user.access_token}`,
       },
     });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    await update();
+    update(id);
     setIsLoading(false);
   };
 

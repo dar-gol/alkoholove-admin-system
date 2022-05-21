@@ -32,6 +32,9 @@ const Btn = css`
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   border-radius: ${borderRadius};
   cursor: pointer;
+  &:disabled {
+    pointer-events: none;
+  }
 `;
 
 export const GlobalStyle = createGlobalStyle`

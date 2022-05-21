@@ -1,49 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Alcohols, IAlcohol } from '../../@types/alcohol';
-import { UserContextType } from '../../@types/user';
-import { UserContext } from '../../context/userContext';
+import React from 'react';
+import { IAlcohol } from '../../@types/alcohol';
 import { LinkPrimary, Row } from '../../styles/global.styled';
-import { API } from '../../utils/constant';
-import { get } from '../../utils/fetch';
 import { Title } from './alcoholList.styled';
 import AlcoholBlock from '../AlcoholBlock/AlcoholBlock';
-import useAuthReq from '../../utils/hooks/useReq';
+import Pagination from '../Pagination/pagination';
+import Searcher from '../Searcher/searcher';
+import useAlcohols from '../../utils/hooks/useAlcohols';
 
 const AlcoholList = () => {
-  const { user } = useContext(UserContext) as UserContextType;
-  const [alcohols, setAlcohols] = useState<Alcohols | null>(null);
-  const { send } = useAuthReq(
-    'GET',
-    `${API}/alcohols/admin?limit=10&offset=0`,
-    null
-  );
+  const { search, remove, changePageSize, changePage, alcohols, page } =
+    useAlcohols();
 
-  const updateView = () => {
-    console.log('update view');
-    return send()
-      .then((data: any) => {
-        console.log(data);
-        return data.json();
-      })
-      .then((data) => setAlcohols(data))
-      .catch((e) => console.log(e));
-  };
-  useEffect(() => {
-    if (user.access_token) updateView();
-  }, [user.access_token]);
-
-  const alcoholsBlock = alcohols?.alcohols?.map((alcohol: IAlcohol) => (
-    <AlcoholBlock
-      alcohol={alcohol}
-      key={alcohol.alcohol_id}
-      update={updateView}
-    />
+  const alcoholsBlock = alcohols?.map((alcohol: IAlcohol) => (
+    <AlcoholBlock alcohol={alcohol} key={alcohol.alcohol_id} update={remove} />
   ));
   return (
     <>
-      <Title>Lista alkoholi: </Title>
+      <Title>Lista Alkoholi: </Title>
+      <Searcher setLimit={changePageSize} update={search} />
       {alcoholsBlock || 'Wystąpił błąd!'}
-      <Row margin="0 10px" justifyContent="flex-end">
+      <Pagination
+        lastPage={Math.ceil(page.total / page.limit)}
+        offset={page.number}
+        setOffset={changePage}
+      />
+      <Row margin="10px 10px" justifyContent="flex-end">
         <LinkPrimary to="/alcohols/add">Dodaj Alkohol</LinkPrimary>
       </Row>
     </>

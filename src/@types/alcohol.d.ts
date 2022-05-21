@@ -72,9 +72,7 @@ export interface IPageInfo {
   limit: number;
   offset: number;
   total: number;
+  number: number;
 }
 
-export type Alcohols = {
-  alcohols: IAlcohol[];
-  page_info: IPageInfo;
-};
+export type Alcohols = IAlcohol[];
