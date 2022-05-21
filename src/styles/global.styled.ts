@@ -91,6 +91,7 @@ export const BtnPrimary = styled.button<Button>`
 export const BtnSecondary = styled.button<Button>`
   ${Heading4()};
   ${Btn}
+  white-space: nowrap;
   margin: ${({ margin }) => margin || ''};
   background: ${({ theme }) => theme.palette.btnSecondary};
 `;

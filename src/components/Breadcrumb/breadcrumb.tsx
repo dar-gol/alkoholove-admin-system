@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Container, Crumb, Space, Last } from './breadcrumb.styled';
 
 const capitalize = (string: string) =>
