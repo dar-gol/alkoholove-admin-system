@@ -14,7 +14,9 @@ const useSelect = (url: string | undefined) => {
       header: {
         Authorization: `Bearer ${user.access_token}`,
       },
-    }).then((res) => setData(res));
+    })
+      .then((res) => res.json())
+      .then((res) => setData(res));
   }, []);
 
   return data;

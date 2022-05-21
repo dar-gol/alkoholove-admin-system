@@ -6,7 +6,7 @@ import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
 import { Col } from '../../styles/global.styled';
 import { API } from '../../utils/constant';
-import { get, post } from '../../utils/fetch';
+import { get, postJSON } from '../../utils/fetch';
 
 const Select = ({ name, show_name, api, onCreate, isMulti }: IProps) => {
   const { user } = useContext(UserContext) as UserContextType;
@@ -19,7 +19,7 @@ const Select = ({ name, show_name, api, onCreate, isMulti }: IProps) => {
       header: {
         Authorization: `Bearer ${user.access_token}`,
       },
-    });
+    }).then((data) => data.json());
 
     if (api)
       return res[api].map((r: { name: string; id: number }) => ({
@@ -30,7 +30,7 @@ const Select = ({ name, show_name, api, onCreate, isMulti }: IProps) => {
   };
 
   const createOption = (inputValue: any) => {
-    post({
+    postJSON({
       url: `${API}/${api}?name=${inputValue}`,
       header: {
         Authorization: `Bearer ${user.access_token}`,

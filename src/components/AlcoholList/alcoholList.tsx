@@ -7,18 +7,24 @@ import { API } from '../../utils/constant';
 import { get } from '../../utils/fetch';
 import { Title } from './alcoholList.styled';
 import AlcoholBlock from '../AlcoholBlock/AlcoholBlock';
+import useAuthReq from '../../utils/hooks/useReq';
 
 const AlcoholList = () => {
   const { user } = useContext(UserContext) as UserContextType;
   const [alcohols, setAlcohols] = useState<Alcohols | null>(null);
+  const { send } = useAuthReq(
+    'GET',
+    `${API}/alcohols/admin?limit=10&offset=0`,
+    null
+  );
+
   const updateView = () => {
     console.log('update view');
-    return get({
-      url: `${API}/alcohols/admin?limit=10&offset=0`,
-      header: {
-        Authorization: `Bearer ${user.access_token}`,
-      },
-    })
+    return send()
+      .then((data: any) => {
+        console.log(data);
+        return data.json();
+      })
       .then((data) => setAlcohols(data))
       .catch((e) => console.log(e));
   };

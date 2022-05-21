@@ -1,10 +1,17 @@
-import { IPost, IGet } from '../@types/fetch';
+import { IPost, IGet, Post } from '../@types/fetch';
 
-export const post = ({ url, body, header }: IPost) =>
+export const post = ({ url, body, header }: Post) =>
+  fetch(url, {
+    method: 'POST',
+    headers: { ...header },
+    body,
+  });
+
+export const postJSON = ({ url, body, header }: IPost) =>
   fetch(url, {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
+      Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
       ...header,
     },
@@ -35,7 +42,7 @@ export const postMultipart = ({ url, body, header }: any) => {
       ...header,
     },
     body: formData,
-  }).then((data) => data.text());
+  });
 };
 
 export const get = ({ url, header }: IGet) =>
@@ -44,19 +51,9 @@ export const get = ({ url, header }: IGet) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
       ...header,
     },
-  }).then((data) => data.json());
-
-export const getText = ({ url, header }: IGet) =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      ...header,
-    },
-  }).then((data) => data.blob());
+  });
 
 export const del = ({ url, header }: IGet) =>
   fetch(url, {
@@ -64,7 +61,6 @@ export const del = ({ url, header }: IGet) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
       ...header,
     },
   });

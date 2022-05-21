@@ -4,7 +4,7 @@ import useAlcohol from '../../utils/hooks/useAlcohol';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import { API } from '../../utils/constant';
-import { getText } from '../../utils/fetch';
+import { get } from '../../utils/fetch';
 
 const AlcoholDetails = () => {
   const { alcoholBarcode } = useParams();
@@ -13,16 +13,16 @@ const AlcoholDetails = () => {
 
   useEffect(() => {
     if (alcohol?.image_name) {
-      getText({ url: `${API}/media/${alcohol.image_name}?size=sm` }).then(
-        (data) => {
+      get({ url: `${API}/media/${alcohol.image_name}?size=sm` })
+        .then((data) => data.json())
+        .then((data) => {
           const reader = new FileReader();
           reader.readAsDataURL(data);
           reader.onloadend = () => {
             const base64data: string = reader.result as string;
             setImage(base64data);
           };
-        }
-      );
+        });
     }
   }, [alcohol?.image_name]);
 

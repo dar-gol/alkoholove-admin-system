@@ -15,7 +15,9 @@ const useAlcohol = (barcode: string) => {
       header: {
         Authorization: `Bearer ${user.access_token}`,
       },
-    }).then((data) => setAlcohol(data));
+    })
+      .then((data) => data.json())
+      .then((data) => setAlcohol(data));
   }, []);
 
   return alcohol;

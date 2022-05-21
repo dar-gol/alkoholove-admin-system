@@ -135,9 +135,4 @@ export const ADD_INPUTS: IFactory[] = [
     show_name: 'Winorosl',
     type: 'simple',
   },
-  {
-    name: 'image_name',
-    show_name: 'Nazwa pliku',
-    type: 'simple',
-  },
 ];

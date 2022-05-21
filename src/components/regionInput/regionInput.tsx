@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { BtnPrimary, BtnSecondary, Row } from '../../styles/global.styled';
 import { API } from '../../utils/constant';
-import { post } from '../../utils/fetch';
+import { postJSON } from '../../utils/fetch';
 import Modal from '../modal/Modal';
 import Select from '../Select/select';
 import SimpleInput from '../SimpleInput/simpleInput';
@@ -20,7 +20,7 @@ const RegionInput = () => {
       country_id: { value },
       name,
     } = data;
-    post({
+    postJSON({
       url: `${API}/regions`,
       body: {
         name,
