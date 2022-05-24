@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import { IProps, Option } from '../../@types/inputs';
@@ -6,21 +6,17 @@ import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
 import { Col } from '../../styles/global.styled';
 import { API } from '../../utils/constant';
-import { get, postJSON } from '../../utils/fetch';
+import useAuthReq from '../../utils/hooks/useReq';
 
 const Select = ({ name, show_name, api, onCreate, isMulti }: IProps) => {
   const { user } = useContext(UserContext) as UserContextType;
   const { control } = useFormContext();
+  const { send } = useAuthReq('POST', '', '');
 
   const promiseOptions = async (inputValue: string) => {
     const searchUrl = inputValue ? `?name=${inputValue}` : '';
-    const res = await get({
-      url: `${API}/${api}${searchUrl}`,
-      header: {
-        Authorization: `Bearer ${user.access_token}`,
-      },
-    }).then((data) => data.json());
-
+    const res = await send({method: 'GET', url: `${API}/${api}${searchUrl}`}).then(data => data.json())
+    
     if (api)
       return res[api].map((r: { name: string; id: number }) => ({
         label: r.name,
@@ -29,15 +25,7 @@ const Select = ({ name, show_name, api, onCreate, isMulti }: IProps) => {
     return [];
   };
 
-  const createOption = (inputValue: any) => {
-    postJSON({
-      url: `${API}/${api}?name=${inputValue}`,
-      header: {
-        Authorization: `Bearer ${user.access_token}`,
-      },
-      body: {},
-    });
-  };
+  const createOption = (inputValue: any) => send({ method: 'POST', url: `${API}/${api}?name=${inputValue}` })
 
   return user.access_token ? (
     <Col flex="1">
@@ -52,7 +40,6 @@ const Select = ({ name, show_name, api, onCreate, isMulti }: IProps) => {
             defaultOptions
             placeholder="Wprowadz dane"
             isMulti={isMulti}
-            // cacheOptions
             loadOptions={promiseOptions}
             onCreateOption={onCreate || createOption}
             theme={(theme) => ({

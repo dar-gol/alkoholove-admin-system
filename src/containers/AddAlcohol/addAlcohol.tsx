@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useState } from 'react';
-import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import InputFactory from '../../components/InputFactory/inputFactory';
 import { ADD_INPUTS, API } from '../../utils/constant';
-import { postJSON, postMultipart } from '../../utils/fetch';
+import { postMultipart } from '../../utils/fetch';
 import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
 import FileInput from '../../components/FileInput/fileInput';
@@ -15,6 +15,7 @@ import { BtnPrimary, LinkSecondary, Row } from '../../styles/global.styled';
 import Loader from '../../components/Loader/loader';
 import Modal from '../../components/modal/Modal';
 import { ModalTitle } from '../../components/modal/Modal.styled';
+import useAuthReq from '../../utils/hooks/useReq';
 
 const isObject = (obj: any) =>
   typeof obj === 'object' && !Array.isArray(obj) && obj !== null;
@@ -25,6 +26,7 @@ const AddAlcohol = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { send } = useAuthReq('POST', `${API}/alcohols/admin`, '');
 
   const submit = async (data: any) => {
     setIsLoading(true);
@@ -43,14 +45,7 @@ const AddAlcohol = () => {
     });
     data.image_name = data.name?.replaceAll?.(' ', '_');
     try {
-      const res = await postJSON({
-        url: `${API}/alcohols/admin`,
-        body: data,
-        header: {
-          Authorization: `Bearer ${user.access_token}`,
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
+      const res = await send({ body: JSON.stringify(data) })
       const resImage = await postMultipart({
         url: `${API}/media`,
         body: [

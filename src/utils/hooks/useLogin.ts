@@ -27,6 +27,7 @@ const useLogin = () => {
       body: { username, password },
     })
       .then((data: Tokens) => {
+        if (!data?.access_token) throw data;
         set({ ...data });
         navigate('home');
       })
