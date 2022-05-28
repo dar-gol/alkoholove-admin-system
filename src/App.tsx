@@ -10,6 +10,7 @@ import Home from './containers/Home/home';
 import { Main } from './styles/global.styled';
 
 import useLogin from './utils/hooks/useLogin';
+import AddCategory from './containers/AddCategory/addCategory';
 
 const App = () => {
   const { checkLogin } = useLogin();
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/alcohols/add" element={<AddAlcohol />} />
         <Route path="/alcohols/edit/:alcoholBarcode" element={<Home />} />
         <Route path="/alcohols/:alcoholBarcode" element={<AlcoholDetails />} />
+        <Route path="/category/add" element={<AddCategory />} />
 
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
