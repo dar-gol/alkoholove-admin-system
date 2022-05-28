@@ -3,14 +3,18 @@ import { useFormContext } from 'react-hook-form';
 import { IProps } from '../../@types/inputs';
 import { Col, InputText } from '../../styles/global.styled';
 
-const SimpleInput = ({ name, show_name }: IProps) => {
+const DoubleInput = ({ name, title, required }: IProps) => {
   const { register } = useFormContext();
   return (
     <Col>
-      <p>{show_name}:</p>
-      <InputText {...register(name)} />
+      <p>{title}:</p>
+      <InputText
+        {...register(name, { required, valueAsNumber: true })}
+        type="number"
+        step="0.01"
+      />
     </Col>
   );
 };
 
-export default SimpleInput;
+export default DoubleInput;
