@@ -3,7 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 import { IProps } from '../../@types/inputs';
 
-const BoolInput = ({ name, show_name }: IProps) => {
+const BoolInput = ({ name, title, required }: IProps) => {
   const { control } = useFormContext();
   const options = [
     {
@@ -17,20 +17,17 @@ const BoolInput = ({ name, show_name }: IProps) => {
   ];
   return (
     <div>
-      <p>{show_name}:</p>
+      <p>{title}:</p>
       <Controller
         name={name}
         control={control}
+        rules={{ required }}
         render={({ field }) => (
           <Select
             {...field}
             isClearable
             placeholder="Wybierz wartość"
             options={options}
-            theme={(theme) => ({
-              ...theme,
-              borderRadius: 20,
-            })}
           />
         )}
       />

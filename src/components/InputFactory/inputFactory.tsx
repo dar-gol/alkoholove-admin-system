@@ -2,24 +2,24 @@ import React from 'react';
 import { IFactory } from '../../@types/inputs';
 import BoolInput from '../BoolInput/boolInput';
 import MoreInput from '../MoreInput/moreInput';
-import RegionInput from '../regionInput/regionInput';
 import Select from '../Select/select';
-import SimpleInput from '../SimpleInput/simpleInput';
+import DoubleInput from '../SimpleInput/DoubleInput';
+import NumberInput from '../SimpleInput/NumberInput';
+import TextInput from '../SimpleInput/TextInput';
 
-const InputFactory = ({ name, show_name, type, api, isMulti }: IFactory) => {
+const InputFactory = ({ name, title, type, required }: IFactory) => {
   switch (type) {
-    case 'simple':
-      return <SimpleInput name={name} show_name={show_name} />;
-    case 'more':
-      return <MoreInput name={name} show_name={show_name} />;
-    case 'select':
-      return (
-        <Select name={name} show_name={show_name} api={api} isMulti={isMulti} />
-      );
-    case 'boolean':
-      return <BoolInput name={name} show_name={show_name} />;
-    case 'region':
-      return <RegionInput />;
+    case 'string':
+      return <TextInput name={name} title={title} required={false} />;
+    case 'array':
+      return <Select name={name} title={title} required={false} />;
+    case 'bool':
+      return <BoolInput name={name} title={title} required={false} />;
+    case 'int':
+    case 'long':
+      return <NumberInput name={name} title={title} required={false} />;
+    case 'double':
+      return <DoubleInput name={name} title={title} required={false} />;
     default:
       return <div />;
   }

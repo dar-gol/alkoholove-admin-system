@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { IAlcohol } from '../../@types/alcohol';
 import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
@@ -10,7 +10,7 @@ import {
   Row,
 } from '../../styles/global.styled';
 import { API } from '../../utils/constant';
-import { del, get } from '../../utils/fetch';
+import { del } from '../../utils/fetch';
 import Loader from '../Loader/loader';
 import Modal from '../modal/Modal';
 import { ModalTitle } from '../modal/Modal.styled';
@@ -26,9 +26,11 @@ import {
 const AlcoholBlock = ({
   alcohol,
   update,
+  index,
 }: {
   alcohol: IAlcohol;
   update: (id: number) => void;
+  index: number;
 }) => {
   const { user } = useContext(UserContext) as UserContextType;
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -46,7 +48,7 @@ const AlcoholBlock = ({
     setIsOpen(false);
     setIsLoading(true);
     await del({
-      url: `${API}/alcohols/admin/${id}`,
+      url: `${API}/alcohols/${id}`,
       header: {
         Authorization: `Bearer ${user.access_token}`,
       },
@@ -60,11 +62,11 @@ const AlcoholBlock = ({
       justifyContent="space-between"
       padding="10px 20px;"
       margin="10px"
-      key={alcohol.alcohol_id}
+      key={alcohol.id}
     >
-      <More to={`/alcohols/${alcohol.barcodes[0].barcode}`}>
+      <More to={`/alcohols/${alcohol.barcode[0]}`}>
         <Row gap="10px" flex="1">
-          <Col justifyContent="center">{alcohol.alcohol_id}.</Col>
+          <Col justifyContent="center">{index}.</Col>
           <Col justifyContent="center" flex="1">
             {alcohol.name}
           </Col>
@@ -76,7 +78,7 @@ const AlcoholBlock = ({
       </More>
       <Row gap="10px">
         <Col justifyContent="center">
-          <LinkSecondary to={`/alcohols/edit/${alcohol.barcodes[0].barcode}`}>
+          <LinkSecondary to={`/alcohols/edit/${alcohol.barcode[0]}`}>
             Edytuj
           </LinkSecondary>
         </Col>
@@ -92,7 +94,7 @@ const AlcoholBlock = ({
         <Col>
           <Tuple>
             <Key>ID</Key>
-            <Value>{alcohol.alcohol_id}</Value>
+            <Value>{alcohol.id}</Value>
           </Tuple>
           <Tuple>
             <Key>Nazwa</Key>
@@ -100,7 +102,7 @@ const AlcoholBlock = ({
           </Tuple>
         </Col>
         <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
-          <BtnSecondary onClick={() => remove(alcohol.alcohol_id)}>
+          <BtnSecondary onClick={() => remove(alcohol.id)}>
             TAK
           </BtnSecondary>
           <BtnPrimary onClick={closeModal}>NIE</BtnPrimary>

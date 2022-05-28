@@ -28,10 +28,10 @@ const AlcoholDetails = () => {
 
   const JSX = alcohol && (
     <ul>
-      <li>ID: {alcohol.alcohol_id}</li>
+      <li>ID: {alcohol.id}</li>
       <li>
         Kody kreskowe:
-        {alcohol.barcodes?.map(({ barcode }) => (
+        {alcohol.barcode?.map(barcode => (
           <ul key={barcode}>
             <li>{barcode}</li>
           </ul>
@@ -46,45 +46,44 @@ const AlcoholDetails = () => {
       <li>Opis: {alcohol.description}</li>
       <li>Kolor: {alcohol.color}</li>
       <li>Temperatura podania: {alcohol.serving_temperature}</li>
-      <li>Region: {alcohol.region.name}</li>
-      <li>Kraj: {alcohol.region.country.name}</li>
+      <li>Region: {alcohol.region}</li>
       <li>
         Pasujące posiłki:
-        {alcohol.foods?.map(({ id, name }) => (
-          <ul key={id}>
-            <li>{name}</li>
+        {alcohol.food?.map((food) => (
+          <ul key={`food${food}`}>
+            <li>{food}</li>
           </ul>
         ))}
       </li>
       <li>
         Aromaty:
-        {alcohol.aromas?.map(({ id, name }) => (
-          <ul key={id}>
-            <li>{name}</li>
+        {alcohol.aroma?.map((aroma) => (
+          <ul key={`aroma${aroma}`}>
+            <li>{aroma}</li>
           </ul>
         ))}
       </li>
       <li>
         Składniki:
-        {alcohol.ingredients?.map(({ id, name }) => (
-          <ul key={id}>
-            <li>{name}</li>
+        {alcohol.ingredients?.map((ingredient) => (
+          <ul key={`ingredient${ingredient}`}>
+            <li>{ingredient}</li>
           </ul>
         ))}
       </li>
       <li>
         Smaki:
-        {alcohol.tastes?.map(({ id, name }) => (
-          <ul key={id}>
-            <li>{name}</li>
+        {alcohol.taste?.map((taste) => (
+          <ul key={`taste${taste}`}>
+            <li>{taste}</li>
           </ul>
         ))}
       </li>
       <li>
         Finisz:
-        {alcohol.finishes?.map(({ id, name }) => (
-          <ul key={id}>
-            <li>{name}</li>
+        {alcohol.finish?.map((finish) => (
+          <ul key={`finish${finish}`}>
+            <li>{finish}</li>
           </ul>
         ))}
       </li>
@@ -98,7 +97,7 @@ const AlcoholDetails = () => {
       <li>Rok: {alcohol.year || '-'}</li>
       <li>Winorosl: {alcohol.vine_stock || '-'}</li>
       <li>
-        <img src={image || ''} alt="wóda" />
+        <img src={`${API}/static/${alcohol.name.toLowerCase()}_md.png`} alt="Zdjęcie przedstawiające wybrany alkohol" />
       </li>
     </ul>
   );
