@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alcohols, IAlcohol, IPageInfo } from '../../@types/alcohol';
+import { IReq } from '../../@types/fetch';
 import { API } from '../constant';
 import useAuthReq from './useReq';
 import useUser from './useUser';
@@ -22,7 +23,17 @@ const useAlcohols = () => {
   const [alcohols, setAlcohols] = useState<Alcohols | null>(null);
   const [name, setName] = useState<string>('');
   const [page, setPage] = useState<IPageInfo>(initPageInfo);
-  const { send, update } = useAuthReq(...initReq);
+  const { send } = useAuthReq(...initReq);
+
+  const update = (req: IReq = {}) => {
+    send({...req})
+        .then((data: Response) => data.json())
+        .then((data: { alcohols: Alcohols; page_info: IPageInfo }) => {
+          setAlcohols(data.alcohols);
+          setPage((prev) => ({ ...prev, ...data.page_info }));
+        })
+        .catch((e) => console.log(e));
+  }
 
   const search = (input: string) => {
     update({
@@ -60,16 +71,8 @@ const useAlcohols = () => {
   };
 
   useEffect(() => {
-    if (get().access_token) {
-      send()
-        .then((data: Response) => data.json())
-        .then((data: { alcohols: Alcohols; page_info: IPageInfo }) => {
-          setAlcohols(data.alcohols);
-          setPage((prev) => ({ ...prev, ...data.page_info }));
-        })
-        .catch((e) => console.log(e));
-    }
-  }, [get().access_token, page.number, page.limit, name]);
+    if (get().access_token) update();
+  }, [get().access_token]);
 
   return {
     search,

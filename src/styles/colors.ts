@@ -16,6 +16,7 @@ const Colors = {
     black: '#282727',
     white: '#FFFFFF',
     grey: '#C4C4C4',
+    primary: '#F47521',
   },
   dark: {
     title: '#FFFFFF',
@@ -33,6 +34,7 @@ const Colors = {
     black: '#282727',
     white: '#FFFFFF',
     grey: '#C4C4C4',
+    primary: '#F47521',
   },
 };
 

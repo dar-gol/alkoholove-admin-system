@@ -1,37 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { BtnPrimary, BtnSecondary, Row } from '../../styles/global.styled';
 import { API } from '../../utils/constant';
-import { postJSON } from '../../utils/fetch';
 import Modal from '../modal/Modal';
 import Select from '../Select/select';
 import SimpleInput from '../SimpleInput/simpleInput';
-import { UserContextType } from '../../@types/user';
-import { UserContext } from '../../context/userContext';
-import { ModalContainer, ModalTitle } from '../modal/Modal.styled';
+import useAuthReq from '../../utils/hooks/useReq';
+import { ModalTitle } from '../modal/Modal.styled';
 
 const RegionInput = () => {
-  const { user } = useContext(UserContext) as UserContextType;
+  const { send } = useAuthReq('POST', `${API}/regions`, '');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const form = useForm({});
 
-  const submitModal = (data: any) => {
-    const {
-      country_id: { value },
-      name,
-    } = data;
-    postJSON({
-      url: `${API}/regions`,
-      body: {
-        name,
-        country_id: value,
-      },
-      header: {
-        Authorization: `Bearer ${user.access_token}`,
-        'Access-Control-Allow-Origin': '*',
-      },
-    });
-  };
+  const submitModal = ({name, country_id: { value }}: any) =>
+    send({ body: JSON.stringify({ name, country_id: value }) })
+  
   return (
     <Row alignItems="end" gap="10px">
       <Select name="region_id" show_name="Region" api="regions" />

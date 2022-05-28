@@ -7,17 +7,6 @@ export const post = ({ url, body, header }: Post) =>
     body,
   });
 
-export const postJSON = ({ url, body, header }: IPost) =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-      ...header,
-    },
-    body: JSON.stringify(body),
-  });
-
 export const postForm = ({ url, body, header }: IPost) =>
   fetch(url, {
     method: 'POST',

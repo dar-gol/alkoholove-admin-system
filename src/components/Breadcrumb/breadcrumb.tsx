@@ -1,27 +1,33 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Container } from './breadcrumb.styled';
+import { useLocation } from 'react-router-dom';
+import { Container, Crumb, Space, Last } from './breadcrumb.styled';
+
+const capitalize = (string: string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
 
 const Breadcrumb = () => {
   const location = useLocation();
   const splitLocation = location?.pathname.split('/');
-  const paths = splitLocation
-    .reduce(
-      (prev: string[], curr, index) => {
-        if (curr === '' || curr === 'home') prev.push('');
-        else prev.push(`${splitLocation[index - 1]}/${curr}`);
-        return prev;
-      },
-      ['/home']
-    )
-    .filter((value) => value !== '');
+  const splitPath = splitLocation.filter((el) => el !== '' && el !== 'home');
+
+  splitLocation[0] = 'Home';
+
+  const paths = splitPath.reduce(
+    (prev: string[], curr, index) => [...prev, `${prev[index]}/${curr}`],
+    ['/home']
+  );
+  const { length } = paths;
+
   const JSX = paths?.map((path, index) => (
     <span key={path}>
-      {' '}
-      <Link to={path}>
-        {splitLocation[index] ? splitLocation[index] : 'Home'}
-      </Link>{' '}
-      {paths.length !== index + 1 ? '/' : ''}
+      {length !== index + 1 ? (
+        <>
+          <Crumb to={path}>{capitalize(splitLocation[index])}</Crumb>
+          <Space> {'  /  '} </Space>
+        </>
+      ) : (
+        <Last>{capitalize(splitLocation[index])}</Last>
+      )}
     </span>
   ));
   return <Container>{JSX}</Container>;
