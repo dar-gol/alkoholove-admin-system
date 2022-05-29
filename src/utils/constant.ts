@@ -35,6 +35,15 @@ export const INPUT_CATEGORY = [
   },
 ];
 
+export const INPUT_LABEL = {
+  string: 'Pole tekstowe',
+  int: 'Pole numeryczny',
+  double: 'Pole numeryczne (do drugiego miejsca po przecinku)',
+  array: 'Pole typu "lista"',
+  bool: 'Pole TAK/NIE',
+  long: 'Pole numeryczny',
+};
+
 export const STATUS_CODE = {
   OK: 200,
   CREATED: 201,

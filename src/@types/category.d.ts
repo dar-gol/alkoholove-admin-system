@@ -2,6 +2,8 @@ import { IPageInfo } from './pagination';
 
 type Required = string;
 
+type Types = 'string' | 'int' | 'double' | 'array' | 'bool' | 'long';
+
 type Type = string | [string, boolean | 'null'];
 
 type Metadata = {

@@ -64,7 +64,7 @@ const AlcoholBlock = ({
       margin="10px"
       key={alcohol.id}
     >
-      <More to={`/alcohols/${alcohol.barcode[0]}`}>
+      <More to={`/alcohol/${alcohol.barcode[0]}`}>
         <Row gap="10px" flex="1">
           <Col justifyContent="center">{index}.</Col>
           <Col justifyContent="center" flex="1">
@@ -102,9 +102,7 @@ const AlcoholBlock = ({
           </Tuple>
         </Col>
         <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
-          <BtnSecondary onClick={() => remove(alcohol.id)}>
-            TAK
-          </BtnSecondary>
+          <BtnSecondary onClick={() => remove(alcohol.id)}>TAK</BtnSecondary>
           <BtnPrimary onClick={closeModal}>NIE</BtnPrimary>
         </Row>
       </Modal>
