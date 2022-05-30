@@ -7,9 +7,10 @@ const useUser = () => {
   const { user, setAdmin } = useContext(UserContext) as UserContextType;
   const [cookie, setCookie] = useCookies(['user']);
 
-  const get = (): Tokens => ({ ...user });
-
-  const getCookie = (): Tokens => ({ ...cookie.user });
+  const get = (): Tokens => {
+    const tokens = user.access_token ? user : cookie.user;
+    return { ...tokens };
+  };
 
   const checkCookie = (): boolean => !!cookie?.user?.access_token;
 
@@ -23,7 +24,7 @@ const useUser = () => {
     setCookie('user', '', { path: '/' });
   };
 
-  return { get, set, remove, checkCookie, getCookie };
+  return { get, set, remove, checkCookie };
 };
 
 export default useUser;

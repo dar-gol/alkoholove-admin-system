@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Alcohols, IAlcohol, IPageInfo } from '../../@types/alcohol';
+import { Alcohols, IAlcohol } from '../../@types/alcohol';
 import { IReq } from '../../@types/fetch';
+import { IPageInfo } from '../../@types/pagination';
 import { API } from '../constant';
 import useAuthReq from './useReq';
 import useUser from './useUser';
@@ -14,7 +15,7 @@ const initPageInfo: IPageInfo = {
 
 const initReq = [
   'GET',
-  `${API}/alcohols/admin?limit=10&offset=0`,
+  `${API}/alcohols?limit=10&offset=0`,
   null,
 ] as const;
 
@@ -37,7 +38,7 @@ const useAlcohols = () => {
 
   const search = (input: string) => {
     update({
-      url: `${API}/alcohols/admin?limit=${page.limit}&offset=0&name=${input}`,
+      url: `${API}/alcohols?limit=${page.limit}&offset=0&phrase=${input}`,
     });
     setName(input);
   };
@@ -49,7 +50,7 @@ const useAlcohols = () => {
       number: index,
     }));
     update({
-      url: `${API}/alcohols/admin?limit=${page.limit}&offset=${shift}&name=${name}`,
+      url: `${API}/alcohols?limit=${page.limit}&offset=${shift}&phrase=${name}`,
     });
   };
 
@@ -60,13 +61,13 @@ const useAlcohols = () => {
       number: 0,
     }));
     update({
-      url: `${API}/alcohols/admin?limit=${limit}&offset=0&name=${name}`,
+      url: `${API}/alcohols?limit=${limit}&offset=0&phrase=${name}`,
     });
   };
 
   const remove = (id: number) => {
     setAlcohols((prev: any): any => [
-      ...prev.filter((alcohol: IAlcohol) => alcohol.alcohol_id !== id),
+      ...prev.filter((alcohol: IAlcohol) => alcohol.id !== id),
     ]);
   };
 

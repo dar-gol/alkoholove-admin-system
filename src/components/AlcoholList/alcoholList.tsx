@@ -11,8 +11,13 @@ const AlcoholList = () => {
   const { search, remove, changePageSize, changePage, alcohols, page } =
     useAlcohols();
 
-  const alcoholsBlock = alcohols?.map((alcohol: IAlcohol) => (
-    <AlcoholBlock alcohol={alcohol} key={alcohol.alcohol_id} update={remove} />
+  const alcoholsBlock = alcohols?.map((alcohol: IAlcohol, index) => (
+    <AlcoholBlock
+      alcohol={alcohol}
+      key={alcohol.id}
+      update={remove}
+      index={index + 1}
+    />
   ));
   return (
     <>

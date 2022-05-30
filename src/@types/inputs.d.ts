@@ -1,25 +1,21 @@
-export interface Name {
-  name: string;
+export interface IOption {
+  label: string;
+  value: string | number;
 }
 
-export interface Option {
-  label: string;
-  value: number;
-}
+export type Options = {
+  [name: string]: Option;
+};
 
 export interface IProps {
   name: string;
-  show_name: string;
-  api?: string;
-  onCreate?: (inputValue: string) => void;
-  isMulti?: boolean;
+  title: string;
+  required: boolean;
 }
 
-export interface IFactory {
-  name: string;
-  show_name: string;
-  type: 'simple' | 'more' | 'select' | 'boolean' | 'region';
-  api?: string | undefined;
+export type inputType = 'string' | 'array' | 'bool' | 'int' | 'double' | 'long';
+
+export interface IFactory extends IProps {
+  type: inputType;
   key?: string;
-  isMulti?: boolean;
 }

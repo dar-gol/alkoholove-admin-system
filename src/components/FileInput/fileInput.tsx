@@ -2,12 +2,12 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IProps } from '../../@types/inputs';
 
-const FileInput = () => {
+const FileInput = ({ name, title, required }: IProps) => {
   const { register } = useFormContext();
   return (
     <div>
-      <p>Zdjęcia:</p>
-      <input {...register('file')} type="file" />
+      <p>{title}</p>
+      <input {...register(name, { required })} type="file" />
     </div>
   );
 };

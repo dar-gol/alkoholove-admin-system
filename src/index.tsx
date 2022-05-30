@@ -4,6 +4,7 @@ import { CookiesProvider } from 'react-cookie';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 import UserProvider from './context/userContext';
+import CategoryProvider from './context/categoryContext';
 import App from './App';
 import createTheme from './styles/theme';
 import { GlobalStyle } from './styles/global.styled';
@@ -17,9 +18,11 @@ root.render(
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <UserProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <CategoryProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </CategoryProvider>
       </UserProvider>
     </ThemeProvider>
   </CookiesProvider>

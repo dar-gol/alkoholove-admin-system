@@ -1,63 +1,44 @@
-export interface IAroma {
-  id: number;
-  name: string;
-}
+export type IAroma = string
 
-export interface IBarcode {
-  barcode: string;
-}
+export type IBarcode = string;
 
-export interface ICountry {
-  id: number;
-  name: number;
-}
+export type IRegion = string;
 
-export interface IRegion {
-  id: number;
-  name: string;
-  country: ICountry;
-}
+export type ICountry = string;
 
-export interface IFood {
-  id: number;
-  name: string;
-}
+export type IFood = string
 
-export interface ITaste {
-  id: number;
-  name: string;
-}
+export type ITaste = string
 
-export interface IFinishes {
-  id: number;
-  name: string;
-}
+export type IFinishes = string
 
-export interface IIngredients {
-  id: number;
-  name: string;
-}
+export type IIngredients = string;
+
+export type IKeywords = string;
 
 export interface IAlcohol {
-  age: number;
-  alcohol_by_volume: number;
-  alcohol_id: number;
-  aromas: IAroma[];
-  barcodes: IBarcode[];
   name: string;
   kind: string;
   type: string;
-  manufacturer: string;
-  rating: number;
-  image_name: string;
+  alcohol_by_volume: number;
   description: string;
   color: string;
-  serving_temperature: string;
+  manufacturer: string;
+  country: ICountry;
   region: IRegion;
-  foods: IFood[];
-  tastes: ITaste[];
-  finishes: IFinishes[];
-  ingredients: IIngredients[];
+  food: IFood[];
+  finish: IFinishes[];
+  aroma: IAroma[];
+  taste: ITaste[];
+  id: number;
+  barcode: IBarcode[];
+  keywords: IKeywords[]
+  ingredients: IIngredients[]; 
+
+  age: number;
+  rating: number;
+  image_name: string;
+  serving_temperature: string;
   bitterness_ibu: number;
   srm: number;
   extract: number;
@@ -66,13 +47,6 @@ export interface IAlcohol {
   is_pasteurized: boolean;
   year: number;
   vine_stock: string;
-}
-
-export interface IPageInfo {
-  limit: number;
-  offset: number;
-  total: number;
-  number: number;
 }
 
 export type Alcohols = IAlcohol[];

@@ -23,7 +23,7 @@ const Breadcrumb = () => {
       {length !== index + 1 ? (
         <>
           <Crumb to={path}>{capitalize(splitLocation[index])}</Crumb>
-          <Space> {'  /  '} </Space>
+          <Space> {' | '} </Space>
         </>
       ) : (
         <Last>{capitalize(splitLocation[index])}</Last>

@@ -9,7 +9,7 @@ import {
   Row,
 } from '../../styles/global.styled';
 
-const MoreInput = ({ name, show_name }: IProps) => {
+const MoreInput = ({ name, title }: IProps) => {
   const { register } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     name,
@@ -21,7 +21,7 @@ const MoreInput = ({ name, show_name }: IProps) => {
 
   return (
     <div>
-      <p>{show_name}: </p>
+      <p>{title}: </p>
       <Col gap="10px">
         {fields.map((item, index) => (
           <Row key={item.id} gap="20px" flex="1">
@@ -35,7 +35,7 @@ const MoreInput = ({ name, show_name }: IProps) => {
         ))}
       </Col>
       <BtnPrimary margin="20px 0 0 0" type="button" onClick={() => append('')}>
-        Dodaj
+        Dodaj kolejny kod kreskowy
       </BtnPrimary>
     </div>
   );

@@ -6,7 +6,7 @@ import { post, postForm } from '../fetch';
 import useUser from './useUser';
 
 const useLogin = () => {
-  const { set, getCookie, checkCookie, get, remove } = useUser();
+  const { set, checkCookie, get, remove } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
   const checkLogin = () =>
@@ -15,7 +15,7 @@ const useLogin = () => {
       else reject(new Error("You don't have cookie"));
     })
       .then(() => {
-        set(getCookie());
+        set(get());
         if (location.pathname === '/') navigate('home');
       })
       .catch(() => {
@@ -28,7 +28,10 @@ const useLogin = () => {
     })
       .then((data: Tokens) => {
         if (!data?.access_token) throw data;
-        set({ ...data });
+        set({
+          access_token: `${data.access_token}`,
+          refresh_token: `${data.refresh_token}`,
+        });
         navigate('home');
       })
       .catch((e) => console.log(e));
