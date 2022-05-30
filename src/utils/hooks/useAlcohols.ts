@@ -13,11 +13,7 @@ const initPageInfo: IPageInfo = {
   number: 0,
 } as const;
 
-const initReq = [
-  'GET',
-  `${API}/alcohols?limit=10&offset=0`,
-  null,
-] as const;
+const initReq = ['GET', `${API}/alcohols?limit=10&offset=0`, null] as const;
 
 const useAlcohols = () => {
   const { get } = useUser();
@@ -27,14 +23,14 @@ const useAlcohols = () => {
   const { send } = useAuthReq(...initReq);
 
   const update = (req: IReq = {}) => {
-    send({...req})
-        .then((data: Response) => data.json())
-        .then((data: { alcohols: Alcohols; page_info: IPageInfo }) => {
-          setAlcohols(data.alcohols);
-          setPage((prev) => ({ ...prev, ...data.page_info }));
-        })
-        .catch((e) => console.log(e));
-  }
+    send({ ...req })
+      .then((data: Response) => data.json())
+      .then((data: { alcohols: Alcohols; page_info: IPageInfo }) => {
+        setAlcohols(data.alcohols);
+        setPage((prev) => ({ ...prev, ...data.page_info }));
+      })
+      .catch((e) => console.log(e));
+  };
 
   const search = (input: string) => {
     update({

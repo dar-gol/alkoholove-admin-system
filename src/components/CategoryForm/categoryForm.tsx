@@ -4,7 +4,6 @@ import Select from 'react-select';
 import { Form } from '../../containers/AddAlcohol/addAlcohol.styled';
 import {
   BtnPrimary,
-  BtnSecondary,
   Col,
   LinkSecondary,
   Row,

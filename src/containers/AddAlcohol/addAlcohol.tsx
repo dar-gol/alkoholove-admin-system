@@ -5,8 +5,13 @@ import { useForm, FormProvider, Controller } from 'react-hook-form';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import FileInput from '../../components/FileInput/fileInput';
-import { Form, Container, Title } from './addAlcohol.styled';
-import { BtnPrimary, LinkSecondary, Row } from '../../styles/global.styled';
+import { Form, Title } from './addAlcohol.styled';
+import {
+  BtnPrimary,
+  Container,
+  LinkSecondary,
+  Row,
+} from '../../styles/global.styled';
 import Loader from '../../components/Loader/loader';
 import Modal from '../../components/modal/Modal';
 import { ModalTitle } from '../../components/modal/Modal.styled';

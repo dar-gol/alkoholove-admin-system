@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css, createGlobalStyle } from 'styled-components';
-import { Heading4 } from './typography.styled';
+import { Heading2, Heading3, Heading4 } from './typography.styled';
 
 export const Test1 = styled.section``;
 export const Test2 = styled.section``;
@@ -44,6 +44,9 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: Roboto;
   }
+  :focus-visible {
+    outline-color: #e7b99b;
+  }
 `;
 
 export const Div = styled.section<BlockType>`
@@ -64,6 +67,22 @@ export const Row = styled(Div)`
 export const Col = styled(Div)`
   display: flex;
   flex-direction: column;
+`;
+
+export const Container = styled.article`
+  padding: 30px;
+  margin: 20px auto;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  max-width: 678px;
+`;
+
+export const Title = styled.h2`
+  ${Heading2()}
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px;
 `;
 
 export const InputText = styled.input`
@@ -111,4 +130,8 @@ export const LinkSecondary = styled(Link)`
   ${Btn}
   background: ${({ theme }) => theme.palette.btnSecondary};
   line-height: 40px;
+`;
+
+export const CapitalCase = styled.span`
+  text-transform: capitalize;
 `;

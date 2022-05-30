@@ -13,7 +13,10 @@ const Breadcrumb = () => {
   splitLocation[0] = 'Home';
 
   const paths = splitPath.reduce(
-    (prev: string[], curr, index) => [...prev, `${prev[index]}/${curr}`],
+    (prev: string[], curr, index) => [
+      ...prev,
+      `${prev[index] === '/home' ? '' : prev[index]}/${curr}`,
+    ],
     ['/home']
   );
   const { length } = paths;
