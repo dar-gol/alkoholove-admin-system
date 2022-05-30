@@ -1,9 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { CapitalCase } from '../../styles/global.styled';
 import { Container, Crumb, Space, Last } from './breadcrumb.styled';
-
-const capitalize = (string: string) =>
-  string.charAt(0).toUpperCase() + string.slice(1);
 
 const Breadcrumb = () => {
   const location = useLocation();
@@ -25,11 +23,15 @@ const Breadcrumb = () => {
     <span key={path}>
       {length !== index + 1 ? (
         <>
-          <Crumb to={path}>{capitalize(splitLocation[index])}</Crumb>
+          <Crumb to={path}>
+            <CapitalCase>{splitLocation[index]}</CapitalCase>
+          </Crumb>
           <Space> {' | '} </Space>
         </>
       ) : (
-        <Last>{capitalize(splitLocation[index])}</Last>
+        <Last>
+          <CapitalCase>{splitLocation[index]}</CapitalCase>
+        </Last>
       )}
     </span>
   ));

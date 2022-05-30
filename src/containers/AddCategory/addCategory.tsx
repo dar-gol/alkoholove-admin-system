@@ -168,6 +168,7 @@ const AddCategory = () => {
   }, [ctg?.categories]);
 
   const addOrEdit = async (kind: any, properties: any, required: any) => {
+    console.log({ properties });
     if (categoryName) {
       return send({
         url: `${API}${URL.CATEGORIES}/${getID(categoryName || '')}`,

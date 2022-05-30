@@ -1,5 +1,10 @@
 import React from 'react';
-import { BtnSecondary, Col, Row } from '../../styles/global.styled';
+import {
+  BtnSecondary,
+  Col,
+  LinkSecondary,
+  Row,
+} from '../../styles/global.styled';
 import { Container, Title } from './header.styled';
 import useLogin from '../../utils/hooks/useLogin';
 
@@ -12,7 +17,7 @@ const Header = () => {
           <Title>AlkohoLove Panel Administracyjny</Title>
         </Col>
         <Row justifyContent="center" alignItems="center" gap="20px">
-          <BtnSecondary>Konto</BtnSecondary>
+          <LinkSecondary to="/account">Konto</LinkSecondary>
           <BtnSecondary onClick={logout}>Wyloguj się</BtnSecondary>
         </Row>
       </Row>
