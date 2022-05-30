@@ -5,6 +5,7 @@ export const URL = {
   GET_ALCOHOLS: '/alcohols',
   POST_ALCOHOLS: '/admin/alcohols',
   UPLOAD_IMAGE: '/admin/static',
+  USERS: '/admin/users',
 };
 
 export const CORE_PROPERTY = 'core';

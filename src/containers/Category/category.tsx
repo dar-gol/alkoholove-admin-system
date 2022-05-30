@@ -6,18 +6,15 @@ import Pagination from '../../components/Pagination/pagination';
 
 import Searcher from '../../components/Searcher/searcher';
 import {
-  BtnPrimary,
-  BtnSecondary,
   CapitalCase,
   Col,
+  Container,
   LinkPrimary,
   LinkSecondary,
+  ListTitle,
   Row,
 } from '../../styles/global.styled';
-import { URL } from '../../utils/constant';
 import useCategory from '../../utils/hooks/useCategory';
-import useAuthReq from '../../utils/hooks/useReq';
-import { Title } from '../AddAlcohol/addAlcohol.styled';
 import { Block } from './category.styled';
 
 const Category = () => {
@@ -52,18 +49,20 @@ const Category = () => {
     <>
       <Header />
       <Breadcrumb />
-      <Title>Lista kategorii: </Title>
-      <Searcher setLimit={changePageSize} update={(input) => {}} />
-      {categoryBlock}
-      <Pagination
-        lastPage={Math.ceil(page.total / page.limit)}
-        offset={page.number}
-        setOffset={changePage}
-      />
-      <Row margin="10px 10px" justifyContent="flex-end" gap="20px">
-        <LinkSecondary to="/category/add">Dodaj kategorię</LinkSecondary>
-        <LinkPrimary to="/alcohols/add">Dodaj Alkohol</LinkPrimary>
-      </Row>
+      <Container>
+        <ListTitle>Lista kategorii: </ListTitle>
+        <Searcher setLimit={changePageSize} update={(input) => {}} />
+        {categoryBlock}
+        <Pagination
+          lastPage={Math.ceil(page.total / page.limit)}
+          offset={page.number}
+          setOffset={changePage}
+        />
+        <Row margin="10px 10px" justifyContent="flex-end" gap="20px">
+          <LinkSecondary to="/category/add">Dodaj kategorię</LinkSecondary>
+          <LinkPrimary to="/alcohols/add">Dodaj Alkohol</LinkPrimary>
+        </Row>
+      </Container>
     </>
   );
 };

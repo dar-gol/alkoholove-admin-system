@@ -79,13 +79,13 @@ const useCategory = () => {
     );
     if (!index) return '';
     const id = ctg?.categories?.[index].id;
-    console.log(id);
     return id || '';
   };
 
   const getCategory = (
     name: string,
-    onlySpecial: boolean = false
+    onlySpecial: boolean = false,
+    isFiltered: boolean = true
   ): SpecificCategory => {
     if (!ctg?.categories) return { required: [], properties: [] };
     const { categories } = ctg;
@@ -94,7 +94,10 @@ const useCategory = () => {
         if (![name, !onlySpecial ? CORE_PROPERTY : ''].includes(curr.title))
           return { ...prev };
         const { properties, required } = curr;
-        const prop = filterProp(properties, ['kind', BARCODE_PROPERTY]);
+        const prop = filterProp(properties, [
+          'kind',
+          isFiltered ? BARCODE_PROPERTY : '',
+        ]);
 
         return {
           required: [...prev.required, ...(required || [])],

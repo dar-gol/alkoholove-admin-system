@@ -5,108 +5,71 @@ import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import { API } from '../../utils/constant';
 import { get } from '../../utils/fetch';
+import { createImageName } from '../../utils/utils';
+import useCategory from '../../utils/hooks/useCategory';
+import {
+  BtnPrimary,
+  BtnSecondary,
+  CapitalCase,
+  Col,
+  Container,
+  Key,
+  Row,
+  Tuple,
+  Value,
+} from '../../styles/global.styled';
+import { Title } from '../AddAlcohol/addAlcohol.styled';
 
 const AlcoholDetails = () => {
   const { alcoholBarcode } = useParams();
   const alcohol = useAlcohol(alcoholBarcode || '');
-  const [image, setImage] = useState<string | null>(null);
+  const { getCategory } = useCategory();
 
-  useEffect(() => {
-    if (alcohol?.image_name) {
-      get({ url: `${API}/media/${alcohol.image_name}?size=sm` })
-        .then((data) => data.json())
-        .then((data) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(data);
-          reader.onloadend = () => {
-            const base64data: string = reader.result as string;
-            setImage(base64data);
-          };
-        });
-    }
-  }, [alcohol?.image_name]);
-
-  const JSX = alcohol && (
-    <ul>
-      <li>ID: {alcohol.id}</li>
-      <li>
-        Kody kreskowe:
-        {alcohol.barcode?.map(barcode => (
-          <ul key={barcode}>
-            <li>{barcode}</li>
-          </ul>
-        ))}
-      </li>
-      <li>Nazwa: {alcohol.name}</li>
-      <li>Rodzaj: {alcohol.kind}</li>
-      <li>Typ: {alcohol.type}</li>
-      <li>Ilość promili: {alcohol.alcohol_by_volume}</li>
-      <li>Producent: {alcohol.manufacturer}</li>
-      <li>Ocena: {alcohol.rating}</li>
-      <li>Opis: {alcohol.description}</li>
-      <li>Kolor: {alcohol.color}</li>
-      <li>Temperatura podania: {alcohol.serving_temperature}</li>
-      <li>Region: {alcohol.region}</li>
-      <li>
-        Pasujące posiłki:
-        {alcohol.food?.map((food) => (
-          <ul key={`food${food}`}>
-            <li>{food}</li>
-          </ul>
-        ))}
-      </li>
-      <li>
-        Aromaty:
-        {alcohol.aroma?.map((aroma) => (
-          <ul key={`aroma${aroma}`}>
-            <li>{aroma}</li>
-          </ul>
-        ))}
-      </li>
-      <li>
-        Składniki:
-        {alcohol.ingredients?.map((ingredient) => (
-          <ul key={`ingredient${ingredient}`}>
-            <li>{ingredient}</li>
-          </ul>
-        ))}
-      </li>
-      <li>
-        Smaki:
-        {alcohol.taste?.map((taste) => (
-          <ul key={`taste${taste}`}>
-            <li>{taste}</li>
-          </ul>
-        ))}
-      </li>
-      <li>
-        Finisz:
-        {alcohol.finish?.map((finish) => (
-          <ul key={`finish${finish}`}>
-            <li>{finish}</li>
-          </ul>
-        ))}
-      </li>
-      <li>IBU: {alcohol.bitterness_ibu}</li>
-      <li>Kolor (SRM): {alcohol.srm}</li>
-      <li>Ekstrakt: {alcohol.extract}</li>
-      <li>Fermentacja: {alcohol.fermentation}</li>
-      <li>Filtrowane: {alcohol.is_filtered ? 'TAK' : 'NIE'}</li>
-      <li>Pasteryzowane: {alcohol.is_pasteurized ? 'TAK' : 'NIE'}</li>
-      <li>Wiek: {alcohol.age || '-'}</li>
-      <li>Rok: {alcohol.year || '-'}</li>
-      <li>Winorosl: {alcohol.vine_stock || '-'}</li>
-      <li>
-        <img src={`${API}/static/${alcohol.name.toLowerCase()}_md.png`} alt="Zdjęcie przedstawiające wybrany alkohol" />
-      </li>
-    </ul>
-  );
+  const JSX =
+    alcohol &&
+    getCategory(alcohol.kind, false, false).properties.map((prop) => {
+      // console.log({ prop });
+      const {
+        name,
+        metadata: { title },
+      } = prop;
+      const value = alcohol[name as keyof typeof alcohol];
+      console.log({ value });
+      const formatValue =
+        typeof value === 'object' && value !== null ? value.join(' | ') : value;
+      return (
+        <Tuple key={name}>
+          <Key>
+            <CapitalCase>{title}</CapitalCase>
+          </Key>
+          <Value>{formatValue || 'Brak danych*'}</Value>
+        </Tuple>
+      );
+    });
 
   return (
     <>
       <Header />
       <Breadcrumb />
-      <div>{JSX}</div>
+      <Container>
+        <Title>Szczegółowe informacje</Title>
+        <Col>{JSX}</Col>
+        <Row justifyContent="center">
+          <Col>
+            <img
+              src={`${API}/static/${createImageName(
+                alcohol?.name.toLowerCase() || '',
+                'sm'
+              )}`}
+              alt="Zdjęcie przedstawiające wybrany alkohol"
+            />
+          </Col>
+        </Row>
+        <Row justifyContent="flex-end" gap="20px">
+          <BtnPrimary>Edytuj alkohol</BtnPrimary>
+          <BtnSecondary>Usuń alkohol</BtnSecondary>
+        </Row>
+      </Container>
     </>
   );
 };

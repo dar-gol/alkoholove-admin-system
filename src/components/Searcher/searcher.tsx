@@ -48,7 +48,7 @@ const Searcher: React.FC<IProps> = ({ setLimit, update }) => {
         onChange={(option: IOption | null) => setLimit(option?.value || 10)}
       />
       <InputText
-        placeholder="Wyszukaj alkohol"
+        placeholder="Szukaj..."
         onChange={(e) => setInput(e.target.value)}
       />
     </Row>
