@@ -78,7 +78,7 @@ const AlcoholBlock = ({
       </More>
       <Row gap="10px">
         <Col justifyContent="center">
-          <LinkSecondary to={`/alcohols/edit/${alcohol.barcode[0]}`}>
+          <LinkSecondary to={`/alcohol/edit/${alcohol.barcode[0]}`}>
             Edytuj
           </LinkSecondary>
         </Col>

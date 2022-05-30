@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { IProps } from '../../@types/inputs';
 import {
   BtnPrimary,
@@ -10,12 +11,14 @@ import {
 } from '../../styles/global.styled';
 
 const MoreInput = ({ name, title }: IProps) => {
+  const { alcoholBarcode } = useParams();
   const { register } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     name,
   });
 
   useEffect(() => {
+    if (alcoholBarcode) return;
     append('');
   }, []);
 

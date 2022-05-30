@@ -12,13 +12,24 @@ import useCategory from '../../utils/hooks/useCategory';
 
 interface IProps {
   submit: (data: any) => Promise<void>;
+  kindName: string | null;
 }
 
-const CategoryForm = ({ submit }: IProps) => {
-  const { control, handleSubmit } = useForm({});
+const CategoryForm = ({ submit, kindName }: IProps) => {
+  const { control, handleSubmit, reset } = useForm({});
   const { getNames } = useCategory();
 
   const options = getNames()?.map((name) => ({ label: name, value: name }));
+
+  React.useEffect(() => {
+    if (!kindName) return;
+    reset({
+      kind: {
+        label: kindName,
+        value: kindName,
+      },
+    });
+  }, [kindName]);
 
   return (
     <Form onSubmit={handleSubmit(submit)}>
