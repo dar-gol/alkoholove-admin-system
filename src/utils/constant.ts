@@ -12,6 +12,29 @@ export const BARCODE_PROPERTY = 'barcode';
 
 export const INPUT_TYPE = ['string', 'int', 'double', 'array', 'bool', 'long'];
 
+export const INPUT_CATEGORY = [
+  {
+    label: 'Pole tekstowe',
+    value: 'string',
+  },
+  {
+    label: 'Pole numeryczny',
+    value: 'int',
+  },
+  {
+    label: 'Pole numeryczne (do drugiego miejsca po przecinku)',
+    value: 'double',
+  },
+  {
+    label: 'Pole typu "lista"',
+    value: 'array',
+  },
+  {
+    label: 'Pole TAK/NIE',
+    value: 'bool',
+  },
+];
+
 export const STATUS_CODE = {
   OK: 200,
   CREATED: 201,

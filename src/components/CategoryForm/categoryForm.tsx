@@ -2,7 +2,13 @@ import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { Form } from '../../containers/AddAlcohol/addAlcohol.styled';
-import { BtnPrimary, BtnSecondary, Col, Row } from '../../styles/global.styled';
+import {
+  BtnPrimary,
+  BtnSecondary,
+  Col,
+  LinkSecondary,
+  Row,
+} from '../../styles/global.styled';
 import useCategory from '../../utils/hooks/useCategory';
 
 interface IProps {
@@ -27,7 +33,7 @@ const CategoryForm = ({ submit }: IProps) => {
           />
         </Col>
         <BtnPrimary type="submit">Wybierz kategorię</BtnPrimary>
-        <BtnSecondary>Dodaj kategorię</BtnSecondary>
+        <LinkSecondary to="/category/add">Dodaj kategorię</LinkSecondary>
       </Row>
     </Form>
   );

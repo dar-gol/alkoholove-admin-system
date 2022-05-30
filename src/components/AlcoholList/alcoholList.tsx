@@ -1,6 +1,6 @@
 import React from 'react';
 import { IAlcohol } from '../../@types/alcohol';
-import { LinkPrimary, Row } from '../../styles/global.styled';
+import { LinkPrimary, LinkSecondary, Row } from '../../styles/global.styled';
 import { Title } from './alcoholList.styled';
 import AlcoholBlock from '../AlcoholBlock/AlcoholBlock';
 import Pagination from '../Pagination/pagination';
@@ -29,7 +29,8 @@ const AlcoholList = () => {
         offset={page.number}
         setOffset={changePage}
       />
-      <Row margin="10px 10px" justifyContent="flex-end">
+      <Row margin="10px 10px" justifyContent="flex-end" gap="20px">
+        <LinkSecondary to="/category/add">Dodaj kategorię</LinkSecondary>
         <LinkPrimary to="/alcohols/add">Dodaj Alkohol</LinkPrimary>
       </Row>
     </>

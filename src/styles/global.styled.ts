@@ -5,7 +5,9 @@ import { Heading4 } from './typography.styled';
 export const Test1 = styled.section``;
 export const Test2 = styled.section``;
 
-export const Main = styled.main``;
+export const Main = styled.main`
+  margin-bottom: 50px;
+`;
 
 const borderRadius = '20px';
 
