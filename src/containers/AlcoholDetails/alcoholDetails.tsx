@@ -60,7 +60,7 @@ const AlcoholDetails = () => {
               src={`${API}/static/${createImageName(
                 alcohol?.name.toLowerCase() || '',
                 'sm'
-              )}`}
+              )}.png`}
               alt="Zdjęcie przedstawiające wybrany alkohol"
             />
           </Col>

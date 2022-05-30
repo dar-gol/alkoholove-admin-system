@@ -16,7 +16,7 @@ export const getType = (type: Type) => {
 };
 
 export const createImageName = (name: string, type: string): string =>
-  `${name.replaceAll(' ', '_')}_${type}.png`;
+  `${name.replaceAll(' ', '_')}_${type}`;
 
 type FormDataType = Array<[string, string | Blob]>;
 

@@ -96,6 +96,9 @@ const useCategory = () => {
         const { properties, required } = curr;
         const prop = filterProp(properties, [
           'kind',
+          'rate_count',
+          'rate_value',
+          'avg_rating',
           isFiltered ? BARCODE_PROPERTY : '',
         ]);
 

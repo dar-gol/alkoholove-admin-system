@@ -27,8 +27,10 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/account" element={<Account />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/alcohol/:alcoholBarcode" element={<AlcoholDetails />} />
+        <Route path="/alcohol/edit" element={<AlcoholList />} />
+        <Route path="/alcohol/edit/:alcoholBarcode" element={<AddAlcohol />} />
         <Route path="/alcohol/add" element={<AddAlcohol />} />
+        <Route path="/alcohol/:alcoholBarcode" element={<AlcoholDetails />} />
         <Route path="/alcohol" element={<AlcoholList />} />
         <Route path="/category/add" element={<AddCategory />} />
         <Route path="/category/edit/:categoryName" element={<AddCategory />} />
