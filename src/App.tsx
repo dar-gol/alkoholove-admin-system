@@ -15,6 +15,8 @@ import { Main } from './styles/global.styled';
 
 import useLogin from './utils/hooks/useLogin';
 import User from './containers/User/user';
+import Errors from './containers/Errors/errors';
+import Error from './containers/Error/error';
 
 const App = () => {
   const { checkLogin } = useLogin();
@@ -38,6 +40,8 @@ const App = () => {
         <Route path="/category/edit" element={<Category />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<User />} />
+        <Route path="/errors" element={<Errors />} />
+        <Route path="/errors/:id" element={<Error />} />
 
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { IError, IErrors } from '../../@types/errors';
 import { IReq } from '../../@types/fetch';
 import { IPageInfo } from '../../@types/pagination';
-import { IUser } from '../../@types/users';
 import { API, URL } from '../constant';
 import useAuthReq from './useReq';
 
@@ -12,29 +12,21 @@ const initPageInfo: IPageInfo = {
   number: 0,
 } as const;
 
-const useUsers = () => {
-  const { send } = useAuthReq('GET', `${API}${URL.USERS}`, null, {
+const useErrors = () => {
+  const { send } = useAuthReq('GET', `${API}${URL.ERRORS}`, null, {
     accept: 'application/json',
   });
-  const [users, setUsers] = useState<IUser[] | null>(null);
-  const [name, setName] = useState<string>('');
+  const [errors, setErrors] = useState<IError[] | null>(null);
   const [page, setPage] = useState<IPageInfo>(initPageInfo);
 
   const update = (req: IReq = {}) => {
     send({ ...req })
       .then((data: Response) => data.json())
-      .then((data) => {
-        setUsers(data.users);
+      .then((data: IErrors) => {
+        setErrors(data.reported_errors);
         setPage((prev) => ({ ...prev, ...data.page_info }));
       })
       .catch((e) => console.log(e));
-  };
-
-  const search = (input: string) => {
-    update({
-      url: `${API}${URL.USERS}?limit=${page.limit}&offset=0&username=${input}`,
-    });
-    setName(input);
   };
 
   const changePage = (index: number) => {
@@ -44,7 +36,7 @@ const useUsers = () => {
       number: index,
     }));
     update({
-      url: `${API}${URL.USERS}?limit=${page.limit}&offset=${shift}&username=${name}`,
+      url: `${API}${URL.ERRORS}?limit=${page.limit}&offset=${shift}`,
     });
   };
 
@@ -55,15 +47,13 @@ const useUsers = () => {
       number: 0,
     }));
     update({
-      url: `${API}${URL.USERS}?limit=${limit}&offset=0&username=${name}`,
+      url: `${API}${URL.ERRORS}?limit=${limit}&offset=0`,
     });
   };
 
-  useEffect(() => {
-    update();
-  }, []);
+  useEffect(() => update(), []);
 
-  return { users, page, changePage, changePageSize, search };
+  return { errors, page, changePage, changePageSize };
 };
 
-export default useUsers;
+export default useErrors;

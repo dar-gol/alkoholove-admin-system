@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAlcohol from '../../utils/hooks/useAlcohol';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
-import { API } from '../../utils/constant';
+import { API, URL } from '../../utils/constant';
 import { get } from '../../utils/fetch';
 import { createImageName } from '../../utils/utils';
 import useCategory from '../../utils/hooks/useCategory';
@@ -14,27 +14,42 @@ import {
   Col,
   Container,
   Key,
+  LinkPrimary,
   Row,
   Tuple,
   Value,
+  WarnText,
 } from '../../styles/global.styled';
 import { Title } from '../AddAlcohol/addAlcohol.styled';
+import Modal from '../../components/modal/Modal';
+import { ModalTitle } from '../../components/modal/Modal.styled';
+import useAuthReq from '../../utils/hooks/useReq';
 
 const AlcoholDetails = () => {
   const { alcoholBarcode } = useParams();
   const alcohol = useAlcohol(alcoholBarcode || '');
+  const navigate = useNavigate();
   const { getCategory } = useCategory();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { send } = useAuthReq(
+    'DELETE',
+    `${API}${URL.POST_ALCOHOLS}/${alcohol?.id}`,
+    null
+  );
+
+  const remove = async () => {
+    await send({});
+    navigate('/alcohol');
+  };
 
   const JSX =
     alcohol &&
     getCategory(alcohol.kind, false, false).properties.map((prop) => {
-      // console.log({ prop });
       const {
         name,
         metadata: { title },
       } = prop;
       const value = alcohol[name as keyof typeof alcohol];
-      console.log({ value });
       const formatValue =
         typeof value === 'object' && value !== null ? value.join(' | ') : value;
       return (
@@ -66,10 +81,34 @@ const AlcoholDetails = () => {
           </Col>
         </Row>
         <Row justifyContent="flex-end" gap="20px">
-          <BtnPrimary>Edytuj alkohol</BtnPrimary>
-          <BtnSecondary>Usuń alkohol</BtnSecondary>
+          <LinkPrimary to={`/alcohol/edit/${alcohol?.barcode[0]}`}>
+            Edytuj alkohol
+          </LinkPrimary>
+          <BtnSecondary onClick={() => setIsOpen(true)}>
+            Usuń alkohol
+          </BtnSecondary>
         </Row>
       </Container>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <ModalTitle>Usuwanie alkoholu</ModalTitle>
+        <WarnText>
+          Czy na pewno chcesz permanentnie usunąć ten alkohol?
+        </WarnText>
+        <Col>
+          <Tuple>
+            <Key>ID</Key>
+            <Value>{alcohol?.id}</Value>
+          </Tuple>
+          <Tuple>
+            <Key>Nazwa</Key>
+            <Value>{alcohol?.name}</Value>
+          </Tuple>
+        </Col>
+        <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
+          <BtnSecondary onClick={() => remove()}>TAK</BtnSecondary>
+          <BtnPrimary onClick={() => setIsOpen(false)}>NIE</BtnPrimary>
+        </Row>
+      </Modal>
     </>
   );
 };

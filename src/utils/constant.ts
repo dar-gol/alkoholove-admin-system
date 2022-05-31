@@ -6,6 +6,8 @@ export const URL = {
   POST_ALCOHOLS: '/admin/alcohols',
   UPLOAD_IMAGE: '/admin/static',
   USERS: '/admin/users',
+  ERRORS: '/admin/errors',
+  ME: '/me',
 };
 
 export const CORE_PROPERTY = 'core';
