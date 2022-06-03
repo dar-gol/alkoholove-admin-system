@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { IUser } from '../../@types/users';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
-import Modal from '../../components/modal/Modal';
-import { ModalTitle } from '../../components/modal/Modal.styled';
-import TextInput from '../../components/SimpleInput/TextInput';
-import { UserContext } from '../../context/userContext';
+import React, { useContext, useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { IUser } from "../../@types/users";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import Header from "../../components/Header/header";
+import Modal from "../../components/modal/Modal";
+import { ModalTitle } from "../../components/modal/Modal.styled";
+import TextInput from "../../components/SimpleInput/TextInput";
+import { UserContext } from "../../context/userContext";
 import {
   BtnPrimary,
   BtnSecondary,
@@ -18,10 +18,10 @@ import {
   Tuple,
   Value,
   WarnText,
-} from '../../styles/global.styled';
-import { API, URL } from '../../utils/constant';
-import useAuthReq from '../../utils/hooks/useReq';
-import useUser from '../../utils/hooks/useUser';
+} from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
+import useAuthReq from "../../utils/hooks/useReq";
+import useUser from "../../utils/hooks/useUser";
 
 const Account = () => {
   const methods = useForm({});
@@ -31,15 +31,16 @@ const Account = () => {
   const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
-  const { send } = useAuthReq('GET', `${API}${URL.ME}`, null, {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+  const [emailIsUpdate, setEmailIsUpdate] = useState<boolean>(false);
+  const { send } = useAuthReq("GET", `${API}${URL.ME}`, null, {
+    Accept: "application/json",
+    "Content-Type": "application/json",
   });
 
   const handleRemove = async () => {
-    await send({ method: 'DELETE' });
+    await send({ method: "DELETE" });
     remove();
-    navigate('/');
+    navigate("/");
   };
 
   const update = async () => {
@@ -49,26 +50,38 @@ const Account = () => {
   };
 
   const submit = async (data: any) => {
-    const { oldPassword, newPassword, newPasswordAgain } = data;
+    console.log({ data });
+    const { new_password, new_password_again } = data;
 
-    if (newPassword !== newPasswordAgain) {
-      methods.setError('newPasswordAgain', {
-        type: 'custom',
-        message: 'Hasła nie sa takie same!',
+    if (new_password !== new_password_again) {
+      methods.setError("new_password_again", {
+        type: "custom",
+        message: "Hasła nie sa takie same!",
       });
       return;
     }
 
-    await send({
-      method: 'PUT',
-      body: JSON.stringify({
-        email: me?.email,
-        password: oldPassword,
-        new_password: newPassword,
-      }),
-    });
-    await update();
+    try {
+      await send({
+        method: "PUT",
+        body: JSON.stringify({
+          ...data,
+        }),
+      });
+      await update();
+    } catch (e) {
+      const field = emailIsUpdate ? "email" : "new_password_again";
+      const text = emailIsUpdate
+        ? "Wpisz poprawny email"
+        : "Hasło powinno zawierac duza litere, cyfre oraz 8 znakow.";
+      methods.setError(field, {
+        type: "custom",
+        message: text,
+      });
+      return;
+    }
 
+    setEmailIsUpdate(false);
     setIsUpdate(false);
   };
 
@@ -94,9 +107,10 @@ const Account = () => {
           <Value>{me?.email}</Value>
         </Tuple>
         <Row margin="20px 0 0 0" justifyContent="flex-end" gap="20px">
-          <BtnPrimary onClick={() => setIsUpdate(true)}>
-            Edytuj profil
+          <BtnPrimary onClick={() => setEmailIsUpdate(true)}>
+            Zmień emaila
           </BtnPrimary>
+          <BtnPrimary onClick={() => setIsUpdate(true)}>Zmień hasło</BtnPrimary>
           <BtnSecondary onClick={() => setIsDeleting(true)}>
             Usuń profil
           </BtnSecondary>
@@ -114,19 +128,50 @@ const Account = () => {
         <ModalTitle>Edycja konta</ModalTitle>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(submit)}>
-            <TextInput name="oldPassword" title="Stare hasło" required />
-            <TextInput name="newPassword" title="Nowe hasło" required />
             <TextInput
-              name="newPasswordAgain"
+              name="password"
+              title="Stare hasło"
+              required
+              type="password"
+            />
+            <TextInput
+              name="new_password"
+              title="Nowe hasło"
+              required
+              type="password"
+            />
+            <TextInput
+              name="new_password_again"
               title="Nowe hasło ponownie"
               required
+              type="password"
             />
             <Row justifyContent="center">
-              <WarnText>{errors?.newPasswordAgain?.message}</WarnText>
+              <WarnText>{errors?.new_password_again?.message}</WarnText>
             </Row>
             <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
               <BtnPrimary type="submit">Zaktualizuj</BtnPrimary>
               <BtnSecondary type="button" onClick={() => setIsUpdate(false)}>
+                Wróć
+              </BtnSecondary>
+            </Row>
+          </form>
+        </FormProvider>
+      </Modal>
+      <Modal isOpen={emailIsUpdate} onClose={() => setEmailIsUpdate(false)}>
+        <ModalTitle>Edycja konta</ModalTitle>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(submit)}>
+            <TextInput name="email" title="Nowy email" required />
+            <Row justifyContent="center">
+              <WarnText>{errors?.email?.message}</WarnText>
+            </Row>
+            <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
+              <BtnPrimary type="submit">Zaktualizuj</BtnPrimary>
+              <BtnSecondary
+                type="button"
+                onClick={() => setEmailIsUpdate(false)}
+              >
                 Wróć
               </BtnSecondary>
             </Row>
