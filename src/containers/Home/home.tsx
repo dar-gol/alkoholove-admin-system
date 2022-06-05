@@ -17,7 +17,6 @@ const Home = () => (
           <Block to="/category">Kategorię</Block>
           <Block to="/users">Uzytkownicy</Block>
           <Block to="/errors">Zgłoszone błędy</Block>
-          <Block to="/errors">Sugestie(2)</Block>
         </Col>
         <Col flex="1">
           <Title>Akcję</Title>
