@@ -11,7 +11,7 @@ export const Main = styled.main`
 
 const borderRadius = '20px';
 
-type BlockType = {
+export type BlockType = {
   flex?: string;
   alignItems?: string;
   justifyContent?: string;
@@ -157,6 +157,7 @@ export const Key = styled.p`
 export const Value = styled.p`
   color: black;
   font-weight: 600;
+  text-align: right;
 `;
 
 export const WarnText = styled.p`

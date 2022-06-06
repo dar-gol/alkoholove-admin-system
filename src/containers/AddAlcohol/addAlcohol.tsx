@@ -2,16 +2,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import FileInput from '../../components/FileInput/fileInput';
 import { Form, Title } from './addAlcohol.styled';
 import {
   BtnPrimary,
+  Col,
   Container,
+  Key,
   LinkSecondary,
+  ListTitle,
   Row,
+  Tuple,
+  Value,
 } from '../../styles/global.styled';
 import Loader from '../../components/Loader/loader';
 import Modal from '../../components/modal/Modal';
@@ -26,6 +31,7 @@ import MoreInput from '../../components/MoreInput/moreInput';
 import useAuthReq from '../../utils/hooks/useReq';
 import { getType, createImageName, createFormData } from '../../utils/utils';
 import { IReq } from '../../@types/fetch';
+import Suggestion from '../../components/Suggestion/suggestion';
 
 const getValues = (array: any) => array.map((el: any) => el.value);
 
@@ -234,6 +240,7 @@ const AddAlcohol = () => {
           </>
         )}
       </Modal>
+      <Suggestion />
     </>
   );
 };

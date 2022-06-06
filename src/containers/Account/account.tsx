@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { IUser } from "../../@types/users";
-import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
-import Header from "../../components/Header/header";
-import Modal from "../../components/modal/Modal";
-import { ModalTitle } from "../../components/modal/Modal.styled";
-import TextInput from "../../components/SimpleInput/TextInput";
-import { UserContext } from "../../context/userContext";
+import React, { useContext, useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { IUser } from '../../@types/users';
+import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
+import Header from '../../components/Header/header';
+import Modal from '../../components/modal/Modal';
+import { ModalTitle } from '../../components/modal/Modal.styled';
+import TextInput from '../../components/SimpleInput/TextInput';
+import { UserContext } from '../../context/userContext';
 import {
   BtnPrimary,
   BtnSecondary,
@@ -18,10 +18,10 @@ import {
   Tuple,
   Value,
   WarnText,
-} from "../../styles/global.styled";
-import { API, URL } from "../../utils/constant";
-import useAuthReq from "../../utils/hooks/useReq";
-import useUser from "../../utils/hooks/useUser";
+} from '../../styles/global.styled';
+import { API, URL } from '../../utils/constant';
+import useAuthReq from '../../utils/hooks/useReq';
+import useUser from '../../utils/hooks/useUser';
 
 const Account = () => {
   const methods = useForm({});
@@ -32,15 +32,15 @@ const Account = () => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [emailIsUpdate, setEmailIsUpdate] = useState<boolean>(false);
-  const { send } = useAuthReq("GET", `${API}${URL.ME}`, null, {
-    Accept: "application/json",
-    "Content-Type": "application/json",
+  const { send } = useAuthReq('GET', `${API}${URL.ME}`, null, {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
   });
 
   const handleRemove = async () => {
-    await send({ method: "DELETE" });
+    await send({ method: 'DELETE' });
     remove();
-    navigate("/");
+    navigate('/');
   };
 
   const update = async () => {
@@ -54,28 +54,28 @@ const Account = () => {
     const { new_password, new_password_again } = data;
 
     if (new_password !== new_password_again) {
-      methods.setError("new_password_again", {
-        type: "custom",
-        message: "Hasła nie sa takie same!",
+      methods.setError('new_password_again', {
+        type: 'custom',
+        message: 'Hasła nie sa takie same!',
       });
       return;
     }
 
     try {
       await send({
-        method: "PUT",
+        method: 'PUT',
         body: JSON.stringify({
           ...data,
         }),
       });
       await update();
     } catch (e) {
-      const field = emailIsUpdate ? "email" : "new_password_again";
+      const field = emailIsUpdate ? 'email' : 'new_password_again';
       const text = emailIsUpdate
-        ? "Wpisz poprawny email"
-        : "Hasło powinno zawierac duza litere, cyfre oraz 8 znakow.";
+        ? 'Wpisz poprawny email'
+        : 'Hasło powinno zawierac duza litere, cyfre oraz 8 znakow.';
       methods.setError(field, {
-        type: "custom",
+        type: 'custom',
         message: text,
       });
       return;

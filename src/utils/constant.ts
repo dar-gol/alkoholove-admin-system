@@ -8,6 +8,8 @@ export const URL = {
   USERS: '/admin/users',
   ERRORS: '/admin/errors',
   ME: '/me',
+  GET_SUGGESTIONS: '/admin/suggestions',
+  GET_TOTAL_SUGGESTIONS: '/admin/suggestions/total',
 };
 
 export const CORE_PROPERTY = 'core';

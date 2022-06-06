@@ -10,6 +10,7 @@ interface IOption {
 interface IProps {
   setLimit: (limit: number) => void;
   update: (input: string) => void;
+  isSearch?: boolean;
 }
 
 const options: IOption[] = [
@@ -31,7 +32,7 @@ const options: IOption[] = [
   },
 ];
 
-const Searcher: React.FC<IProps> = ({ setLimit, update }) => {
+const Searcher: React.FC<IProps> = ({ setLimit, update, isSearch }) => {
   const [input, setInput] = useState('');
   useEffect(() => {
     const delayFn = setTimeout(() => {
@@ -47,12 +48,16 @@ const Searcher: React.FC<IProps> = ({ setLimit, update }) => {
         defaultValue={options[0]}
         onChange={(option: IOption | null) => setLimit(option?.value || 10)}
       />
-      <InputText
-        placeholder="Szukaj..."
-        onChange={(e) => setInput(e.target.value)}
-      />
+      {isSearch && (
+        <InputText
+          placeholder="Szukaj..."
+          onChange={(e) => setInput(e.target.value)}
+        />
+      )}
     </Row>
   );
 };
+
+Searcher.defaultProps = { isSearch: true };
 
 export default Searcher;
