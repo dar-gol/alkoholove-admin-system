@@ -198,10 +198,18 @@ const AddAlcohol = () => {
                 );
               })}
               {!alcoholBarcode && (
-                <FileInput name="sm" title="Małe zdjęcie (sm):" required />
+                <FileInput
+                  name="sm"
+                  title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
+                  required
+                />
               )}
               {!alcoholBarcode && (
-                <FileInput name="md" title="Duże zdjęcie (md):" required />
+                <FileInput
+                  name="md"
+                  title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
+                  required
+                />
               )}
               <Row justifyContent="flex-end">
                 <BtnPrimary type="submit" margin="20px 0">
