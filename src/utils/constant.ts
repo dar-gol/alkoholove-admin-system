@@ -1,4 +1,4 @@
-export const API = 'https://api-alkoholove.herokuapp.com';
+export const API = 'http://localhost:8008';
 
 export const URL = {
   CATEGORIES: '/admin/alcohols/metadata/categories',
