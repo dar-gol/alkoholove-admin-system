@@ -10,6 +10,7 @@ const useLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const checkLogin = () =>
     new Promise((resolve, reject) => {
       if (checkCookie()) resolve(true);
@@ -22,8 +23,9 @@ const useLogin = () => {
       .catch(() => {
         if (location.pathname !== '/') navigate('/');
       });
-  const loginHandler = (username: string, password: string) =>
-    postForm({
+  const loginHandler = (username: string, password: string) => {
+    setIsLoading(true);
+    return postForm({
       url: `${API}/auth/token`,
       body: { username, password },
     })
@@ -40,9 +42,12 @@ const useLogin = () => {
           e?.detail ||
             'Problem with reading error, propably wrong login details'
         )
-      );
-  const logout = () => {
-    post({
+      )
+      .finally(() => setIsLoading(false));
+  };
+  const logout = async () => {
+    setIsLoading(true);
+    await post({
       url: `${API}/auth/logout`,
       header: {
         Authorization: `Bearer ${get().access_token}`,
@@ -50,6 +55,7 @@ const useLogin = () => {
       },
       body: '',
     });
+    setIsLoading(false);
     remove();
     navigate('/');
   };
@@ -59,6 +65,7 @@ const useLogin = () => {
     logout,
     error,
     setError,
+    isLoading,
   };
 };
 
