@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tokens } from '../../@types/user';
 import { API } from '../constant';
@@ -9,6 +9,7 @@ const useLogin = () => {
   const { set, checkCookie, get, remove } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
+  const [error, setError] = useState<string>('');
   const checkLogin = () =>
     new Promise((resolve, reject) => {
       if (checkCookie()) resolve(true);
@@ -34,7 +35,12 @@ const useLogin = () => {
         });
         navigate('home');
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        setError(
+          e?.detail ||
+            'Problem with reading error, propably wrong login details'
+        )
+      );
   const logout = () => {
     post({
       url: `${API}/auth/logout`,
@@ -51,6 +57,8 @@ const useLogin = () => {
     loginHandler,
     checkLogin,
     logout,
+    error,
+    setError,
   };
 };
 

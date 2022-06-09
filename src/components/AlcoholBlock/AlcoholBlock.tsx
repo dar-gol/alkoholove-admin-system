@@ -9,8 +9,10 @@ import {
   LinkSecondary,
   Row,
 } from '../../styles/global.styled';
-import { API } from '../../utils/constant';
+import { API, URL } from '../../utils/constant';
 import { del } from '../../utils/fetch';
+import useAuthReq from '../../utils/hooks/useReq';
+import ErrorModal from '../ErrorModal/errorModal';
 import Loader from '../Loader/loader';
 import Modal from '../modal/Modal';
 import { ModalTitle } from '../modal/Modal.styled';
@@ -23,6 +25,13 @@ import {
   Value,
 } from './AlcoholBlock.styled';
 
+type IModal = {
+  open: boolean;
+  title: string;
+  text: string;
+  details: string;
+};
+
 const AlcoholBlock = ({
   alcohol,
   update,
@@ -34,7 +43,9 @@ const AlcoholBlock = ({
 }) => {
   const { user } = useContext(UserContext) as UserContextType;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [errorModal, setErrorModal] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { send } = useAuthReq('DELETE', '', '');
 
   const removeTrigger = () => {
     setIsOpen(true);
@@ -47,14 +58,14 @@ const AlcoholBlock = ({
   const remove = async (id: number) => {
     setIsOpen(false);
     setIsLoading(true);
-    await del({
-      url: `${API}/alcohols/${id}`,
-      header: {
-        Authorization: `Bearer ${user.access_token}`,
-      },
-    });
-    update(id);
-    setIsLoading(false);
+    try {
+      const test = await send({ url: `${API}${URL.POST_ALCOHOLS}/${id}` });
+      update(id);
+    } catch (e: any) {
+      setErrorModal(e?.statusText);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -106,6 +117,13 @@ const AlcoholBlock = ({
           <BtnPrimary onClick={closeModal}>NIE</BtnPrimary>
         </Row>
       </Modal>
+      <ErrorModal
+        isOpen={!!errorModal}
+        onClose={() => setErrorModal('')}
+        title="Problem z usunięciem alkoholu"
+        text=""
+        details={errorModal}
+      />
       <Modal isOpen={isLoading} onClose={() => {}} isClosable={false}>
         <ModalTitle>Proszę czekać aktualizujemy dane</ModalTitle>
         <Row justifyContent="center">
