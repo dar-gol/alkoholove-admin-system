@@ -48,7 +48,7 @@ const AlcoholBlock = ({
     setIsOpen(false);
     setIsLoading(true);
     await del({
-      url: `${API}/alcohols/${id}`,
+      url: `${API}/admin/alcohols/${id}`,
       header: {
         Authorization: `Bearer ${user.access_token}`,
       },
