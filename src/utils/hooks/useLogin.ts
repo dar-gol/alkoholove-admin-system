@@ -34,7 +34,7 @@ const useLogin = () => {
         });
         navigate('home');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.error(e));
   const logout = () => {
     post({
       url: `${API}/auth/logout`,

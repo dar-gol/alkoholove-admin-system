@@ -72,7 +72,7 @@ const AlcoholDetails = () => {
         <Row justifyContent="center">
           <Col>
             <img
-              src={`${API}/static/${createImageName(
+              src={`${URL.GET_IMAGE}/${createImageName(
                 alcohol?.name.toLowerCase() || '',
                 'sm'
               )}.png`}

@@ -82,7 +82,7 @@ const useAuthReq = (
       if (res.type === 'success') return res.data;
       throw new Error(`${res.status}`);
     } catch (e) {
-      console.log({ ERROR: e });
+      console.error({ ERROR: e });
       const isRefresh = await handleAuthError(e);
       if (isRefresh)
         send({

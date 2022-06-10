@@ -50,7 +50,6 @@ const Account = () => {
   };
 
   const submit = async (data: any) => {
-    console.log({ data });
     const { new_password, new_password_again } = data;
 
     if (new_password !== new_password_again) {
