@@ -83,7 +83,7 @@ const AddAlcohol = () => {
   });
   const { getCategory, ctg } = useCategory();
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
-  
+
   const resetValues = (keys: any) =>
     keys.reduce(
       (prev: any, curr: any) => {
@@ -95,7 +95,7 @@ const AddAlcohol = () => {
         barcode: [''],
       }
     );
-  
+
   const modalIsOpen = (isOpen: boolean = false) => {
     setModal((prev) => ({ ...prev, open: isOpen }));
   };
@@ -134,7 +134,7 @@ const AddAlcohol = () => {
   }, [ctg?.categories]);
 
   const addMore = () => {
-    setIsOpen(false);
+    modalIsOpen(false);
     navigate('/alcohol/add');
   };
 
@@ -281,9 +281,7 @@ const AddAlcohol = () => {
       <Modal isOpen={modal.open && isValid} onClose={modalIsOpen}>
         <ModalTitle>Alkohol został dodany prawidłowo</ModalTitle>
         <Row gap="20px">
-          <BtnPrimary onClick={() => modalIsOpen()}>
-            Dodaje kolejny alkohol
-          </BtnPrimary>
+          <BtnPrimary onClick={addMore}>Dodaje kolejny alkohol</BtnPrimary>
           <LinkSecondary to="/alcohol">Wracam do listy alkoholi</LinkSecondary>
         </Row>
       </Modal>
