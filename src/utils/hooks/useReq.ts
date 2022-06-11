@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable camelcase */
 /* eslint-disable consistent-return */
 import { useEffect, useRef, useState } from 'react';
@@ -25,6 +26,18 @@ const useAuthReq = (
   const { set, get, remove } = useUser();
   const navigate = useNavigate();
 
+  const handleResponse = (data: any) => {
+    if (data.ok)
+      return Promise.resolve({ type: 'success', data } as ResSuccess);
+    return data.json().then((err: any) =>
+      Promise.reject({
+        status: data.status,
+        type: 'error',
+        statusText: err?.detail,
+      })
+    );
+  };
+
   const request = async (
     method?: Method,
     url?: Url,
@@ -41,12 +54,13 @@ const useAuthReq = (
         },
         ...((method || initMethod) !== 'GET' ? { body: body || initBody } : {}),
       });
-      if (data.ok) return { type: 'success', data } as ResSuccess;
-      throw new Error(`${data.status}`);
+      return handleResponse(data);
+      // if (data.ok) return { type: 'success', data } as ResSuccess;
+      // throw new Error(`${data.status}`);
     } catch (error) {
       if (error instanceof Error)
-        return { type: 'error', status: error.message } as ResError;
-      return { type: 'error', status: error } as ResError;
+        return { type: 'error', status: error.message, statusText: '' };
+      return { type: 'error', status: error, statusText: '' };
     }
   };
 
@@ -59,8 +73,8 @@ const useAuthReq = (
 
   const handleAuthError = async (e: any) => {
     if (
-      e?.message === STATUS_CODE.UNAUTHORIZED ||
-      e?.message === STATUS_CODE.METHOD_NOT_ALLOWED
+      e?.status === STATUS_CODE.UNAUTHORIZED ||
+      e?.status === STATUS_CODE.METHOD_NOT_ALLOWED
     ) {
       const refresh = await request('POST', `${API}/auth/refresh`, '', {
         Authorization: `Bearer ${get().refresh_token}`,
@@ -79,8 +93,7 @@ const useAuthReq = (
   const send = async ({ method, body, header, url }: IReq) => {
     try {
       const res = await request(method, url, body, header);
-      if (res.type === 'success') return res.data;
-      throw new Error(`${res.status}`);
+      return res.data;
     } catch (e) {
       console.error({ ERROR: e });
       const isRefresh = await handleAuthError(e);

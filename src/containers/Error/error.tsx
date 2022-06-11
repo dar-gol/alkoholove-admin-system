@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IError } from '../../@types/errors';
 import { IUser } from '../../@types/users';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
+import ErrorModal from '../../components/ErrorModal/errorModal';
 import Header from '../../components/Header/header';
 import Modal from '../../components/modal/Modal';
 import { ModalTitle } from '../../components/modal/Modal.styled';
@@ -27,13 +28,18 @@ const Error = () => {
   const [error, setError] = useState<IError | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [errorModal, setErrorModal] = useState<string>('');
   const { send } = useAuthReq('GET', `${API}${URL.ERRORS}/${id}`, null, {
     Accept: 'application/json',
   });
 
   const remove = async () => {
-    await send({ method: 'DELETE', url: `${API}${URL.ERRORS}/${id}` });
-    navigate('/errors');
+    try {
+      await send({ method: 'DELETE', url: `${API}${URL.ERRORS}/${id}` });
+      navigate('/errors');
+    } catch (e: any) {
+      setErrorModal(e?.statusText);
+    }
   };
 
   const getData = async () => {
@@ -108,6 +114,13 @@ const Error = () => {
           <BtnPrimary onClick={() => setIsOpen(false)}>NIE</BtnPrimary>
         </Row>
       </Modal>
+      <ErrorModal
+        isOpen={!!errorModal}
+        title="Problem z usunięciem zgłoszenia"
+        text=""
+        details={errorModal}
+        onClose={() => setErrorModal('')}
+      />
     </>
   );
 };

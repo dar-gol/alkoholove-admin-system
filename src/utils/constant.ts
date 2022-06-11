@@ -1,4 +1,7 @@
-export const API = 'http://localhost:8008';
+export const API =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8008'
+    : 'https://api-alkoholove.herokuapp.com';
 
 export const URL = {
   CATEGORIES: '/admin/alcohols/metadata/categories',

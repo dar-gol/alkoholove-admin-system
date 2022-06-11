@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import ReactSelect from 'react-select';
 import { Types } from '../../@types/category';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
+import ErrorModal from '../../components/ErrorModal/errorModal';
 import Header from '../../components/Header/header';
 import Modal from '../../components/modal/Modal';
 import { ModalTitle } from '../../components/modal/Modal.styled';
@@ -31,6 +32,7 @@ type IModal = {
   open: boolean;
   title: string;
   text: string;
+  details: string;
 };
 
 const generateProp = (data: any, name: any) => {
@@ -54,6 +56,7 @@ const AddCategory = () => {
     open: false,
     title: '',
     text: '',
+    details: '',
   });
   const { ctg, getCategory, getID, update } = useCategory();
   const [names, setNames] = useState<PropertyState[]>([]);
@@ -222,13 +225,16 @@ const AddCategory = () => {
         open: true,
         title: 'Dodanie/Edycja kategorii przebiegło pomyślnie',
         text: '',
+        details: '',
       });
       update();
-    } catch (e) {
+    } catch (e: any) {
+      console.log({ e });
       setModal({
         open: true,
         title: 'Problem z dodaniem/edycja kategorii',
         text: 'Upewnij się, że wypełniłeś wszystkie pola',
+        details: e?.statusText,
       });
     }
   };
@@ -270,22 +276,13 @@ const AddCategory = () => {
             </Row>
           </form>
         </FormProvider>
-        <Modal isOpen={modal.open} onClose={() => handleOpenModal()}>
-          {modal.open ? (
-            <>
-              <ModalTitle>{modal.title}</ModalTitle>
-              <p>{modal.text}</p>
-              <Row gap="20px" justifyContent="center">
-                <BtnPrimary onClick={() => handleOpenModal()}>OK</BtnPrimary>
-                <LinkSecondary to="/category">
-                  Wracam do listy kategorii
-                </LinkSecondary>
-              </Row>
-            </>
-          ) : (
-            ''
-          )}
-        </Modal>
+        <ErrorModal
+          isOpen={modal.open}
+          title={modal.title}
+          text={modal.text}
+          details={modal.details}
+          onClose={handleOpenModal}
+        />
       </Container>
     </>
   );
