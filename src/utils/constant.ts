@@ -7,12 +7,15 @@ export const URL = {
   CATEGORIES: '/admin/alcohols/metadata/categories',
   GET_ALCOHOLS: '/alcohols',
   POST_ALCOHOLS: '/admin/alcohols',
-  UPLOAD_IMAGE: '/admin/static',
+  UPLOAD_IMAGE: '/admin/image',
   USERS: '/admin/users',
   ERRORS: '/admin/errors',
   ME: '/me',
   GET_SUGGESTIONS: '/admin/suggestions',
   GET_TOTAL_SUGGESTIONS: '/admin/suggestions/total',
+  GET_IMAGE: `https://res.cloudinary.com/alkoholove/${
+    process.env.NODE_ENV === 'development' ? 'test' : 'alcohols'
+  }`,
 };
 
 export const CORE_PROPERTY = 'core';

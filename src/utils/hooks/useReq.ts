@@ -95,7 +95,7 @@ const useAuthReq = (
       const res = await request(method, url, body, header);
       return res.data;
     } catch (e) {
-      console.log({ ERROR: e });
+      console.error({ ERROR: e });
       const isRefresh = await handleAuthError(e);
       if (isRefresh)
         send({

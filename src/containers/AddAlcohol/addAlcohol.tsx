@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import FileInput from '../../components/FileInput/fileInput';
@@ -60,13 +60,9 @@ const prepareToSelect = (data: any) =>
     value: el,
   }));
 
-const resetValues = (keys: any) =>
-  keys.reduce((prev: any, curr: any) => ({ [curr]: '', ...prev }), {
-    barcode: [''],
-  });
-
 const AddAlcohol = () => {
   const methods = useForm({});
+  const navigate = useNavigate();
   const { alcoholBarcode } = useParams();
   const [id, setID] = useState<string>('');
   const [modal, setModal] = useState<IModal>({
@@ -77,6 +73,7 @@ const AddAlcohol = () => {
   });
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [imgChanged, setImgChanged] = useState<any>({ sm: false, md: false });
   const [categories, setCategories] = useState<
     SpecificCategory & { kind: string | null }
   >({
@@ -86,7 +83,19 @@ const AddAlcohol = () => {
   });
   const { getCategory, ctg } = useCategory();
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
-
+  
+  const resetValues = (keys: any) =>
+    keys.reduce(
+      (prev: any, curr: any) => {
+        if (methods.getValues(curr) === undefined)
+          return { [curr]: undefined, ...prev };
+        return { [curr]: '', ...prev };
+      },
+      {
+        barcode: [''],
+      }
+    );
+  
   const modalIsOpen = (isOpen: boolean = false) => {
     setModal((prev) => ({ ...prev, open: isOpen }));
   };
@@ -114,6 +123,8 @@ const AddAlcohol = () => {
       barcode: alcohol.barcode,
       kind: alcohol.kind,
       ...values,
+      sm: createImageName(alcohol.name, 'sm'),
+      md: createImageName(alcohol.name, 'md'),
     });
   };
 
@@ -121,6 +132,11 @@ const AddAlcohol = () => {
     if (!alcoholBarcode) return;
     handleCompleteFields();
   }, [ctg?.categories]);
+
+  const addMore = () => {
+    setIsOpen(false);
+    navigate('/alcohol/add');
+  };
 
   const chooseCategory = async ({ kind }: Options) => {
     setCategories({ ...getCategory(kind.value), kind: kind.value });
@@ -144,30 +160,41 @@ const AddAlcohol = () => {
     if (![200, 201].includes(result.status))
       throw new Error('It is problem with add alcohol!');
 
-    if (alcoholBarcode) return result;
+    if ((!!alcoholBarcode && imgChanged.sm) || !alcoholBarcode) {
+      const formDataSM = createFormData([
+        ['image_name', createImageName(data.name, 'sm')],
+        ['file', sm],
+      ]);
+      const resSM = await send({
+        url: `${API}${URL.UPLOAD_IMAGE}`,
+        body: formDataSM,
+      });
 
-    const formDataSM = createFormData([
-      ['image_name', createImageName(data.name, 'sm')],
-      ['file', sm[0]],
-    ]);
-    const resSM = await send({
-      url: `${API}${URL.UPLOAD_IMAGE}`,
-      body: formDataSM,
-    });
-    const formDataMD = createFormData([
-      ['image_name', createImageName(data.name, 'md')],
-      ['file', md[0]],
-    ]);
-    const resMD = await send({
-      url: `${API}${URL.UPLOAD_IMAGE}`,
-      body: formDataMD,
-      header: { Accept: '*/*' },
-    });
+      if (resSM.status !== 201)
+        throw new Error("It is problem with add alcohol's small image !");
+    }
 
-    if (resSM.status !== 201 || resMD.status !== 201)
-      throw new Error('It is problem with add alcohol!');
+    if ((!!alcoholBarcode && imgChanged.md) || !alcoholBarcode) {
+      const formDataMD = createFormData([
+        ['image_name', createImageName(data.name, 'md')],
+        ['file', md],
+      ]);
+      const resMD = await send({
+        url: `${API}${URL.UPLOAD_IMAGE}`,
+        body: formDataMD,
+        header: { Accept: '*/*' },
+      });
+
+      if (resMD.status !== 201)
+        throw new Error("It is problem with add alcohol's medium image");
+    }
 
     return result;
+  };
+
+  const removeImage = async (type: string) => {
+    methods.reset({ ...methods.getValues(), [type]: null });
+    setImgChanged((prev: any) => ({ ...prev, [type]: true }));
   };
 
   const submit = async (data: any) => {
@@ -220,20 +247,22 @@ const AddAlcohol = () => {
                   />
                 );
               })}
-              {!alcoholBarcode && (
+              <Row gap="10px">
                 <FileInput
                   name="sm"
                   title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
                   required
+                  remove={removeImage}
+                  imageName={methods.getValues('sm')}
                 />
-              )}
-              {!alcoholBarcode && (
                 <FileInput
                   name="md"
                   title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
                   required
+                  remove={removeImage}
+                  imageName={methods.getValues('md')}
                 />
-              )}
+              </Row>
               <Row justifyContent="flex-end">
                 <BtnPrimary type="submit" margin="20px 0">
                   Dodaj/edytuj alkohol

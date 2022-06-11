@@ -27,7 +27,7 @@ const useUsers = () => {
         setUsers(data.users);
         setPage((prev) => ({ ...prev, ...data.page_info }));
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.error(e));
   };
 
   const search = (input: string) => {
