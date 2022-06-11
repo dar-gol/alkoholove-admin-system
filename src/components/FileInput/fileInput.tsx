@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { FileUploader } from 'react-drag-drop-files';
 import { Trash2 } from 'react-feather';
@@ -17,9 +17,10 @@ const FileInput = ({
   title,
   required,
   remove,
-}: IProps & { remove: (type: string) => void }) => {
+  src,
+}: IProps & { remove: (type: string) => void; src?: string }) => {
   const { control } = useFormContext();
-  const [img, setImg] = useState<string>('');
+  const [img, setImg] = useState<string>(src || '');
 
   const onImageChange = (file: any) => {
     setImg(URL.createObjectURL(file));
@@ -33,6 +34,8 @@ const FileInput = ({
       console.error(e);
     }
   };
+
+  useEffect(() => setImg(src || ''), [src]);
 
   return (
     <Row justifyContent="center" margin="20px 0" flex="1" position="relative">
@@ -65,6 +68,10 @@ const FileInput = ({
       )}
     </Row>
   );
+};
+
+FileInput.defaultProps = {
+  src: '',
 };
 
 export default FileInput;

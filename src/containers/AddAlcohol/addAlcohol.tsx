@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import FileInput from '../../components/FileInput/fileInput';
@@ -52,13 +52,9 @@ const prepareToSelect = (data: any) =>
     value: el,
   }));
 
-const resetValues = (keys: any) =>
-  keys.reduce((prev: any, curr: any) => ({ [curr]: '', ...prev }), {
-    barcode: [''],
-  });
-
 const AddAlcohol = () => {
   const methods = useForm({});
+  const navigate = useNavigate();
   const { alcoholBarcode } = useParams();
   const [id, setID] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -74,6 +70,18 @@ const AddAlcohol = () => {
   });
   const { getCategory, ctg } = useCategory();
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
+
+  const resetValues = (keys: any) =>
+    keys.reduce(
+      (prev: any, curr: any) => {
+        if (methods.getValues(curr) === undefined)
+          return { [curr]: undefined, ...prev };
+        return { [curr]: '', ...prev };
+      },
+      {
+        barcode: [''],
+      }
+    );
 
   const handleCompleteFields = async () => {
     const alcohol = await send({
@@ -98,6 +106,8 @@ const AddAlcohol = () => {
       barcode: alcohol.barcode,
       kind: alcohol.kind,
       ...values,
+      sm: createImageName(alcohol.name, 'sm'),
+      md: createImageName(alcohol.name, 'md'),
     });
   };
 
@@ -105,6 +115,11 @@ const AddAlcohol = () => {
     if (!alcoholBarcode) return;
     handleCompleteFields();
   }, [ctg?.categories]);
+
+  const addMore = () => {
+    setIsOpen(false);
+    navigate('/alcohol/add');
+  };
 
   const chooseCategory = async ({ kind }: Options) => {
     setCategories({ ...getCategory(kind.value), kind: kind.value });
@@ -128,7 +143,7 @@ const AddAlcohol = () => {
     if (![200, 201].includes(result.status))
       throw new Error('It is problem with add alcohol!');
 
-    if (!!alcoholBarcode && imgChanged.sm) {
+    if ((!!alcoholBarcode && imgChanged.sm) || !alcoholBarcode) {
       const formDataSM = createFormData([
         ['image_name', createImageName(data.name, 'sm')],
         ['file', sm],
@@ -142,7 +157,7 @@ const AddAlcohol = () => {
         throw new Error("It is problem with add alcohol's small image !");
     }
 
-    if (!!alcoholBarcode && imgChanged.sm) {
+    if ((!!alcoholBarcode && imgChanged.md) || !alcoholBarcode) {
       const formDataMD = createFormData([
         ['image_name', createImageName(data.name, 'md')],
         ['file', md],
@@ -158,6 +173,11 @@ const AddAlcohol = () => {
     }
 
     return result;
+  };
+
+  const removeImage = async (type: string) => {
+    methods.reset({ ...methods.getValues(), [type]: null });
+    setImgChanged((prev: any) => ({ ...prev, [type]: true }));
   };
 
   const submit = async (data: any) => {
@@ -176,11 +196,6 @@ const AddAlcohol = () => {
       setIsLoading(false);
       setIsOpen(true);
     }
-  };
-
-  const removeImage = async (type: string) => {
-    methods.reset({ ...methods.getValues(), [type]: null });
-    setImgChanged((prev: any) => ({ ...prev, [type]: true }));
   };
 
   return (
@@ -215,12 +230,22 @@ const AddAlcohol = () => {
                   title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
                   required
                   remove={removeImage}
+                  src={
+                    methods.getValues('sm')
+                      ? `${`${URL.GET_IMAGE}/${methods.getValues('sm')}`}.png`
+                      : ''
+                  }
                 />
                 <FileInput
                   name="md"
                   title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
                   required
                   remove={removeImage}
+                  src={
+                    methods.getValues('md')
+                      ? `${`${URL.GET_IMAGE}/${methods.getValues('md')}`}.png`
+                      : ''
+                  }
                 />
               </Row>
               <Row justifyContent="flex-end">
@@ -241,11 +266,9 @@ const AddAlcohol = () => {
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {isValid ? (
           <>
-            <ModalTitle>Alkohol został dodany prawidłowo</ModalTitle>
+            <ModalTitle>Alkohol został dodany/edytowany prawidłowo</ModalTitle>
             <Row gap="20px">
-              <BtnPrimary onClick={() => setIsOpen(false)}>
-                Dodaje kolejny alkohol
-              </BtnPrimary>
+              <BtnPrimary onClick={addMore}>Dodaje kolejny alkohol</BtnPrimary>
               <LinkSecondary to="/alcohol">
                 Wracam do listy alkoholi
               </LinkSecondary>

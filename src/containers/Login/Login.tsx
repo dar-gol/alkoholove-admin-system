@@ -31,7 +31,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Row>
-        <Row>
+        <Row justifyContent="center">
           <BtnPrimary onClick={() => loginHandler(email, password)}>
             Zaloguj się
           </BtnPrimary>
