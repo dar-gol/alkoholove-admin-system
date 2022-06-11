@@ -38,7 +38,7 @@ const Error = () => {
       await send({ method: 'DELETE', url: `${API}${URL.ERRORS}/${id}` });
       navigate('/errors');
     } catch (e: any) {
-      setErrorModal(e?.statusText);
+      setErrorModal(JSON.stringify(e?.statusText));
     }
   };
 

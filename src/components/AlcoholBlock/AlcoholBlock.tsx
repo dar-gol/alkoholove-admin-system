@@ -62,7 +62,7 @@ const AlcoholBlock = ({
       const test = await send({ url: `${API}${URL.POST_ALCOHOLS}/${id}` });
       update(id);
     } catch (e: any) {
-      setErrorModal(e?.statusText);
+      setErrorModal(JSON.stringify(e?.statusText));
     } finally {
       setIsLoading(false);
     }

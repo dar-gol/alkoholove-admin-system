@@ -43,16 +43,7 @@ type IModal = {
 
 const getValues = (array: any) => array.map((el: any) => el.value);
 
-const prepareValues = (data: any) => {
-  Object.keys(data).forEach((name) => {
-    if (data[name] instanceof Array && name !== BARCODE_PROPERTY)
-      data[name] = getValues(data[name]);
-    if (!(data[name] instanceof Array) && typeof data[name] === 'object')
-      data[name] = data[name].value;
-    if (data[name] === undefined) data[name] = [];
-  });
-  return data;
-};
+const getDouble = (number: number) => number.toFixed(2);
 
 const prepareToSelect = (data: any) =>
   data.map((el: any) => ({
@@ -83,7 +74,28 @@ const AddAlcohol = () => {
   });
   const { getCategory, ctg } = useCategory();
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
-  
+
+  const prepareValues = (data: any) => {
+    console.log(categories);
+    const prepareData = categories.properties.reduce(
+      (prev, curr) => {
+        const { type } = getType(curr.metadata.bsonType);
+        console.log(curr.name, data[curr.name]);
+        if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
+        if (type === 'array')
+          return { ...prev, [curr.name]: getValues(data[curr.name]) };
+        if (type === 'bool')
+          return { ...prev, [curr.name]: data[curr.name].value };
+        if (type === 'double')
+          return { ...prev, [curr.name]: getDouble(data[curr.name]) };
+        return prev;
+      },
+      { ...data }
+    );
+    console.log({ prepareData });
+    return prepareData;
+  };
+
   const resetValues = (keys: any) =>
     keys.reduce(
       (prev: any, curr: any) => {
@@ -95,7 +107,7 @@ const AddAlcohol = () => {
         barcode: [''],
       }
     );
-  
+
   const modalIsOpen = (isOpen: boolean = false) => {
     setModal((prev) => ({ ...prev, open: isOpen }));
   };
@@ -134,7 +146,7 @@ const AddAlcohol = () => {
   }, [ctg?.categories]);
 
   const addMore = () => {
-    setIsOpen(false);
+    modalIsOpen(false);
     navigate('/alcohol/add');
   };
 
@@ -198,28 +210,30 @@ const AddAlcohol = () => {
   };
 
   const submit = async (data: any) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const { sm, md } = data;
     delete data.sm;
     delete data.md;
     const values = prepareValues(data);
-    try {
-      await addOrEdit({ ...values, kind: categories.kind }, sm, md);
-      setIsValid(true);
-      methods.reset(resetValues(Object.keys(data)));
-    } catch (e: any) {
-      setIsValid(false);
-      setModal({
-        open: true,
-        title: 'Problem z dodaniem/edycją alkoholu',
-        text: 'Upewnij się, że wszystkie pola są poprawnie wypełnione',
-        details: e?.statusText,
-      });
-    } finally {
-      setIsLoading(false);
-      modalIsOpen(true);
-    }
+    // try {
+    //   await addOrEdit({ ...values, kind: categories.kind }, sm, md);
+    //   setIsValid(true);
+    //   methods.reset(resetValues(Object.keys(data)));
+    // } catch (e: any) {
+    //   setIsValid(false);
+    //   setModal({
+    //     open: true,
+    //     title: 'Problem z dodaniem/edycją alkoholu',
+    //     text: 'Upewnij się, że wszystkie pola są poprawnie wypełnione',
+    //     details: JSON.stringify(e?.statusText),
+    //   });
+    // } finally {
+    //   setIsLoading(false);
+    //   modalIsOpen(true);
+    // }
   };
+
+  console.log({ modal });
 
   return (
     <>
@@ -281,9 +295,7 @@ const AddAlcohol = () => {
       <Modal isOpen={modal.open && isValid} onClose={modalIsOpen}>
         <ModalTitle>Alkohol został dodany prawidłowo</ModalTitle>
         <Row gap="20px">
-          <BtnPrimary onClick={() => modalIsOpen()}>
-            Dodaje kolejny alkohol
-          </BtnPrimary>
+          <BtnPrimary onClick={addMore}>Dodaje kolejny alkohol</BtnPrimary>
           <LinkSecondary to="/alcohol">Wracam do listy alkoholi</LinkSecondary>
         </Row>
       </Modal>
