@@ -9,6 +9,7 @@ import {
   FileStyle,
   BtnDelete,
   ImgPreview,
+  PreviewBlock,
   Title,
 } from './fileInput.styled';
 
@@ -63,7 +64,9 @@ const FileInput = ({
           <BtnDelete type="button" onClick={() => handleRemove()}>
             <Trash2 size={18} />
           </BtnDelete>
-          <ImgPreview src={img} alt="This introduce choosen alcohol" />
+          <PreviewBlock>
+            <ImgPreview src={img} alt="This introduce choosen alcohol" />
+          </PreviewBlock>
         </Preview>
       )}
     </Row>
