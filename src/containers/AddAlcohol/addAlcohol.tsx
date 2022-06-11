@@ -231,12 +231,17 @@ const AddAlcohol = () => {
         {!!categories.properties.length && (
           <FormProvider {...methods}>
             <Form onSubmit={methods.handleSubmit(submit)}>
-              <MoreInput name="barcode" title="Kod kreskowy" required />
+              <MoreInput
+                name="barcode"
+                title="Kod kreskowy"
+                required
+                placeholder="9501101531000"
+              />
               {categories.properties.map((input) => {
-                const { bsonType, title } = input.metadata;
+                const { bsonType, title, description } = input.metadata;
                 const { name } = input;
                 const { type, required } = getType(bsonType);
-
+                console.log({ input });
                 return (
                   <InputFactory
                     key={name}
@@ -244,6 +249,7 @@ const AddAlcohol = () => {
                     name={name}
                     title={title}
                     required={required}
+                    placeholder={description}
                   />
                 );
               })}
@@ -254,6 +260,7 @@ const AddAlcohol = () => {
                   required
                   remove={removeImage}
                   imageName={methods.getValues('sm')}
+                  placeholder="sm"
                 />
                 <FileInput
                   name="md"
@@ -261,6 +268,7 @@ const AddAlcohol = () => {
                   required
                   remove={removeImage}
                   imageName={methods.getValues('md')}
+                  placeholder="md"
                 />
               </Row>
               <Row justifyContent="flex-end">

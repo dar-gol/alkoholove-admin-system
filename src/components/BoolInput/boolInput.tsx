@@ -3,7 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 import { IProps } from '../../@types/inputs';
 
-const BoolInput = ({ name, title, required }: IProps) => {
+const BoolInput = ({ name, title, required, placeholder }: IProps) => {
   const { control } = useFormContext();
   const options = [
     {
@@ -26,7 +26,7 @@ const BoolInput = ({ name, title, required }: IProps) => {
           <Select
             {...field}
             isClearable
-            placeholder="Wybierz wartość"
+            placeholder={placeholder}
             options={options}
           />
         )}
