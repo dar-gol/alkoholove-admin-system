@@ -210,27 +210,27 @@ const AddAlcohol = () => {
   };
 
   const submit = async (data: any) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     const { sm, md } = data;
     delete data.sm;
     delete data.md;
     const values = prepareValues(data);
-    // try {
-    //   await addOrEdit({ ...values, kind: categories.kind }, sm, md);
-    //   setIsValid(true);
-    //   methods.reset(resetValues(Object.keys(data)));
-    // } catch (e: any) {
-    //   setIsValid(false);
-    //   setModal({
-    //     open: true,
-    //     title: 'Problem z dodaniem/edycją alkoholu',
-    //     text: 'Upewnij się, że wszystkie pola są poprawnie wypełnione',
-    //     details: JSON.stringify(e?.statusText),
-    //   });
-    // } finally {
-    //   setIsLoading(false);
-    //   modalIsOpen(true);
-    // }
+    try {
+      await addOrEdit({ ...values, kind: categories.kind }, sm, md);
+      setIsValid(true);
+      methods.reset(resetValues(Object.keys(data)));
+    } catch (e: any) {
+      setIsValid(false);
+      setModal({
+        open: true,
+        title: 'Problem z dodaniem/edycją alkoholu',
+        text: 'Upewnij się, że wszystkie pola są poprawnie wypełnione',
+        details: JSON.stringify(e?.statusText),
+      });
+    } finally {
+      setIsLoading(false);
+      modalIsOpen(true);
+    }
   };
 
   console.log({ modal });
