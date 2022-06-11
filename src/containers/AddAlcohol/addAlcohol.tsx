@@ -47,6 +47,8 @@ const prepareValues = (data: any) => {
   Object.keys(data).forEach((name) => {
     if (data[name] instanceof Array && name !== BARCODE_PROPERTY)
       data[name] = getValues(data[name]);
+    if (!(data[name] instanceof Array) && typeof data[name] === 'object')
+      data[name] = data[name].value;
     if (data[name] === undefined) data[name] = [];
   });
   return data;
