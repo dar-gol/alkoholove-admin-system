@@ -26,6 +26,8 @@ export const PreviewBlock = styled.div`
   height: 100%;
   border-radius: 10px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 `;
 
 export const FileStyle = createGlobalStyle`

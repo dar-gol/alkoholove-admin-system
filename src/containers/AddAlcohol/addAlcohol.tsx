@@ -230,22 +230,14 @@ const AddAlcohol = () => {
                   title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
                   required
                   remove={removeImage}
-                  src={
-                    methods.getValues('sm')
-                      ? `${`${URL.GET_IMAGE}/${methods.getValues('sm')}`}.png`
-                      : ''
-                  }
+                  imageName={methods.getValues('sm')}
                 />
                 <FileInput
                   name="md"
                   title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
                   required
                   remove={removeImage}
-                  src={
-                    methods.getValues('md')
-                      ? `${`${URL.GET_IMAGE}/${methods.getValues('md')}`}.png`
-                      : ''
-                  }
+                  imageName={methods.getValues('md')}
                 />
               </Row>
               <Row justifyContent="flex-end">

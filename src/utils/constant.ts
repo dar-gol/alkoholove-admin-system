@@ -10,7 +10,9 @@ export const URL = {
   ME: '/me',
   GET_SUGGESTIONS: '/admin/suggestions',
   GET_TOTAL_SUGGESTIONS: '/admin/suggestions/total',
-  GET_IMAGE: 'https://res.cloudinary.com/alkoholove/image/upload/alcohols',
+  GET_IMAGE: `https://res.cloudinary.com/alkoholove/${
+    process.env.NODE_ENV === 'development' ? 'test' : 'alcohols'
+  }`,
 };
 
 export const CORE_PROPERTY = 'core';

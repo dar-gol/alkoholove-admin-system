@@ -12,16 +12,19 @@ import {
   PreviewBlock,
   Title,
 } from './fileInput.styled';
+import { URL as URLS } from '../../utils/constant';
 
 const FileInput = ({
   name,
   title,
   required,
   remove,
-  src,
-}: IProps & { remove: (type: string) => void; src?: string }) => {
-  const { control } = useFormContext();
-  const [img, setImg] = useState<string>(src || '');
+  imageName,
+}: IProps & { remove: (type: string) => void; imageName?: string }) => {
+  const { control, setValue, getValues } = useFormContext();
+  const [img, setImg] = useState<string>(
+    imageName ? `${URLS.GET_IMAGE}/${imageName}` : ''
+  );
 
   const onImageChange = (file: any) => {
     setImg(URL.createObjectURL(file));
@@ -36,7 +39,9 @@ const FileInput = ({
     }
   };
 
-  useEffect(() => setImg(src || ''), [src]);
+  useEffect(() => {
+    if (!imageName) setImg('');
+  }, [imageName]);
 
   return (
     <Row justifyContent="center" margin="20px 0" flex="1" position="relative">
@@ -74,7 +79,7 @@ const FileInput = ({
 };
 
 FileInput.defaultProps = {
-  src: '',
+  imageName: '',
 };
 
 export default FileInput;
