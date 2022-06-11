@@ -32,6 +32,14 @@ import useAuthReq from '../../utils/hooks/useReq';
 import { getType, createImageName, createFormData } from '../../utils/utils';
 import { IReq } from '../../@types/fetch';
 import Suggestion from '../../components/Suggestion/suggestion';
+import ErrorModal from '../../components/ErrorModal/errorModal';
+
+type IModal = {
+  open: boolean;
+  title: string;
+  text: string;
+  details: string;
+};
 
 const getValues = (array: any) => array.map((el: any) => el.value);
 
@@ -61,7 +69,12 @@ const AddAlcohol = () => {
   const methods = useForm({});
   const { alcoholBarcode } = useParams();
   const [id, setID] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modal, setModal] = useState<IModal>({
+    open: false,
+    title: '',
+    text: '',
+    details: '',
+  });
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<
@@ -74,13 +87,16 @@ const AddAlcohol = () => {
   const { getCategory, ctg } = useCategory();
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
 
+  const modalIsOpen = (isOpen: boolean = false) => {
+    setModal((prev) => ({ ...prev, open: isOpen }));
+  };
+
   const handleCompleteFields = async () => {
     const alcohol = await send({
       method: 'GET',
       url: `${API}${URL.GET_ALCOHOLS}/${alcoholBarcode}`,
       header: { Accept: 'application/json' },
     }).then((data) => data.json());
-    console.log({ barcode: alcohol.barcode });
     const category = getCategory(alcohol.kind);
     setCategories({ ...category, kind: alcohol.kind });
     const values = category.properties.reduce((prev, curr) => {
@@ -155,7 +171,6 @@ const AddAlcohol = () => {
   };
 
   const submit = async (data: any) => {
-    console.log({ data });
     setIsLoading(true);
     const { sm, md } = data;
     delete data.sm;
@@ -167,9 +182,15 @@ const AddAlcohol = () => {
       methods.reset(resetValues(Object.keys(data)));
     } catch (e: any) {
       setIsValid(false);
+      setModal({
+        open: true,
+        title: 'Problem z dodaniem/edycją alkoholu',
+        text: 'Upewnij się, że wszystkie pola są poprawnie wypełnione',
+        details: e?.statusText,
+      });
     } finally {
       setIsLoading(false);
-      setIsOpen(true);
+      modalIsOpen(true);
     }
   };
 
@@ -228,28 +249,22 @@ const AddAlcohol = () => {
           <Loader />
         </Row>
       </Modal>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        {isValid ? (
-          <>
-            <ModalTitle>Alkohol został dodany prawidłowo</ModalTitle>
-            <Row gap="20px">
-              <BtnPrimary onClick={() => setIsOpen(false)}>
-                Dodaje kolejny alkohol
-              </BtnPrimary>
-              <LinkSecondary to="/alcohol">
-                Wracam do listy alkoholi
-              </LinkSecondary>
-            </Row>
-          </>
-        ) : (
-          <>
-            <ModalTitle>Wystąpił problem z dodaniem alkoholu!</ModalTitle>
-            <Row justifyContent="center">
-              <BtnPrimary onClick={() => setIsOpen(false)}>OK</BtnPrimary>
-            </Row>
-          </>
-        )}
+      <Modal isOpen={modal.open && isValid} onClose={modalIsOpen}>
+        <ModalTitle>Alkohol został dodany prawidłowo</ModalTitle>
+        <Row gap="20px">
+          <BtnPrimary onClick={() => modalIsOpen()}>
+            Dodaje kolejny alkohol
+          </BtnPrimary>
+          <LinkSecondary to="/alcohol">Wracam do listy alkoholi</LinkSecondary>
+        </Row>
       </Modal>
+      <ErrorModal
+        isOpen={modal.open && !isValid}
+        title={modal.title}
+        text={modal.text}
+        details={modal.details}
+        onClose={modalIsOpen}
+      />
       <Suggestion />
     </>
   );
