@@ -114,7 +114,7 @@ const AddAlcohol = () => {
 
   const handleCompleteFields = async () => {
     const alcohol = await send({
-      method: 'GET',
+      method: 'POST',
       url: `${API}${URL.GET_ALCOHOLS}/${alcoholBarcode}`,
       header: { Accept: 'application/json' },
     }).then((data) => data.json());

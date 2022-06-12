@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alcohols, IAlcohol } from '../../@types/alcohol';
 import { IReq } from '../../@types/fetch';
 import { IPageInfo } from '../../@types/pagination';
-import { API } from '../constant';
+import { API, URL } from '../constant';
 import useAuthReq from './useReq';
 import useUser from './useUser';
 
@@ -13,7 +13,11 @@ const initPageInfo: IPageInfo = {
   number: 0,
 } as const;
 
-const initReq = ['GET', `${API}/alcohols?limit=10&offset=0`, null] as const;
+const initReq = [
+  'POST',
+  `${API}${URL.GET_ALCOHOLS}?limit=10&offset=0`,
+  null,
+] as const;
 
 const useAlcohols = () => {
   const { get } = useUser();
@@ -33,10 +37,11 @@ const useAlcohols = () => {
   };
 
   const search = (input: string) => {
+    const phrase = input ? `&phrase=${input}` : '';
     update({
-      url: `${API}/alcohols?limit=${page.limit}&offset=0&phrase=${input}`,
+      url: `${API}${URL.GET_ALCOHOLS}?limit=${page.limit}&offset=0${phrase}`,
     });
-    setName(input);
+    setName(phrase);
   };
 
   const changePage = (index: number) => {
@@ -46,7 +51,7 @@ const useAlcohols = () => {
       number: index,
     }));
     update({
-      url: `${API}/alcohols?limit=${page.limit}&offset=${shift}&phrase=${name}`,
+      url: `${API}${URL.GET_ALCOHOLS}?limit=${page.limit}&offset=${shift}${name}`,
     });
   };
 
@@ -57,7 +62,7 @@ const useAlcohols = () => {
       number: 0,
     }));
     update({
-      url: `${API}/alcohols?limit=${limit}&offset=0&phrase=${name}`,
+      url: `${API}${URL.GET_ALCOHOLS}?limit=${limit}&offset=0${name}`,
     });
   };
 

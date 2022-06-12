@@ -25,6 +25,14 @@ import Modal from '../../components/modal/Modal';
 import { ModalTitle } from '../../components/modal/Modal.styled';
 import useAuthReq from '../../utils/hooks/useReq';
 
+const formater = (value: any) => {
+  if (!value || (typeof value === 'object' && value.length === 0))
+    return 'Brak danych*';
+  if (typeof value === 'object' && value !== null) return value.join(' | ');
+  if (typeof value === 'boolean') return value ? 'TAK' : 'NIE';
+  return value;
+};
+
 const AlcoholDetails = () => {
   const { alcoholBarcode } = useParams();
   const alcohol = useAlcohol(alcoholBarcode || '');
@@ -50,14 +58,12 @@ const AlcoholDetails = () => {
         metadata: { title },
       } = prop;
       const value = alcohol[name as keyof typeof alcohol];
-      const formatValue =
-        typeof value === 'object' && value !== null ? value.join(' | ') : value;
       return (
         <Tuple key={name}>
           <Key>
             <CapitalCase>{title}</CapitalCase>
           </Key>
-          <Value>{formatValue || 'Brak danych*'}</Value>
+          <Value>{formater(value)}</Value>
         </Tuple>
       );
     });
@@ -66,29 +72,35 @@ const AlcoholDetails = () => {
     <>
       <Header />
       <Breadcrumb />
-      <Container>
-        <Title>Szczegółowe informacje</Title>
-        <Col>{JSX}</Col>
-        <Row justifyContent="center">
-          <Col>
-            <img
-              src={`${URL.GET_IMAGE}/${createImageName(
-                alcohol?.name.toLowerCase() || '',
-                'sm'
-              )}.png`}
-              alt="Zdjęcie przedstawiające wybrany alkohol"
-            />
-          </Col>
-        </Row>
-        <Row justifyContent="flex-end" gap="20px">
-          <LinkPrimary to={`/alcohol/edit/${alcohol?.barcode[0]}`}>
-            Edytuj alkohol
-          </LinkPrimary>
-          <BtnSecondary onClick={() => setIsOpen(true)}>
-            Usuń alkohol
-          </BtnSecondary>
-        </Row>
-      </Container>
+      {alcohol ? (
+        <Container>
+          <Title>Szczegółowe informacje</Title>
+          <Col>{JSX}</Col>
+          <Row justifyContent="center">
+            <Col>
+              <img
+                src={`${URL.GET_IMAGE}/${createImageName(
+                  alcohol?.name.toLowerCase() || '',
+                  'sm'
+                )}.png`}
+                alt="Zdjęcie przedstawiające wybrany alkohol"
+              />
+            </Col>
+          </Row>
+          <Row justifyContent="flex-end" gap="20px" margin="20px 0 0 0">
+            <LinkPrimary to={`/alcohol/edit/${alcohol?.barcode[0]}`}>
+              Edytuj alkohol
+            </LinkPrimary>
+            <BtnSecondary onClick={() => setIsOpen(true)}>
+              Usuń alkohol
+            </BtnSecondary>
+          </Row>
+        </Container>
+      ) : (
+        <Container>
+          <p>Nie ma takiego alkoholu...</p>
+        </Container>
+      )}
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalTitle>Usuwanie alkoholu</ModalTitle>
         <WarnText>
