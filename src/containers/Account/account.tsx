@@ -50,7 +50,6 @@ const Account = () => {
   };
 
   const submit = async (data: any) => {
-    console.log({ data });
     const { new_password, new_password_again } = data;
 
     if (new_password !== new_password_again) {
@@ -133,18 +132,21 @@ const Account = () => {
               title="Stare hasło"
               required
               type="password"
+              placeholder="***"
             />
             <TextInput
               name="new_password"
               title="Nowe hasło"
               required
               type="password"
+              placeholder="***"
             />
             <TextInput
               name="new_password_again"
               title="Nowe hasło ponownie"
               required
               type="password"
+              placeholder="***"
             />
             <Row justifyContent="center">
               <WarnText>{errors?.new_password_again?.message}</WarnText>
@@ -162,7 +164,12 @@ const Account = () => {
         <ModalTitle>Edycja konta</ModalTitle>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(submit)}>
-            <TextInput name="email" title="Nowy email" required />
+            <TextInput
+              name="email"
+              title="Nowy email"
+              required
+              placeholder="alkohoLove@email.com"
+            />
             <Row justifyContent="center">
               <WarnText>{errors?.email?.message}</WarnText>
             </Row>

@@ -10,7 +10,7 @@ import {
   Row,
 } from '../../styles/global.styled';
 
-const MoreInput = ({ name, title }: IProps) => {
+const MoreInput = ({ name, title, placeholder }: IProps) => {
   const { alcoholBarcode } = useParams();
   const { register } = useFormContext();
   const { fields, append, remove } = useFieldArray({
@@ -28,7 +28,10 @@ const MoreInput = ({ name, title }: IProps) => {
       <Col gap="10px">
         {fields.map((item, index) => (
           <Row key={item.id} gap="20px" flex="1">
-            <InputText {...register(`${name}[${index}]`, { required: true })} />
+            <InputText
+              {...register(`${name}[${index}]`, { required: true })}
+              placeholder={placeholder}
+            />
             {!!index && (
               <BtnSecondary type="button" onClick={() => remove(index)}>
                 Usuń

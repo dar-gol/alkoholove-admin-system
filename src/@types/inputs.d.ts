@@ -11,6 +11,7 @@ export interface IProps {
   name: string;
   title: string;
   required: boolean;
+  placeholder: string;
 }
 
 export type inputType = 'string' | 'array' | 'bool' | 'int' | 'double' | 'long';

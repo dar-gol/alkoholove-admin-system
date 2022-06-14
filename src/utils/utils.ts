@@ -16,7 +16,7 @@ export const getType = (type: Type) => {
 };
 
 export const createImageName = (name: string, type: string): string =>
-  `${name.replaceAll(' ', '_')}_${type}`;
+  `${name.toLowerCase().replaceAll(' ', '_')}_${type}`;
 
 type FormDataType = Array<[string, string | Blob]>;
 
@@ -29,7 +29,3 @@ export const createFormData = (tuples: FormDataType) => {
 
   return formData;
 };
-
-// export const createAlcoholName = (name: string): string => {
-
-// }

@@ -14,7 +14,8 @@ export const StyledPopup = styled(Popup)`
 export const ModalContainer = styled.article`
   padding: 30px;
   background-color: white;
-  min-width: 250px;
+  min-width: 300px;
+  max-width: 450px;
   border-radius: 20px;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.4);
 `;

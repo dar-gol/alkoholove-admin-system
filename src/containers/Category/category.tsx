@@ -20,8 +20,6 @@ import { Block } from './category.styled';
 const Category = () => {
   const { ctg, changePage, changePageSize, page } = useCategory();
 
-  console.log(page);
-
   const categoryBlock =
     ctg?.categories &&
     ctg?.categories.map((el, index) => (

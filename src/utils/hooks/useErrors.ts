@@ -26,7 +26,7 @@ const useErrors = () => {
         setErrors(data.reported_errors);
         setPage((prev) => ({ ...prev, ...data.page_info }));
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.error(e));
   };
 
   const changePage = (index: number) => {
