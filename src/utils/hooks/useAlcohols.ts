@@ -15,7 +15,7 @@ const initPageInfo: IPageInfo = {
 
 const initReq = [
   'POST',
-  `${API}${URL.GET_ALCOHOLS}?limit=10&offset=0`,
+  `${API}${URL.SEARCH_ALCOHOLS}?limit=10&offset=0`,
   null,
 ] as const;
 
@@ -39,7 +39,7 @@ const useAlcohols = () => {
   const search = (input: string) => {
     const phrase = input ? `&phrase=${input}` : '';
     update({
-      url: `${API}${URL.GET_ALCOHOLS}?limit=${page.limit}&offset=0${phrase}`,
+      url: `${API}${URL.SEARCH_ALCOHOLS}?limit=${page.limit}&offset=0${phrase}`,
     });
     setName(phrase);
   };
@@ -51,7 +51,7 @@ const useAlcohols = () => {
       number: index,
     }));
     update({
-      url: `${API}${URL.GET_ALCOHOLS}?limit=${page.limit}&offset=${shift}${name}`,
+      url: `${API}${URL.SEARCH_ALCOHOLS}?limit=${page.limit}&offset=${shift}${name}`,
     });
   };
 
@@ -62,7 +62,7 @@ const useAlcohols = () => {
       number: 0,
     }));
     update({
-      url: `${API}${URL.GET_ALCOHOLS}?limit=${limit}&offset=0${name}`,
+      url: `${API}${URL.SEARCH_ALCOHOLS}?limit=${limit}&offset=0${name}`,
     });
   };
 

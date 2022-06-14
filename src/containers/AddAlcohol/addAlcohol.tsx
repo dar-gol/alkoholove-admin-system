@@ -114,8 +114,8 @@ const AddAlcohol = () => {
 
   const handleCompleteFields = async () => {
     const alcohol = await send({
-      method: 'POST',
-      url: `${API}${URL.GET_ALCOHOLS}/${alcoholBarcode}`,
+      method: 'GET',
+      url: `${API}${URL.GET_ALCOHOL}/${alcoholBarcode}`,
       header: { Accept: 'application/json' },
     }).then((data) => data.json());
     const category = getCategory(alcohol.kind);
@@ -232,8 +232,6 @@ const AddAlcohol = () => {
       modalIsOpen(true);
     }
   };
-
-  console.log({ modal });
 
   return (
     <>

@@ -11,7 +11,7 @@ const useAlcohol = (barcode: string) => {
 
   useEffect(() => {
     get({
-      url: `${API}${URL.GET_ALCOHOLS}/${barcode}`,
+      url: `${API}${URL.GET_ALCOHOL}/${barcode}`,
       header: {
         Authorization: `Bearer ${user.access_token}`,
       },
