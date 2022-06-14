@@ -92,7 +92,7 @@ const AddAlcohol = () => {
     );
     return prepareData;
   };
-
+  
   const resetValues = (keys: any) =>
     keys.reduce(
       (prev: any, curr: any) => {
