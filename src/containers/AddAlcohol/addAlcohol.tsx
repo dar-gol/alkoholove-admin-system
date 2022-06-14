@@ -76,11 +76,9 @@ const AddAlcohol = () => {
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
 
   const prepareValues = (data: any) => {
-    console.log(categories);
     const prepareData = categories.properties.reduce(
       (prev, curr) => {
         const { type } = getType(curr.metadata.bsonType);
-        console.log(curr.name, data[curr.name]);
         if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
         if (type === 'array')
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
@@ -92,7 +90,6 @@ const AddAlcohol = () => {
       },
       { ...data }
     );
-    console.log({ prepareData });
     return prepareData;
   };
 
