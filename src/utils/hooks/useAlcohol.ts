@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContextType } from '../../@types/user';
 import { UserContext } from '../../context/userContext';
 import { IAlcohol } from '../../@types/alcohol';
-import { API } from '../constant';
+import { API, URL } from '../constant';
 import { get } from '../fetch';
 
 const useAlcohol = (barcode: string) => {
@@ -11,12 +11,15 @@ const useAlcohol = (barcode: string) => {
 
   useEffect(() => {
     get({
-      url: `${API}/alcohols/${barcode}`,
+      url: `${API}${URL.GET_ALCOHOL}/${barcode}`,
       header: {
         Authorization: `Bearer ${user.access_token}`,
       },
     })
-      .then((data) => data.json())
+      .then((data) => {
+        if (data.ok) return data.json();
+        throw data;
+      })
       .then((data) => setAlcohol(data));
   }, []);
 

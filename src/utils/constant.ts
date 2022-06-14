@@ -5,7 +5,8 @@ export const API =
 
 export const URL = {
   CATEGORIES: '/admin/alcohols/metadata/categories',
-  GET_ALCOHOLS: '/alcohols',
+  SEARCH_ALCOHOLS: '/admin/alcohols/search',
+  GET_ALCOHOL: '/alcohols',
   POST_ALCOHOLS: '/admin/alcohols',
   UPLOAD_IMAGE: '/admin/image',
   USERS: '/admin/users',

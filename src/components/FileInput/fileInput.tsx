@@ -70,7 +70,10 @@ const FileInput = ({
             <Trash2 size={18} />
           </BtnDelete>
           <PreviewBlock>
-            <ImgPreview src={img} alt="This introduce choosen alcohol" />
+            <ImgPreview
+              src={`${img}#t?t=${new Date().getTime()}`}
+              alt="This introduce choosen alcohol"
+            />
           </PreviewBlock>
         </Preview>
       )}

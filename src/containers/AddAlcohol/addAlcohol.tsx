@@ -43,16 +43,7 @@ type IModal = {
 
 const getValues = (array: any) => array.map((el: any) => el.value);
 
-const prepareValues = (data: any) => {
-  Object.keys(data).forEach((name) => {
-    if (data[name] instanceof Array && name !== BARCODE_PROPERTY)
-      data[name] = getValues(data[name]);
-    if (!(data[name] instanceof Array) && typeof data[name] === 'object')
-      data[name] = data[name].value;
-    if (data[name] === undefined) data[name] = [];
-  });
-  return data;
-};
+const getDouble = (number: number) => number.toFixed(2);
 
 const prepareToSelect = (data: any) =>
   data.map((el: any) => ({
@@ -84,6 +75,24 @@ const AddAlcohol = () => {
   const { getCategory, ctg } = useCategory();
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
 
+  const prepareValues = (data: any) => {
+    const prepareData = categories.properties.reduce(
+      (prev, curr) => {
+        const { type } = getType(curr.metadata.bsonType);
+        if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
+        if (type === 'array')
+          return { ...prev, [curr.name]: getValues(data[curr.name]) };
+        if (type === 'bool')
+          return { ...prev, [curr.name]: data[curr.name].value };
+        if (type === 'double')
+          return { ...prev, [curr.name]: getDouble(data[curr.name]) };
+        return prev;
+      },
+      { ...data }
+    );
+    return prepareData;
+  };
+  
   const resetValues = (keys: any) =>
     keys.reduce(
       (prev: any, curr: any) => {
@@ -103,7 +112,7 @@ const AddAlcohol = () => {
   const handleCompleteFields = async () => {
     const alcohol = await send({
       method: 'GET',
-      url: `${API}${URL.GET_ALCOHOLS}/${alcoholBarcode}`,
+      url: `${API}${URL.GET_ALCOHOL}/${alcoholBarcode}`,
       header: { Accept: 'application/json' },
     }).then((data) => data.json());
     const category = getCategory(alcohol.kind);
@@ -213,7 +222,7 @@ const AddAlcohol = () => {
         open: true,
         title: 'Problem z dodaniem/edycją alkoholu',
         text: 'Upewnij się, że wszystkie pola są poprawnie wypełnione',
-        details: e?.statusText,
+        details: JSON.stringify(e?.statusText),
       });
     } finally {
       setIsLoading(false);

@@ -16,8 +16,12 @@ const ErrorModal = ({ title, text, details, isOpen, onClose }: IProps) => (
   <Modal isOpen={isOpen} onClose={onClose}>
     <ModalTitle>{title}</ModalTitle>
     <Text>{text}</Text>
-    <DetailTitle>Szczegóły błędu: </DetailTitle>
-    <Details>{details}</Details>
+    {details && (
+      <>
+        <DetailTitle>Szczegóły błędu: </DetailTitle>
+        <Details>{details}</Details>
+      </>
+    )}
     <Row gap="20px" justifyContent="center">
       <BtnPrimary onClick={() => onClose()}>OK</BtnPrimary>
     </Row>

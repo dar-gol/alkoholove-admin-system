@@ -234,7 +234,7 @@ const AddCategory = () => {
         open: true,
         title: 'Problem z dodaniem/edycja kategorii',
         text: 'Upewnij się, że wypełniłeś wszystkie pola',
-        details: e?.statusText,
+        details: JSON.stringify(e?.statusText),
       });
     }
   };
