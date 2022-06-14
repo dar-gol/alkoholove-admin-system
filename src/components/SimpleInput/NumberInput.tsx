@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { IProps } from '../../@types/inputs';
 import { Col, InputText } from '../../styles/global.styled';
 
-const NumberInput = ({ name, title, required }: IProps) => {
+const NumberInput = ({ name, title, required, placeholder }: IProps) => {
   const { register } = useFormContext();
   return (
     <Col>
@@ -12,6 +12,7 @@ const NumberInput = ({ name, title, required }: IProps) => {
         {...register(name, { required, valueAsNumber: true })}
         type="number"
         step="1"
+        placeholder={placeholder}
       />
     </Col>
   );

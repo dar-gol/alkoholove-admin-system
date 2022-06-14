@@ -247,7 +247,12 @@ const AddCategory = () => {
         <Title>Formularz dodawania/edycji kategorii</Title>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(submit)}>
-            <TextInput name="kind" title="Nazwa rodzaju kategorii" required />
+            <TextInput
+              name="kind"
+              title="Nazwa rodzaju kategorii"
+              required
+              placeholder="piwo"
+            />
             <p>Dodaj cechy:</p>
             <Col gap="20px">
               {names.map((name, index) => {

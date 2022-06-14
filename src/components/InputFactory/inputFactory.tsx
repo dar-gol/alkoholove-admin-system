@@ -7,19 +7,60 @@ import DoubleInput from '../SimpleInput/DoubleInput';
 import NumberInput from '../SimpleInput/NumberInput';
 import TextInput from '../SimpleInput/TextInput';
 
-const InputFactory = ({ name, title, type, required }: IFactory) => {
+const InputFactory = ({
+  name,
+  title,
+  type,
+  required,
+  placeholder,
+}: IFactory) => {
   switch (type) {
     case 'string':
-      return <TextInput name={name} title={title} required={false} />;
+      return (
+        <TextInput
+          name={name}
+          title={title}
+          required={false}
+          placeholder={placeholder}
+        />
+      );
     case 'array':
-      return <Select name={name} title={title} required={false} />;
+      return (
+        <Select
+          name={name}
+          title={title}
+          required={false}
+          placeholder={placeholder}
+        />
+      );
     case 'bool':
-      return <BoolInput name={name} title={title} required={false} />;
+      return (
+        <BoolInput
+          name={name}
+          title={title}
+          required={false}
+          placeholder={placeholder}
+        />
+      );
     case 'int':
     case 'long':
-      return <NumberInput name={name} title={title} required={false} />;
+      return (
+        <NumberInput
+          name={name}
+          title={title}
+          required={false}
+          placeholder={placeholder}
+        />
+      );
     case 'double':
-      return <DoubleInput name={name} title={title} required={false} />;
+      return (
+        <DoubleInput
+          name={name}
+          title={title}
+          required={false}
+          placeholder={placeholder}
+        />
+      );
     default:
       return <div />;
   }

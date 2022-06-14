@@ -4,7 +4,7 @@ import Creatable from 'react-select/creatable';
 import { IProps } from '../../@types/inputs';
 import { Col } from '../../styles/global.styled';
 
-const Select = ({ title, name, required }: IProps) => {
+const Select = ({ title, name, required, placeholder }: IProps) => {
   const { control } = useFormContext();
   return (
     <Col flex="1">
@@ -14,12 +14,7 @@ const Select = ({ title, name, required }: IProps) => {
         control={control}
         rules={{ required }}
         render={({ field }) => (
-          <Creatable
-            {...field}
-            isClearable
-            placeholder="Wprowadz dane"
-            isMulti
-          />
+          <Creatable {...field} isClearable placeholder={placeholder} isMulti />
         )}
       />
     </Col>
