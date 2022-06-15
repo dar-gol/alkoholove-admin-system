@@ -72,10 +72,7 @@ const useAuthReq = (
   };
 
   const handleAuthError = async (e: any) => {
-    if (
-      e?.status === STATUS_CODE.UNAUTHORIZED ||
-      e?.status === STATUS_CODE.METHOD_NOT_ALLOWED
-    ) {
+    if (e?.status === STATUS_CODE.UNAUTHORIZED) {
       const refresh = await request('POST', `${API}/auth/refresh`, '', {
         Authorization: `Bearer ${get().refresh_token}`,
       });
