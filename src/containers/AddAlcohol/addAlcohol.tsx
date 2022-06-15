@@ -92,12 +92,12 @@ const AddAlcohol = () => {
     );
     return prepareData;
   };
-  
+
   const resetValues = (keys: any) =>
     keys.reduce(
       (prev: any, curr: any) => {
         if (methods.getValues(curr) === undefined)
-          return { [curr]: undefined, ...prev };
+          return { [curr]: [], ...prev };
         return { [curr]: '', ...prev };
       },
       {
