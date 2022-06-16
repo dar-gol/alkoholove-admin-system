@@ -41,7 +41,7 @@ type IModal = {
   details: string;
 };
 
-const getValues = (array: any) => array.map((el: any) => el.value);
+const getValues = (array: any) => array?.map((el: any) => el.value) || [];
 
 const getDouble = (number: number) => number.toFixed(2);
 
