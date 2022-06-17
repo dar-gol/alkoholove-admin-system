@@ -24,12 +24,14 @@ const useLogin = () => {
         if (location.pathname !== '/') navigate('/');
       });
   const loginHandler = (username: string, password: string) => {
+    console.log({ username, password });
     setIsLoading(true);
     return postForm({
       url: `${API}/auth/token`,
       body: { username, password },
     })
       .then((data: Tokens) => {
+        console.log({ data });
         if (!data?.access_token) throw data;
         set({
           access_token: `${data.access_token}`,
@@ -37,12 +39,13 @@ const useLogin = () => {
         });
         navigate('home');
       })
-      .catch((e) =>
-        setError(
-          e?.detail ||
-            'Problem with reading error, propably wrong login details'
-        )
-      )
+      .catch((e) => {
+        const detail =
+          typeof e?.detail === 'object'
+            ? 'Problem with reading error, propably wrong login details'
+            : e?.detail;
+        setError(detail);
+      })
       .finally(() => setIsLoading(false));
   };
   const logout = async () => {
