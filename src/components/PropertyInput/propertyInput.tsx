@@ -124,13 +124,13 @@ const PropertyInput = ({
         >
           <Trash2 size={18} />
         </BtnDelete>
-        <BtnEdit
+        {/* <BtnEdit
           type="button"
           onClick={() => editProperty(id)}
           hide={getValues(`${name}Required`) || traits.isNew}
         >
           <Edit size={16} />
-        </BtnEdit>
+        </BtnEdit> */}
       </Property>
     </>
   );
