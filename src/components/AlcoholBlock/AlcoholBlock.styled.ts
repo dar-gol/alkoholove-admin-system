@@ -28,6 +28,8 @@ export const Tuple = styled.section`
   display: flex;
   border-bottom: 2px solid ${({ theme }) => theme.palette.grey};
   justify-content: space-between;
+  padding: 0;
+  margin: 0;
   &:last-of-type {
     border-bottom: 0;
   }

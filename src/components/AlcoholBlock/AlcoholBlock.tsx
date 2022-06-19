@@ -98,7 +98,7 @@ const AlcoholBlock = ({
         <WarnText>
           Czy na pewno chcesz permanentnie usunąć ten alkohol?
         </WarnText>
-        <Col>
+        <Col padding="0">
           <Tuple>
             <Key>ID</Key>
             <Value>{alcohol.id}</Value>
