@@ -250,7 +250,6 @@ const AddAlcohol = () => {
                 const { bsonType, title, description } = input.metadata;
                 const { name } = input;
                 const { type, required } = getType(bsonType);
-                console.log({ input });
                 return (
                   <InputFactory
                     key={name}

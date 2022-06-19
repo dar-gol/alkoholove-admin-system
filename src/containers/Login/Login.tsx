@@ -30,7 +30,7 @@ const Login = () => {
         </Row>
         <Row>
           <InputText
-            placeholder="Email"
+            placeholder="Nazwa użytkownika"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

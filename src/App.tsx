@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import AlcoholDetails from './containers/AlcoholDetails/alcoholDetails';
 import AddAlcohol from './containers/AddAlcohol/addAlcohol';
@@ -20,9 +20,11 @@ import Error from './containers/Error/error';
 
 const App = () => {
   const { checkLogin } = useLogin();
+  const location = useLocation();
+
   useEffect(() => {
     checkLogin();
-  }, []);
+  }, [location]);
   return (
     <Main>
       <Routes>
