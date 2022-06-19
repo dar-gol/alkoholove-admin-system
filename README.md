@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# Admin Alkoholove
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is for manage Alkoholove app. By this site you can manage alkohol's list
+(add, edit, delete) and also you can manage users, category, comments and suggestions.
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Admin Alkoholove](#admin-alkoholove)
+  - [Table of contents](#table-of-contents)
+  - [Technologies](#technologies)
+  - [Launch](#launch)
+  - [AlkohoLove’s Source Code License Agreement](#alkoholoves-source-code-license-agreement)
+    - [Between](#between)
+    - [Definitions](#definitions)
+    - [License Agreement](#license-agreement)
 
-### `yarn start`
+## Technologies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React
+- TypeScript
+- Styled-components
+- react-hook-form
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Launch
 
-### `yarn test`
+1. Download yarn package to launch the project [here you can download](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
+2. Download all necessary library: `yarn`
+3. Run the project: `yarn start`
+   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+4. If you want to go to documentation type this command: `yarn storybook`
+   Open [http://localhost:6006](http://localhost:6006) to view it in the browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## AlkohoLove’s Source Code License Agreement
 
-### `yarn build`
+### Between
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Adam Skorupa
+- Konrad Jasiński
+- Mateusz Romański
+- Damian Judek
+- Dariusz Golomski
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Definitions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**AlkohoLove’s source Code** refers to software application with it’s source code stored at version control system hosting called github:
 
-### `yarn eject`
+- [alkoholove-admin-system]()(https://github.com/dar-gol/alkoholove-admin-system)
+- [AlkohoLove-mobile]()(https://github.com/DamianJudek/AlkohoLove-mobile)
+- [AlkohoLove-backend-service](https://github.com/matixezor/AlkohoLove-backend-service)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### License Agreement
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+All people mentioned above have equal rights to AlkohoLove’s source code.
+The rights to source code shall be understood in particular as: editing, copying, transferring, distributing and sharing.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Any other activities, not mentioned in this statement, should be accepted by all signatories.
