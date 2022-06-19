@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from 'react';
-import { useForm, FormProvider, Controller } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
@@ -250,7 +250,6 @@ const AddAlcohol = () => {
                 const { bsonType, title, description } = input.metadata;
                 const { name } = input;
                 const { type, required } = getType(bsonType);
-                console.log({ input });
                 return (
                   <InputFactory
                     key={name}

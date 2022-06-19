@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { IAlcohol } from '../../@types/alcohol';
-import { UserContextType } from '../../@types/user';
-import { UserContext } from '../../context/userContext';
 import {
   BtnPrimary,
   BtnSecondary,
@@ -10,7 +8,6 @@ import {
   Row,
 } from '../../styles/global.styled';
 import { API, URL } from '../../utils/constant';
-import { del } from '../../utils/fetch';
 import useAuthReq from '../../utils/hooks/useReq';
 import ErrorModal from '../ErrorModal/errorModal';
 import Loader from '../Loader/loader';
@@ -41,7 +38,6 @@ const AlcoholBlock = ({
   update: (id: number) => void;
   index: number;
 }) => {
-  const { user } = useContext(UserContext) as UserContextType;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
