@@ -69,7 +69,7 @@ export default {
         defaultValue: { summary: 'TextInput' },
       },
       description:
-        'You can choose from three types: TextInput (plain text field), NumberInput (numeric field), DoubleInput (floating point numeric field)',
+        'You can choose from three types: TextInput (plain text field), NumberInput (numeric field), DoubleInput (floating point numeric field). THIS IS NOT A PROPS (You must to check on of the component)',
     },
   },
 } as ComponentMeta<typeof TextInput>;
