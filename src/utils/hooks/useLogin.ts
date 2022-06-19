@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tokens } from '../../@types/user';
-import { API } from '../constant';
+import { API, URL } from '../constant';
 import { post, postForm } from '../fetch';
 import useUser from './useUser';
 
@@ -26,7 +26,7 @@ const useLogin = () => {
   const loginHandler = (username: string, password: string) => {
     setIsLoading(true);
     return postForm({
-      url: `${API}/auth/token`,
+      url: `${API}${URL.LOGIN}`,
       body: { username, password },
     })
       .then((data: Tokens) => {
@@ -48,7 +48,7 @@ const useLogin = () => {
   const logout = async () => {
     setIsLoading(true);
     await post({
-      url: `${API}/auth/logout`,
+      url: `${API}${URL.LOGOUT}`,
       header: {
         Authorization: `Bearer ${get().access_token}`,
         'authorization-refresh': `${get().refresh_token}`,
