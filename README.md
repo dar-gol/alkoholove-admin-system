@@ -23,9 +23,9 @@ This project is for manage Alkoholove app. By this site you can manage alkohol's
 
 ## Launch
 
-1. Download yarn package to launch the project [here you can download](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
-2. Download all necessary library: `yarn`
-3. Run the project: `yarn start` \
+1. Download yarn package to launch the project [here you can download.](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
+2. Download all necessary library: `yarn`.
+3. Run the project: `yarn start`. \
    Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 4. If you want to go to documentation type this command: `yarn storybook` \
    Open [http://localhost:6006](http://localhost:6006) to view it in the browser.
@@ -44,8 +44,8 @@ This project is for manage Alkoholove app. By this site you can manage alkohol's
 
 **AlkohoLove’s source Code** refers to software application with it’s source code stored at version control system hosting called github:
 
-- [alkoholove-admin-system]()(https://github.com/dar-gol/alkoholove-admin-system)
-- [AlkohoLove-mobile]()(https://github.com/DamianJudek/AlkohoLove-mobile)
+- [alkoholove-admin-system](https://github.com/dar-gol/alkoholove-admin-system)
+- [AlkohoLove-mobile](https://github.com/DamianJudek/AlkohoLove-mobile)
 - [AlkohoLove-backend-service](https://github.com/matixezor/AlkohoLove-backend-service)
 
 ### License Agreement
