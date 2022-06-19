@@ -4,7 +4,9 @@ export const API =
     : 'https://api-alkoholove.herokuapp.com';
 
 export const URL = {
-  CATEGORIES: '/admin/alcohols/metadata/categories',
+  LOGIN: '/auth/token/admin',
+  LOGOUT: '/auth/logout',
+  CATEGORIES: '/alcohols/metadata/categories',
   SEARCH_ALCOHOLS: '/admin/alcohols/search',
   GET_ALCOHOL: '/alcohols',
   POST_ALCOHOLS: '/admin/alcohols',
