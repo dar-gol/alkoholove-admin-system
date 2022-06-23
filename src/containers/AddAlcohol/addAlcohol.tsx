@@ -120,9 +120,11 @@ const AddAlcohol = () => {
     const values = category.properties.reduce((prev, curr) => {
       const { name } = curr;
       const { bsonType } = curr.metadata;
+      const { type } = getType(bsonType);
+      console.log({ type, name });
       const prop = alcohol[name];
       const value =
-        bsonType === 'array'
+        type === 'array'
           ? { [name]: prepareToSelect(alcohol[name]) }
           : { [name]: prop };
       return { ...prev, ...value };
