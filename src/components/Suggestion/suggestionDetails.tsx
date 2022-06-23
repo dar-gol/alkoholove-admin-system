@@ -49,7 +49,7 @@ const SuggestionDetails = ({ changeToList, id, deleteSuggestion }: IProps) => {
   };
 
   const descriptionBlock = (suggestion: any) =>
-    suggestion?.descriptions.map((value: any, index: any) => {
+    suggestion?.descriptions?.map((value: any, index: any) => {
       const key = `description${id}${index}`;
       return (
         <Tuple key={key}>
