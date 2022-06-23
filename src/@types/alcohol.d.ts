@@ -1,4 +1,4 @@
-export type IAroma = string
+export type IAroma = string;
 
 export type IBarcode = string;
 
@@ -6,11 +6,11 @@ export type IRegion = string;
 
 export type ICountry = string;
 
-export type IFood = string
+export type IFood = string;
 
-export type ITaste = string
+export type ITaste = string;
 
-export type IFinishes = string
+export type IFinishes = string;
 
 export type IIngredients = string;
 
@@ -32,21 +32,7 @@ export interface IAlcohol {
   taste: ITaste[];
   id: number;
   barcode: IBarcode[];
-  keywords: IKeywords[]
-  ingredients: IIngredients[]; 
-
-  age: number;
-  rating: number;
-  image_name: string;
-  serving_temperature: string;
-  bitterness_ibu: number;
-  srm: number;
-  extract: number;
-  fermentation: string;
-  is_filtered: boolean;
-  is_pasteurized: boolean;
-  year: number;
-  vine_stock: string;
+  keywords: IKeywords[];
 }
 
 export type Alcohols = IAlcohol[];
