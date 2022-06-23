@@ -41,7 +41,8 @@ type IModal = {
   details: string;
 };
 
-const getValues = (array: any) => array?.map((el: any) => el.value) || [];
+const getValues = (array: any) =>
+  array instanceof Array ? array?.map((el: any) => el.value) || [] : [];
 
 const getDouble = (number: number) => number.toFixed(2);
 
@@ -76,12 +77,15 @@ const AddAlcohol = () => {
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
 
   const prepareValues = (data: any) => {
+    console.log({ data });
     const prepareData = categories.properties.reduce(
       (prev, curr) => {
         const { type } = getType(curr.metadata.bsonType);
         if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
-        if (type === 'array')
+        if (type === 'array') {
+          console.log(curr.name, data[curr.name]);
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
+        }
         if (type === 'bool')
           return { ...prev, [curr.name]: data[curr.name].value };
         if (type === 'double')
@@ -231,6 +235,8 @@ const AddAlcohol = () => {
       modalIsOpen(true);
     }
   };
+
+  console.log(methods.formState.errors);
 
   return (
     <>
