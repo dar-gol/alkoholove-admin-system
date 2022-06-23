@@ -14,12 +14,12 @@ const Home = () => (
         <Col flex="1">
           <Title>Listy</Title>
           <Block to="/alcohol">Alkohole</Block>
-          <Block to="/category">Kategorię</Block>
+          <Block to="/category">Kategorie</Block>
           <Block to="/users">Uzytkownicy</Block>
           <Block to="/errors">Zgłoszone błędy</Block>
         </Col>
         <Col flex="1">
-          <Title>Akcję</Title>
+          <Title>Akcje</Title>
           <Block to="/alcohol/add">Dodaj alkohol</Block>
           <Block to="/category/add">Dodaj kategorię</Block>
         </Col>
