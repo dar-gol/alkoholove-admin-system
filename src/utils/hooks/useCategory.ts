@@ -19,7 +19,7 @@ const initPageInfo: IPageInfo = {
 
 const useCategory = () => {
   const { ctg, set } = useContext(CategoryContext) as CategoryContextType;
-  const { send } = useAuthReq('GET', `${API}${URL.CATEGORIES}`, '');
+  const { send } = useAuthReq('GET', `${API}${URL.GET_CATEGORIES}`, '');
   const initPage = ctg?.page_info
     ? { ...ctg?.page_info, number: 0 }
     : initPageInfo;
@@ -41,7 +41,7 @@ const useCategory = () => {
       number: index,
     }));
     update({
-      url: `${API}${URL.CATEGORIES}?limit=${page.limit}&offset=${shift}`,
+      url: `${API}${URL.GET_CATEGORIES}?limit=${page.limit}&offset=${shift}`,
     });
   };
 
@@ -52,7 +52,7 @@ const useCategory = () => {
       number: 0,
     }));
     update({
-      url: `${API}${URL.CATEGORIES}?limit=${limit}&offset=0`,
+      url: `${API}${URL.GET_CATEGORIES}?limit=${limit}&offset=0`,
     });
   };
 

@@ -18,6 +18,7 @@ const TextInput = ({
         {...register(name, { required })}
         type={type}
         placeholder={placeholder}
+        onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
       />
     </Col>
   );

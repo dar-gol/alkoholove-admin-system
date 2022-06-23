@@ -31,6 +31,7 @@ const MoreInput = ({ name, title, placeholder }: IProps) => {
             <InputText
               {...register(`${name}[${index}]`, { required: true })}
               placeholder={placeholder}
+              onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
             />
             {!!index && (
               <BtnSecondary type="button" onClick={() => remove(index)}>

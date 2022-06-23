@@ -13,6 +13,7 @@ const DoubleInput = ({ name, title, required, placeholder }: IProps) => {
         type="number"
         step="0.01"
         placeholder={placeholder}
+        onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
       />
     </Col>
   );

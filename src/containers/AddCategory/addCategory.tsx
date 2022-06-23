@@ -62,7 +62,7 @@ const AddCategory = () => {
   const [names, setNames] = useState<PropertyState[]>([]);
   const { send } = useAuthReq(
     categoryName ? 'PUT' : 'POST',
-    `${API}${URL.CATEGORIES}`,
+    `${API}${URL.POST_CATEGORIES}`,
     '',
     {
       'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const AddCategory = () => {
     if (!names[index].isNew) {
       send({
         method: 'DELETE',
-        url: `${API}${URL.CATEGORIES}/${getID(categoryName || '')}`,
+        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || '')}`,
         body: JSON.stringify({
           properties: [names[index].name],
         }),
@@ -114,7 +114,7 @@ const AddCategory = () => {
     if (!names[index].isNew) {
       send({
         method: 'DELETE',
-        url: `${API}${URL.CATEGORIES}/${getID(categoryName || '')}`,
+        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || '')}`,
         body: JSON.stringify({
           properties: [name],
         }),
@@ -172,7 +172,7 @@ const AddCategory = () => {
   const addOrEdit = async (kind: any, properties: any, required: any) => {
     if (categoryName) {
       return send({
-        url: `${API}${URL.CATEGORIES}/${getID(categoryName || '')}`,
+        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || '')}`,
         body: JSON.stringify({
           properties,
         }),

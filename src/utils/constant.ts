@@ -6,7 +6,8 @@ export const API =
 export const URL = {
   LOGIN: '/auth/token/admin',
   LOGOUT: '/auth/logout',
-  CATEGORIES: '/alcohols/metadata/categories',
+  GET_CATEGORIES: '/alcohols/metadata/categories',
+  POST_CATEGORIES: '/admin/alcohols/metadata/categories',
   SEARCH_ALCOHOLS: '/admin/alcohols/search',
   GET_ALCOHOL: '/alcohols',
   POST_ALCOHOLS: '/admin/alcohols',
