@@ -28,7 +28,7 @@ const alcohol: IAlcohol = {
 };
 
 export default {
-  title: 'Lists/AlcoholBlock',
+  title: 'Lists/Element',
   component: AlcoholBlock,
   parameters: {
     docs: {
