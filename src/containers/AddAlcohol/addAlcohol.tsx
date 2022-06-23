@@ -41,7 +41,8 @@ type IModal = {
   details: string;
 };
 
-const getValues = (array: any) => array?.map((el: any) => el.value) || [];
+const getValues = (array: any) =>
+  array instanceof Array ? array?.map((el: any) => el.value) || [] : [];
 
 const getDouble = (number: number) => number.toFixed(2);
 
@@ -121,7 +122,6 @@ const AddAlcohol = () => {
       const { name } = curr;
       const { bsonType } = curr.metadata;
       const { type } = getType(bsonType);
-      console.log({ type, name });
       const prop = alcohol[name];
       const value =
         type === 'array'
