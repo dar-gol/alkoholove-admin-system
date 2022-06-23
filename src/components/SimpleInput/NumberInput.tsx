@@ -13,6 +13,7 @@ const NumberInput = ({ name, title, required, placeholder }: IProps) => {
         type="number"
         step="1"
         placeholder={placeholder}
+        onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
       />
     </Col>
   );
