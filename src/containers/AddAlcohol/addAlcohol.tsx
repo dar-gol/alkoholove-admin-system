@@ -77,15 +77,12 @@ const AddAlcohol = () => {
   const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
 
   const prepareValues = (data: any) => {
-    console.log({ data });
     const prepareData = categories.properties.reduce(
       (prev, curr) => {
         const { type } = getType(curr.metadata.bsonType);
         if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
-        if (type === 'array') {
-          console.log(curr.name, data[curr.name]);
+        if (type === 'array')
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
-        }
         if (type === 'bool')
           return { ...prev, [curr.name]: data[curr.name].value };
         if (type === 'double')
@@ -125,7 +122,6 @@ const AddAlcohol = () => {
       const { name } = curr;
       const { bsonType } = curr.metadata;
       const { type } = getType(bsonType);
-      console.log({ type, name });
       const prop = alcohol[name];
       const value =
         type === 'array'
@@ -235,8 +231,6 @@ const AddAlcohol = () => {
       modalIsOpen(true);
     }
   };
-
-  console.log(methods.formState.errors);
 
   return (
     <>
