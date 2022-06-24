@@ -1,14 +1,14 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState } from "react";
 import {
   CategoryContextType,
   Property,
   SpecificCategory,
-} from '../../@types/category';
-import { CategoryContext } from '../../context/categoryContext';
-import { API, BARCODE_PROPERTY, CORE_PROPERTY, URL } from '../constant';
-import useAuthReq from './useReq';
-import { IPageInfo } from '../../@types/pagination';
-import { IReq } from '../../@types/fetch';
+} from "../../@types/category";
+import { CategoryContext } from "../../context/categoryContext";
+import { API, BARCODE_PROPERTY, CORE_PROPERTY, URL } from "../constant";
+import useAuthReq from "./useReq";
+import { IPageInfo } from "../../@types/pagination";
+import { IReq } from "../../@types/fetch";
 
 const initPageInfo: IPageInfo = {
   limit: 10,
@@ -19,7 +19,11 @@ const initPageInfo: IPageInfo = {
 
 const useCategory = () => {
   const { ctg, set } = useContext(CategoryContext) as CategoryContextType;
-  const { send } = useAuthReq('GET', `${API}${URL.GET_CATEGORIES}`, '');
+  const { send } = useAuthReq(
+    "GET",
+    `${API}${URL.GET_CATEGORIES}?limit=100`,
+    ""
+  );
   const initPage = ctg?.page_info
     ? { ...ctg?.page_info, number: 0 }
     : initPageInfo;
@@ -77,9 +81,9 @@ const useCategory = () => {
     const index = ctg?.categories?.findIndex(
       (category) => category.title === name
     );
-    if (!index) return '';
+    if (!index) return "";
     const id = ctg?.categories?.[index].id;
-    return id || '';
+    return id || "";
   };
 
   const getCategory = (
@@ -91,15 +95,15 @@ const useCategory = () => {
     const { categories } = ctg;
     const alkoholCategories = categories.reduce<SpecificCategory>(
       (prev, curr) => {
-        if (![name, !onlySpecial ? CORE_PROPERTY : ''].includes(curr.title))
+        if (![name, !onlySpecial ? CORE_PROPERTY : ""].includes(curr.title))
           return { ...prev };
         const { properties, required } = curr;
         const prop = filterProp(properties, [
-          'kind',
-          'rate_count',
-          'rate_value',
-          'avg_rating',
-          isFiltered ? BARCODE_PROPERTY : '',
+          "kind",
+          "rate_count",
+          "rate_value",
+          "avg_rating",
+          isFiltered ? BARCODE_PROPERTY : "",
         ]);
 
         return {
