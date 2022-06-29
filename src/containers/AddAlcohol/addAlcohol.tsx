@@ -44,7 +44,10 @@ type IModal = {
 const getValues = (array: any) =>
   array instanceof Array ? array?.map((el: any) => el.value) || [] : [];
 
-const getDouble = (number: number) => number.toFixed(2);
+const getDouble = (number: number) => {
+  const possibleNumber = number.toFixed(2);
+  return possibleNumber === 'NaN' ? null : possibleNumber;
+};
 
 const prepareToSelect = (data: any) =>
   data.map((el: any) => ({
