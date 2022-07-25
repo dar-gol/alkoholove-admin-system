@@ -74,3 +74,74 @@ export const STATUS_CODE = {
   UNPROCESSABLE_ENTITY: 422,
   INTERNAL_SERVER_ERROR: 500,
 };
+
+export const CORE = [
+  {
+    name: 'barcode',
+    display_name: 'Kod kreskowy',
+  },
+  {
+    name: 'name',
+    display_name: 'Nazwa',
+  },
+  {
+    name: 'kind',
+    display_name: 'Rodzaj',
+  },
+  {
+    name: 'type',
+    display_name: 'Typ',
+  },
+  {
+    name: 'alcohol_by_volume',
+    display_name: 'Zawartość alkoholu',
+  },
+  {
+    name: 'description',
+    display_name: 'Opis',
+  },
+  {
+    name: 'color',
+    display_name: 'Kolor',
+  },
+  {
+    name: 'manufacturer',
+    display_name: 'Producent',
+  },
+  {
+    name: 'country',
+    display_name: 'Kraj',
+  },
+  {
+    name: 'region',
+    display_name: 'Region',
+  },
+  {
+    name: 'food',
+    display_name: 'Jedzenie',
+  },
+  {
+    name: 'finish',
+    display_name: 'Finisz',
+  },
+  {
+    name: 'aroma',
+    display_name: 'Aromat',
+  },
+  {
+    name: 'taste',
+    display_name: 'Smak',
+  },
+  {
+    name: 'keywords',
+    display_name: 'Słowa kluczowe',
+  },
+  {
+    name: 'avg_rating',
+    display_name: 'Ocena',
+  },
+  {
+    name: 'rate_count',
+    display_name: 'Ilość głosów',
+  },
+];

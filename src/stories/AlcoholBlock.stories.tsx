@@ -22,9 +22,13 @@ const alcohol: IAlcohol = {
   finish: [],
   aroma: ['imbir', 'goździki'],
   taste: ['imbir', 'skórki cytrusów', 'ziołowy'],
-  id: 6265775246452354,
+  id: '6265775246452354',
+  avg_rating: 5,
+  rate_count: 1,
+  rate_value: 5,
   barcode: ['4067700014665', '4067700014689'],
   keywords: ['ziołowy', 'leczniczy'],
+  additional_properties: [],
 };
 
 export default {

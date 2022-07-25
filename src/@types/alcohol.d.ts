@@ -16,6 +16,12 @@ export type IIngredients = string;
 
 export type IKeywords = string;
 
+export type IAdditionalProperty = {
+  name: string;
+  display_name: string;
+  value: number | string | string[] | number[];
+};
+
 export interface IAlcohol {
   name: string;
   kind: string;
@@ -30,9 +36,13 @@ export interface IAlcohol {
   finish: IFinishes[];
   aroma: IAroma[];
   taste: ITaste[];
-  id: number;
+  id: string;
   barcode: IBarcode[];
   keywords: IKeywords[];
+  avg_rating: number;
+  rate_count: number;
+  rate_value: number;
+  additional_properties: IAdditionalProperty[];
 }
 
 export type Alcohols = IAlcohol[];
