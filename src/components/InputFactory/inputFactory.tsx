@@ -5,6 +5,7 @@ import MoreInput from '../MoreInput/moreInput';
 import Select from '../Select/select';
 import DoubleInput from '../SimpleInput/DoubleInput';
 import NumberInput from '../SimpleInput/NumberInput';
+import Textarea from '../SimpleInput/Textarea';
 import TextInput from '../SimpleInput/TextInput';
 
 const InputFactory = ({
@@ -14,56 +15,61 @@ const InputFactory = ({
   required,
   placeholder,
 }: IFactory) => {
-  switch (type) {
-    case 'string':
-      return (
-        <TextInput
-          name={name}
-          title={title}
-          required={false}
-          placeholder={placeholder}
-        />
-      );
-    case 'array':
-      return (
-        <Select
-          name={name}
-          title={title}
-          required={false}
-          placeholder={placeholder}
-        />
-      );
-    case 'bool':
-      return (
-        <BoolInput
-          name={name}
-          title={title}
-          required={false}
-          placeholder={placeholder}
-        />
-      );
-    case 'int':
-    case 'long':
-      return (
-        <NumberInput
-          name={name}
-          title={title}
-          required={false}
-          placeholder={placeholder}
-        />
-      );
-    case 'double':
-      return (
-        <DoubleInput
-          name={name}
-          title={title}
-          required={false}
-          placeholder={placeholder}
-        />
-      );
-    default:
-      return <div />;
-  }
+  if (name === 'description')
+    return (
+      <Textarea
+        name={name}
+        title={title}
+        required={required}
+        placeholder={placeholder}
+      />
+    );
+  if (type === 'string')
+    return (
+      <TextInput
+        name={name}
+        title={title}
+        required={required}
+        placeholder={placeholder}
+      />
+    );
+  if (type === 'array')
+    return (
+      <Select
+        name={name}
+        title={title}
+        required={required}
+        placeholder={placeholder}
+      />
+    );
+  if (type === 'bool')
+    return (
+      <BoolInput
+        name={name}
+        title={title}
+        required={required}
+        placeholder={placeholder}
+      />
+    );
+  if (type === 'int' || type === 'long')
+    return (
+      <NumberInput
+        name={name}
+        title={title}
+        required={required}
+        placeholder={placeholder}
+      />
+    );
+  if (type === 'double')
+    return (
+      <DoubleInput
+        name={name}
+        title={title}
+        required={required}
+        placeholder={placeholder}
+      />
+    );
+  return <div />;
 };
 
 export default InputFactory;
