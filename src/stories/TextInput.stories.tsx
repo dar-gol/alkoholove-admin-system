@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../components/SimpleInput/TextInput';
 import DoubleInput from '../components/SimpleInput/DoubleInput';
 import NumberInput from '../components/SimpleInput/NumberInput';
+import Textarea from '../components/SimpleInput/Textarea';
 import { Row } from '../styles/global.styled';
 
 export default {
@@ -60,7 +61,7 @@ export default {
     },
     type: {
       defaultValue: 'TextInput',
-      options: ['TextInput', 'DoubleInput', 'NumberInput'],
+      options: ['TextInput', 'DoubleInput', 'NumberInput', 'Textarea'],
       control: { type: 'select' },
       table: {
         type: {
@@ -78,6 +79,7 @@ const Factory = ({ type, ...args }: any) => {
   if (type === 'TextInput') return <TextInput {...args} />;
   if (type === 'DoubleInput') return <DoubleInput {...args} />;
   if (type === 'NumberInput') return <NumberInput {...args} />;
+  if (type === 'Textarea') return <Textarea {...args} />;
   return <TextInput {...args} />;
 };
 

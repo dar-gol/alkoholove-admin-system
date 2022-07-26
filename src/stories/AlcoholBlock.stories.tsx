@@ -28,7 +28,13 @@ const alcohol: IAlcohol = {
   rate_value: 5,
   barcode: ['4067700014665', '4067700014689'],
   keywords: ['ziołowy', 'leczniczy'],
-  additional_properties: [],
+  additional_properties: [
+    {
+      display_name: 'Wiek',
+      name: 'age',
+      value: 4,
+    },
+  ],
 };
 
 export default {
