@@ -1,13 +1,13 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IProps } from '../../@types/inputs';
-import { Col, InputText } from '../../styles/global.styled';
+import { Col, InputText, Label } from '../../styles/global.styled';
 
 const DoubleInput = ({ name, title, required, placeholder }: IProps) => {
   const { register } = useFormContext();
   return (
     <Col>
-      <p>{title}:</p>
+      <Label>{title}:</Label>
       <InputText
         {...register(name, { required, valueAsNumber: true })}
         type="number"
