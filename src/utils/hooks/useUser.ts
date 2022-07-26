@@ -16,12 +16,12 @@ const useUser = () => {
 
   const set = (tokens: Tokens): void => {
     setAdmin({ ...tokens });
-    setCookie('user', { ...tokens }, { path: '/' });
+    setCookie('user', { ...tokens }, { path: '/', sameSite: 'strict' });
   };
 
   const remove = (): void => {
     setAdmin({ access_token: '', refresh_token: '' });
-    setCookie('user', '', { path: '/' });
+    setCookie('user', '', { path: '/', sameSite: 'strict' });
   };
 
   return { get, set, remove, checkCookie };
