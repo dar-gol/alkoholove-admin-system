@@ -12,7 +12,7 @@ const NumberInput = ({ name, title, required, placeholder }: IProps) => {
         {...register(name, { required, valueAsNumber: true })}
         type="number"
         step="1"
-        placeholder={placeholder}
+        placeholder={`${placeholder} ${!required ? '(opcjonalne)' : ''}`}
         onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
       />
     </Col>

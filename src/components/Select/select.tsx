@@ -14,7 +14,12 @@ const Select = ({ title, name, required, placeholder }: IProps) => {
         control={control}
         rules={{ required }}
         render={({ field }) => (
-          <Creatable {...field} isClearable placeholder={placeholder} isMulti />
+          <Creatable
+            {...field}
+            isClearable
+            placeholder={`${placeholder} ${!required ? '(opcjonalne)' : ''}`}
+            isMulti
+          />
         )}
       />
     </Col>

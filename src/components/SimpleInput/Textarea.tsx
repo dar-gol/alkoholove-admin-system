@@ -17,7 +17,7 @@ const Textarea = ({
       <Label>{title}:</Label>
       <TextArea
         {...register(name, { required })}
-        placeholder={placeholder}
+        placeholder={`${placeholder} ${!required ? '(opcjonalne)' : ''}`}
         onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
       />
     </Col>

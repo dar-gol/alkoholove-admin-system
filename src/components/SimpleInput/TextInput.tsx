@@ -17,7 +17,7 @@ const TextInput = ({
       <InputText
         {...register(name, { required })}
         type={type}
-        placeholder={placeholder}
+        placeholder={`${placeholder} ${!required ? '(opcjonalne)' : ''}`}
         onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
       />
     </Col>
