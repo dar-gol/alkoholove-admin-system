@@ -35,7 +35,7 @@ const AlcoholBlock = ({
   index,
 }: {
   alcohol: IAlcohol;
-  update: (id: number) => void;
+  update: (id: string) => void;
   index: number;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -51,7 +51,7 @@ const AlcoholBlock = ({
     setIsOpen(false);
   };
 
-  const remove = async (id: number) => {
+  const remove = async (id: string) => {
     setIsOpen(false);
     setIsLoading(true);
     try {

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useAlcohol from '../../utils/hooks/useAlcohol';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
-import { API, URL } from '../../utils/constant';
+import { API, CORE, URL } from '../../utils/constant';
 import { get } from '../../utils/fetch';
 import { createImageName } from '../../utils/utils';
 import useCategory from '../../utils/hooks/useCategory';
@@ -50,23 +50,27 @@ const AlcoholDetails = () => {
     navigate('/alcohol');
   };
 
-  const JSX =
+  const coreValues =
     alcohol &&
-    getCategory(alcohol.kind, false, false).properties.map((prop) => {
-      const {
-        name,
-        metadata: { title },
-      } = prop;
-      const value = alcohol[name as keyof typeof alcohol];
-      return (
-        <Tuple key={name}>
-          <Key>
-            <CapitalCase>{title}</CapitalCase>
-          </Key>
-          <Value>{formater(value)}</Value>
-        </Tuple>
-      );
-    });
+    CORE.map(({ name, display_name }) => (
+      <Tuple key={name}>
+        <Key>
+          <CapitalCase>{display_name}</CapitalCase>
+        </Key>
+        <Value>{formater(alcohol[name as keyof typeof alcohol])}</Value>
+      </Tuple>
+    ));
+
+  const additionalValues =
+    alcohol &&
+    alcohol.additional_properties.map(({ display_name, value }) => (
+      <Tuple key={display_name}>
+        <Key>
+          <CapitalCase>{display_name}</CapitalCase>
+        </Key>
+        <Value>{formater(value)}</Value>
+      </Tuple>
+    ));
 
   return (
     <>
@@ -75,7 +79,9 @@ const AlcoholDetails = () => {
       {alcohol ? (
         <Container>
           <Title>Szczegółowe informacje</Title>
-          <Col>{JSX}</Col>
+          <Col>
+            {coreValues} {additionalValues}
+          </Col>
           <Row justifyContent="center">
             <Col>
               <img

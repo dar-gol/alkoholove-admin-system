@@ -2,16 +2,21 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IProps } from '../../@types/inputs';
 import { Col, InputText, Label } from '../../styles/global.styled';
+import { TextArea } from './simpleInput.styled';
 
-const NumberInput = ({ name, title, required, placeholder }: IProps) => {
+const Textarea = ({
+  name,
+  title,
+  required,
+  type,
+  placeholder,
+}: IProps & { type?: string }) => {
   const { register } = useFormContext();
   return (
     <Col>
       <Label>{title}:</Label>
-      <InputText
-        {...register(name, { required, valueAsNumber: true })}
-        type="number"
-        step="1"
+      <TextArea
+        {...register(name, { required })}
         placeholder={`${placeholder} ${!required ? '(opcjonalne)' : ''}`}
         onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
       />
@@ -19,4 +24,6 @@ const NumberInput = ({ name, title, required, placeholder }: IProps) => {
   );
 };
 
-export default NumberInput;
+Textarea.defaultProps = { type: 'text' };
+
+export default Textarea;
