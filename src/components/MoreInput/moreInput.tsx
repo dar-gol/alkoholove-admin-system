@@ -7,6 +7,7 @@ import {
   BtnSecondary,
   Col,
   InputText,
+  Label,
   Row,
 } from '../../styles/global.styled';
 
@@ -24,7 +25,7 @@ const MoreInput = ({ name, title, placeholder }: IProps) => {
 
   return (
     <div>
-      <p>{title}: </p>
+      <Label>{title}: </Label>
       <Col gap="10px">
         {fields.map((item, index) => (
           <Row key={item.id} gap="20px" flex="1">

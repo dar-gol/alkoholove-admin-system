@@ -9,7 +9,7 @@ export const Main = styled.main`
   margin-bottom: 50px;
 `;
 
-const borderRadius = '20px';
+export const borderRadius = '20px';
 
 export type BlockType = {
   flex?: string;
@@ -163,4 +163,8 @@ export const Value = styled.p`
 export const WarnText = styled.p`
   ${Heading4()}
   color: #d13030;
+`;
+
+export const Label = styled.p`
+  text-transform: capitalize;
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 import { IProps } from '../../@types/inputs';
+import { Label } from '../../styles/global.styled';
 
 const BoolInput = ({ name, title, required, placeholder }: IProps) => {
   const { control } = useFormContext();
@@ -17,7 +18,7 @@ const BoolInput = ({ name, title, required, placeholder }: IProps) => {
   ];
   return (
     <div>
-      <p>{title}:</p>
+      <Label>{title}:</Label>
       <Controller
         name={name}
         control={control}

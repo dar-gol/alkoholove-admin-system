@@ -66,7 +66,7 @@ const useAlcohols = () => {
     });
   };
 
-  const remove = (id: number) => {
+  const remove = (id: string) => {
     setAlcohols((prev: any): any => [
       ...prev.filter((alcohol: IAlcohol) => alcohol.id !== id),
     ]);
