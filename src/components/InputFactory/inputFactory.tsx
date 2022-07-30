@@ -20,7 +20,7 @@ const InputFactory = ({
       <Textarea
         name={name}
         title={title}
-        required={required}
+        required={false}
         placeholder={placeholder}
       />
     );
@@ -29,7 +29,7 @@ const InputFactory = ({
       <TextInput
         name={name}
         title={title}
-        required={required}
+        required={false}
         placeholder={placeholder}
       />
     );
@@ -38,7 +38,7 @@ const InputFactory = ({
       <Select
         name={name}
         title={title}
-        required={required}
+        required={false}
         placeholder={placeholder}
       />
     );
@@ -47,7 +47,7 @@ const InputFactory = ({
       <BoolInput
         name={name}
         title={title}
-        required={required}
+        required={false}
         placeholder={placeholder}
       />
     );
@@ -56,7 +56,7 @@ const InputFactory = ({
       <NumberInput
         name={name}
         title={title}
-        required={required}
+        required={false}
         placeholder={placeholder}
       />
     );
@@ -65,7 +65,7 @@ const InputFactory = ({
       <DoubleInput
         name={name}
         title={title}
-        required={required}
+        required={false}
         placeholder={placeholder}
       />
     );
