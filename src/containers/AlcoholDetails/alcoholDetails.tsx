@@ -26,7 +26,7 @@ import { ModalTitle } from '../../components/modal/Modal.styled';
 import useAuthReq from '../../utils/hooks/useReq';
 
 const formater = (value: any) => {
-  if (!value || (typeof value === 'object' && value.length === 0))
+  if (value === null || (typeof value === 'object' && value.length === 0))
     return 'Brak danych*';
   if (typeof value === 'object' && value !== null) return value.join(' | ');
   if (typeof value === 'boolean') return value ? 'TAK' : 'NIE';
