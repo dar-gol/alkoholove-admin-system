@@ -4,9 +4,7 @@ import useAlcohol from '../../utils/hooks/useAlcohol';
 import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
 import Header from '../../components/Header/header';
 import { API, CORE, URL } from '../../utils/constant';
-import { get } from '../../utils/fetch';
 import { createImageName } from '../../utils/utils';
-import useCategory from '../../utils/hooks/useCategory';
 import {
   BtnPrimary,
   BtnSecondary,
@@ -37,7 +35,6 @@ const AlcoholDetails = () => {
   const { alcoholBarcode } = useParams();
   const alcohol = useAlcohol(alcoholBarcode || '');
   const navigate = useNavigate();
-  const { getCategory } = useCategory();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { send } = useAuthReq(
     'DELETE',

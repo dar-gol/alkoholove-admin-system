@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Alcohols, IAlcohol } from '../../@types/alcohol';
 import { IReq } from '../../@types/fetch';
 import { IPageInfo } from '../../@types/pagination';
@@ -25,6 +26,7 @@ const useAlcohols = () => {
   const [name, setName] = useState<string>('');
   const [page, setPage] = useState<IPageInfo>(initPageInfo);
   const { send } = useAuthReq(...initReq);
+  const [cookie, setCookie] = useCookies();
 
   const update = (req: IReq = {}) => {
     send({ ...req })
@@ -46,6 +48,7 @@ const useAlcohols = () => {
 
   const changePage = (index: number) => {
     const shift = index * page.limit;
+    setCookie('alcohol_page', index, { path: '/', sameSite: 'strict' });
     setPage((prev) => ({
       ...prev,
       number: index,
@@ -74,6 +77,7 @@ const useAlcohols = () => {
 
   useEffect(() => {
     if (get().access_token) update();
+    changePage(parseInt(cookie.alcohol_page, 10) || 0);
   }, [get().access_token]);
 
   return {
