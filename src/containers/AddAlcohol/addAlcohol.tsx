@@ -26,13 +26,21 @@ import CategoryForm from '../../components/CategoryForm/categoryForm';
 import { inputType, Options } from '../../@types/inputs';
 import { SpecificCategory, Type } from '../../@types/category';
 import InputFactory from '../../components/InputFactory/inputFactory';
-import { API, BARCODE_PROPERTY, INPUT_TYPE, URL } from '../../utils/constant';
+import {
+  API,
+  BARCODE_PROPERTY,
+  CORE,
+  INPUT_TYPE,
+  URL,
+} from '../../utils/constant';
 import MoreInput from '../../components/MoreInput/moreInput';
 import useAuthReq from '../../utils/hooks/useReq';
 import { getType, createImageName, createFormData } from '../../utils/utils';
 import { IReq } from '../../@types/fetch';
 import Suggestion from '../../components/Suggestion/suggestion';
 import ErrorModal from '../../components/ErrorModal/errorModal';
+import useAlcohol from '../../utils/hooks/useAlcohol';
+import { IAlcohol } from '../../@types/alcohol';
 
 type IModal = {
   open: boolean;
@@ -114,36 +122,37 @@ const AddAlcohol = () => {
   };
 
   const handleCompleteFields = async () => {
-    const alcohol = await send({
-      method: 'GET',
-      url: `${API}${URL.GET_ALCOHOL}/${alcoholBarcode}`,
-      header: { Accept: 'application/json' },
-    }).then((data) => data.json());
+    if (!alcoholBarcode) return;
+    const alcohol = useAlcohol(alcoholBarcode) as IAlcohol;
     const category = getCategory(alcohol.kind);
     setCategories({ ...category, kind: alcohol.kind });
-    const values = category.properties.reduce((prev, curr) => {
-      const { name } = curr;
-      const { bsonType } = curr.metadata;
-      const { type } = getType(bsonType);
-      const prop = alcohol[name];
+    const coreValues = CORE.reduce((prev, { name }) => {
+      const prop = alcohol[name as keyof typeof alcohol];
       const value =
-        type === 'array'
-          ? { [name]: prepareToSelect(alcohol[name]) }
+        prop instanceof Array
+          ? { [name]: prepareToSelect(prop) }
           : { [name]: prop };
       return { ...prev, ...value };
     }, {});
+    const additionalValues = alcohol.additional_properties.reduce(
+      (prev, { value, name }) => {
+        const prop = value instanceof Array ? prepareToSelect(value) : value;
+        return { ...prev, [name]: prop };
+      },
+      {}
+    );
     setID(alcohol.id);
     methods.reset({
+      ...coreValues,
+      ...additionalValues,
       barcode: alcohol.barcode,
       kind: alcohol.kind,
-      ...values,
       sm: createImageName(alcohol.name, 'sm'),
       md: createImageName(alcohol.name, 'md'),
     });
   };
 
   useEffect(() => {
-    if (!alcoholBarcode) return;
     handleCompleteFields();
   }, [ctg?.categories]);
 
