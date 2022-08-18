@@ -33,10 +33,10 @@ const options: IOption[] = [
 ];
 
 const Searcher: React.FC<IProps> = ({ setLimit, update, isSearch }) => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string | null>(null);
   useEffect(() => {
     const delayFn = setTimeout(() => {
-      update(input);
+      if (input !== null) update(input);
     }, 1000);
     return () => clearTimeout(delayFn);
   }, [input]);
@@ -51,7 +51,7 @@ const Searcher: React.FC<IProps> = ({ setLimit, update, isSearch }) => {
       {isSearch && (
         <InputText
           placeholder="Szukaj..."
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value || '')}
         />
       )}
     </Row>
