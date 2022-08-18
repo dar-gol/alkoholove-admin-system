@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { IReq } from '../../@types/fetch';
 import { IPageInfo } from '../../@types/pagination';
 import { IUser } from '../../@types/users';
@@ -19,6 +20,7 @@ const useUsers = () => {
   const [users, setUsers] = useState<IUser[] | null>(null);
   const [name, setName] = useState<string>('');
   const [page, setPage] = useState<IPageInfo>(initPageInfo);
+  const [cookie, setCookie] = useCookies();
 
   const update = (req: IReq = {}) => {
     send({ ...req })
@@ -43,6 +45,7 @@ const useUsers = () => {
       ...prev,
       number: index,
     }));
+    setCookie('users_page', index, { path: '/', sameSite: 'strict' });
     update({
       url: `${API}${URL.USERS}?limit=${page.limit}&offset=${shift}&username=${name}`,
     });
@@ -61,6 +64,7 @@ const useUsers = () => {
 
   useEffect(() => {
     update();
+    changePage(parseInt(cookie.users_page, 10) || 0);
   }, []);
 
   return { users, page, changePage, changePageSize, search };
