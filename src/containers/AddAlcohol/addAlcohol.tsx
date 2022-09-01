@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useContext, useEffect, useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
-import FileInput from '../../components/FileInput/fileInput';
-import { Form, Title } from './addAlcohol.styled';
+import React, { useContext, useEffect, useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import Header from "../../components/Header/header";
+import FileInput from "../../components/FileInput/fileInput";
+import { Form, Title } from "./addAlcohol.styled";
 import {
   BtnPrimary,
   Col,
@@ -17,30 +17,30 @@ import {
   Row,
   Tuple,
   Value,
-} from '../../styles/global.styled';
-import Loader from '../../components/Loader/loader';
-import Modal from '../../components/modal/Modal';
-import { ModalTitle } from '../../components/modal/Modal.styled';
-import useCategory from '../../utils/hooks/useCategory';
-import CategoryForm from '../../components/CategoryForm/categoryForm';
-import { inputType, Options } from '../../@types/inputs';
-import { SpecificCategory, Type } from '../../@types/category';
-import InputFactory from '../../components/InputFactory/inputFactory';
+} from "../../styles/global.styled";
+import Loader from "../../components/Loader/loader";
+import Modal from "../../components/modal/Modal";
+import { ModalTitle } from "../../components/modal/Modal.styled";
+import useCategory from "../../utils/hooks/useCategory";
+import CategoryForm from "../../components/CategoryForm/categoryForm";
+import { inputType, Options } from "../../@types/inputs";
+import { SpecificCategory, Type } from "../../@types/category";
+import InputFactory from "../../components/InputFactory/inputFactory";
 import {
   API,
   BARCODE_PROPERTY,
   CORE,
   INPUT_TYPE,
   URL,
-} from '../../utils/constant';
-import MoreInput from '../../components/MoreInput/moreInput';
-import useAuthReq from '../../utils/hooks/useReq';
-import { getType, createImageName, createFormData } from '../../utils/utils';
-import { IReq } from '../../@types/fetch';
-import Suggestion from '../../components/Suggestion/suggestion';
-import ErrorModal from '../../components/ErrorModal/errorModal';
-import useAlcohol from '../../utils/hooks/useAlcohol';
-import { IAlcohol } from '../../@types/alcohol';
+} from "../../utils/constant";
+import MoreInput from "../../components/MoreInput/moreInput";
+import useAuthReq from "../../utils/hooks/useReq";
+import { getType, createImageName, createFormData } from "../../utils/utils";
+import { IReq } from "../../@types/fetch";
+import Suggestion from "../../components/Suggestion/suggestion";
+import ErrorModal from "../../components/ErrorModal/errorModal";
+import useAlcohol from "../../utils/hooks/useAlcohol";
+import { IAlcohol } from "../../@types/alcohol";
 
 type IModal = {
   open: boolean;
@@ -54,7 +54,7 @@ const getValues = (array: any) =>
 
 const getDouble = (number: number) => {
   const possibleNumber = number.toFixed(2);
-  return possibleNumber === 'NaN' ? null : possibleNumber;
+  return possibleNumber === "NaN" ? null : possibleNumber;
 };
 
 const prepareToSelect = (data: any) =>
@@ -63,16 +63,27 @@ const prepareToSelect = (data: any) =>
     value: el,
   }));
 
+const prepareBoolean = (value: boolean) => ({
+  label: value ? "TAK" : "NIE",
+  value,
+});
+
+const prepareField = (field: unknown) => {
+  if (field instanceof Array) return prepareToSelect(field);
+  if (typeof field === "boolean") return prepareBoolean(field);
+  return field;
+};
+
 const AddAlcohol = () => {
   const methods = useForm({});
   const navigate = useNavigate();
   const { alcoholBarcode } = useParams();
-  const [id, setID] = useState<string>('');
+  const [id, setID] = useState<string>("");
   const [modal, setModal] = useState<IModal>({
     open: false,
-    title: '',
-    text: '',
-    details: '',
+    title: "",
+    text: "",
+    details: "",
   });
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -85,18 +96,19 @@ const AddAlcohol = () => {
     properties: [],
   });
   const { getCategory, ctg } = useCategory();
-  const { send } = useAuthReq('POST', `${API}${URL.POST_ALCOHOLS}`, '');
+  const { send } = useAuthReq("POST", `${API}${URL.POST_ALCOHOLS}`, "");
+  const alcohol = useAlcohol(alcoholBarcode) as IAlcohol;
 
   const prepareValues = (data: any) => {
     const prepareData = categories.properties.reduce(
       (prev, curr) => {
         const { type } = getType(curr.metadata.bsonType);
         if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
-        if (type === 'array')
+        if (type === "array")
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
-        if (type === 'bool')
+        if (type === "bool")
           return { ...prev, [curr.name]: data[curr.name].value };
-        if (type === 'double')
+        if (type === "double")
           return { ...prev, [curr.name]: getDouble(data[curr.name]) };
         return prev;
       },
@@ -110,10 +122,10 @@ const AddAlcohol = () => {
       (prev: any, curr: any) => {
         if (methods.getValues(curr) === undefined)
           return { [curr]: [], ...prev };
-        return { [curr]: '', ...prev };
+        return { [curr]: "", ...prev };
       },
       {
-        barcode: [''],
+        barcode: [""],
       }
     );
 
@@ -122,43 +134,43 @@ const AddAlcohol = () => {
   };
 
   const handleCompleteFields = async () => {
-    if (!alcoholBarcode) return;
-    const alcohol = useAlcohol(alcoholBarcode) as IAlcohol;
+    console.log({ alcohol });
+    if (!alcoholBarcode || !alcohol) return;
     const category = getCategory(alcohol.kind);
     setCategories({ ...category, kind: alcohol.kind });
     const coreValues = CORE.reduce((prev, { name }) => {
       const prop = alcohol[name as keyof typeof alcohol];
-      const value =
-        prop instanceof Array
-          ? { [name]: prepareToSelect(prop) }
-          : { [name]: prop };
+      const value = { [name]: prepareField(prop) };
       return { ...prev, ...value };
     }, {});
     const additionalValues = alcohol.additional_properties.reduce(
       (prev, { value, name }) => {
-        const prop = value instanceof Array ? prepareToSelect(value) : value;
+        const prop = prepareField(value);
         return { ...prev, [name]: prop };
       },
       {}
     );
     setID(alcohol.id);
+
+    console.log({ coreValues, additionalValues });
+
     methods.reset({
       ...coreValues,
       ...additionalValues,
       barcode: alcohol.barcode,
       kind: alcohol.kind,
-      sm: createImageName(alcohol.name, 'sm'),
-      md: createImageName(alcohol.name, 'md'),
+      sm: createImageName(alcohol.name, "sm"),
+      md: createImageName(alcohol.name, "md"),
     });
   };
 
   useEffect(() => {
     handleCompleteFields();
-  }, [ctg?.categories]);
+  }, [alcohol]);
 
   const addMore = () => {
     modalIsOpen(false);
-    navigate('/alcohol/add');
+    navigate("/alcohol/add");
   };
 
   const chooseCategory = async ({ kind }: Options) => {
@@ -169,24 +181,24 @@ const AddAlcohol = () => {
     const req = {
       body: JSON.stringify({ ...data }),
       header: {
-        Accept: '*/*',
-        'Content-Type': 'application/json',
+        Accept: "*/*",
+        "Content-Type": "application/json",
       },
       ...(alcoholBarcode
         ? {
-            method: 'PUT',
+            method: "PUT",
             url: `${API}${URL.POST_ALCOHOLS}/${id}`,
           }
         : {}),
     };
     const result = await send({ ...req } as IReq);
     if (![200, 201].includes(result.status))
-      throw new Error('It is problem with add alcohol!');
+      throw new Error("It is problem with add alcohol!");
 
     if ((!!alcoholBarcode && imgChanged.sm) || !alcoholBarcode) {
       const formDataSM = createFormData([
-        ['image_name', createImageName(data.name, 'sm')],
-        ['file', sm],
+        ["image_name", createImageName(data.name, "sm")],
+        ["file", sm],
       ]);
       const resSM = await send({
         url: `${API}${URL.UPLOAD_IMAGE}`,
@@ -199,13 +211,13 @@ const AddAlcohol = () => {
 
     if ((!!alcoholBarcode && imgChanged.md) || !alcoholBarcode) {
       const formDataMD = createFormData([
-        ['image_name', createImageName(data.name, 'md')],
-        ['file', md],
+        ["image_name", createImageName(data.name, "md")],
+        ["file", md],
       ]);
       const resMD = await send({
         url: `${API}${URL.UPLOAD_IMAGE}`,
         body: formDataMD,
-        header: { Accept: '*/*' },
+        header: { Accept: "*/*" },
       });
 
       if (resMD.status !== 201)
@@ -227,15 +239,16 @@ const AddAlcohol = () => {
     delete data.md;
     const values = prepareValues(data);
     try {
-      await addOrEdit({ ...values, kind: categories.kind }, sm, md);
+      console.log({ values, data });
+      // await addOrEdit({ ...values, kind: categories.kind }, sm, md);
       setIsValid(true);
       methods.reset(resetValues(Object.keys(data)));
     } catch (e: any) {
       setIsValid(false);
       setModal({
         open: true,
-        title: 'Problem z dodaniem/edycją alkoholu',
-        text: 'Upewnij się, że wszystkie pola są poprawnie wypełnione',
+        title: "Problem z dodaniem/edycją alkoholu",
+        text: "Upewnij się, że wszystkie pola są poprawnie wypełnione",
         details: JSON.stringify(e?.statusText),
       });
     } finally {
@@ -281,7 +294,7 @@ const AddAlcohol = () => {
                   title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
                   required
                   remove={removeImage}
-                  imageName={methods.getValues('sm')}
+                  imageName={methods.getValues("sm")}
                   placeholder="sm"
                 />
                 <FileInput
@@ -289,7 +302,7 @@ const AddAlcohol = () => {
                   title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
                   required
                   remove={removeImage}
-                  imageName={methods.getValues('md')}
+                  imageName={methods.getValues("md")}
                   placeholder="md"
                 />
               </Row>
