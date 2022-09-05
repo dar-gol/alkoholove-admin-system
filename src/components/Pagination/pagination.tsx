@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   BtnPrimary,
   BtnSecondary,
   InputText,
   Row,
-} from '../../styles/global.styled';
-import { CurrentPage } from './pagination.styled';
+} from "../../styles/global.styled";
+import useQueryParams from "../../utils/hooks/useQueryParams";
+import { CurrentPage } from "./pagination.styled";
 
 interface IProps {
   lastPage: number;
@@ -14,10 +15,12 @@ interface IProps {
 }
 
 const Pagination: React.FC<IProps> = ({ lastPage, offset, setOffset }) => {
+  const { query, updateParam } = useQueryParams();
   const getIndexes = (length: number, shift: number): number[] =>
     Array.from({ length }, (_, i) => i + shift);
 
   const changePage = (page: number) => {
+    updateParam("offset", page);
     setOffset(page);
   };
 
@@ -25,12 +28,16 @@ const Pagination: React.FC<IProps> = ({ lastPage, offset, setOffset }) => {
     const page = offset + 1;
     const diff = lastPage - page;
     const pages = [];
-    if (page > 3) pages.push(...[1, '...', page - 1, page]);
+    if (page > 3) pages.push(...[1, "...", page - 1, page]);
     else pages.push(...getIndexes(page, 1));
-    if (diff >= 3) pages.push(...[page + 1, '...', lastPage]);
+    if (diff >= 3) pages.push(...[page + 1, "...", lastPage]);
     else pages.push(...getIndexes(diff, page + 1));
     return pages;
   };
+
+  useEffect(() => {
+    changePage(parseInt(query.offset, 10) || 0);
+  }, []);
 
   return (
     <div>
@@ -43,7 +50,7 @@ const Pagination: React.FC<IProps> = ({ lastPage, offset, setOffset }) => {
                 {page}
               </CurrentPage>
             );
-          if (page === '...') return <span key={key}>{page}</span>;
+          if (page === "...") return <span key={key}>{page}</span>;
           return (
             <BtnSecondary
               key={key}

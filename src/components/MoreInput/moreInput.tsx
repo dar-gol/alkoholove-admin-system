@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { IProps } from '../../@types/inputs';
+import React, { useEffect } from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { IProps } from "../../@types/inputs";
 import {
   BtnPrimary,
   BtnSecondary,
@@ -9,7 +9,7 @@ import {
   InputText,
   Label,
   Row,
-} from '../../styles/global.styled';
+} from "../../styles/global.styled";
 
 const MoreInput = ({ name, title, placeholder }: IProps) => {
   const { alcoholBarcode } = useParams();
@@ -20,7 +20,7 @@ const MoreInput = ({ name, title, placeholder }: IProps) => {
 
   useEffect(() => {
     if (alcoholBarcode) return;
-    append('');
+    append("");
   }, []);
 
   return (
@@ -32,7 +32,7 @@ const MoreInput = ({ name, title, placeholder }: IProps) => {
             <InputText
               {...register(`${name}[${index}]`, { required: true })}
               placeholder={placeholder}
-              onKeyDown={(e: any) => e.key === 'Enter' && e.preventDefault()}
+              onKeyDown={(e: any) => e.key === "Enter" && e.preventDefault()}
             />
             {!!index && (
               <BtnSecondary type="button" onClick={() => remove(index)}>
@@ -42,7 +42,7 @@ const MoreInput = ({ name, title, placeholder }: IProps) => {
           </Row>
         ))}
       </Col>
-      <BtnPrimary margin="20px 0 0 0" type="button" onClick={() => append('')}>
+      <BtnPrimary margin="20px 0 0 0" type="button" onClick={() => append("")}>
         Dodaj kolejny kod kreskowy
       </BtnPrimary>
     </div>
