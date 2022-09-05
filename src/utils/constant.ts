@@ -1,9 +1,7 @@
-// export const API =
-//   process.env.NODE_ENV === 'development'
-//     ? 'http://localhost:8008'
-//     : 'https://api-alkoholove.herokuapp.com';
-
-export const API = "https://api-alkoholove.herokuapp.com";
+export const API =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8008"
+    : "https://api-alkoholove.herokuapp.com";
 
 export const URL = {
   LOGIN: "/auth/token/admin",
