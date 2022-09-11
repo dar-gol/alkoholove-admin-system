@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  UseFormReturn,
+} from "react-hook-form";
 import { useTheme } from "styled-components";
-import { Controller, useForm, useFormState } from "react-hook-form";
-import { useCookies } from "react-cookie";
 import {
   Container,
   Logo,
@@ -13,59 +17,38 @@ import {
   DayNightContainer,
 } from "./Login.styled";
 import Spacings from "../../styles/spacings";
-import useLogin from "../../utils/hooks/useLogin";
 import ErrorModal from "../../components/ErrorModal/errorModal";
-import Modal from "../../components/modal/Modal";
-import { ModalTitle } from "../../components/modal/Modal.styled";
-import Loader from "../../components/Loader/loader";
 import TextInput from "../../components/Inputs/TextInput";
-import { Type } from "../../utils/reducers/LoginReducer";
 import { BtnPrimary, Col, Row } from "../../styles/global.styled";
 import CheckBox from "../../components/Inputs/CheckBox";
 import LoadingModal from "../../components/modal/LoadingModal";
+import useLogin from "../../utils/hooks/useLogin";
+import { State } from "../../utils/reducers/LoginReducer";
 
-const Login = () => {
-  const { loginHandler, dispatch, state } = useLogin();
+interface Props {
+  isNight: boolean;
+  modeHandler: () => void;
+  form: UseFormReturn<{ username: string; password: string }>;
+  onSubmit: SubmitHandler<FieldValues>;
+  cleanForm: () => void;
+  state: State;
+}
+
+const LoginView = ({
+  isNight,
+  modeHandler,
+  form,
+  onSubmit,
+  cleanForm,
+  state,
+}: Props) => {
   const theme = useTheme() as { palette: { [k: string]: string } };
-  const [cookie, setCookie] = useCookies();
-  const [isNight, setIsNight] = useState<boolean>(false);
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-  } = useForm({
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
 
-  const login = ({ username, password }: any) =>
-    loginHandler(username, password);
-
-  useEffect(() => {
-    setIsNight(cookie.mode === "dark");
-  }, []);
-
-  const clean = () => {
-    dispatch({ type: Type.LOGIN_CLEAN });
-    reset({ username: "", password: "" });
-  };
-
-  const modeHandler = () => {
-    setIsNight((prev) => !prev);
-    setCookie("mode", isNight ? "light" : "dark", {
-      path: "/",
-      sameSite: "strict",
-    });
-  };
+  console.log({ ...state });
   return (
     <Container>
       <DayNightContainer>
         <CheckBox
-          error="asd"
-          placeholder="asd"
           leftIcon="icon-sun"
           leftColor={theme.palette.Yellow70}
           rightIcon="icon-night"
@@ -78,7 +61,7 @@ const Login = () => {
         <LogoWrapper>
           <Logo src="./logo192.png" alt="This is a alkohoLove's logo" />
         </LogoWrapper>
-        <Form onSubmit={handleSubmit(login)}>
+        <Form onSubmit={form.handleSubmit(onSubmit)}>
           <Row>
             <Title>Panel administracyjny</Title>
           </Row>
@@ -87,7 +70,7 @@ const Login = () => {
           </Row>
           <Row width="100%">
             <Controller
-              control={control}
+              control={form.control}
               name="username"
               rules={{ required: true }}
               render={({ field }) => (
@@ -98,14 +81,14 @@ const Login = () => {
                   inputRef={field.ref}
                   placeholder="Nazwa uzytkownika"
                   error="Nazwa uzytkownika jest wymagana"
-                  state={errors.username ? "error" : ""}
+                  state={form.formState.errors.username ? "error" : ""}
                 />
               )}
             />
           </Row>
           <Row width="100%">
             <Controller
-              control={control}
+              control={form.control}
               name="password"
               rules={{
                 minLength: 8,
@@ -119,7 +102,7 @@ const Login = () => {
                   inputRef={field.ref}
                   placeholder="Hasło"
                   error="Hasło jest nieprawidłowe!"
-                  state={errors.password ? "error" : ""}
+                  state={form.formState.errors.password ? "error" : ""}
                   type="password"
                   autoComplete="on"
                 />
@@ -137,7 +120,7 @@ const Login = () => {
         title="Problem z logowaniem"
         text="Upewnij się, że wpisałeś poprawne dane logowania"
         details={state.error}
-        onClose={clean}
+        onClose={cleanForm}
       />
       <LoadingModal
         isOpen={state.loading}
@@ -147,4 +130,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginView;

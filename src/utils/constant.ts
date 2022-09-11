@@ -1,7 +1,13 @@
-export const API =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:8008"
-    : "https://api-alkoholove.herokuapp.com";
+/* eslint-disable no-unreachable */
+const isProduction = () => {
+  return true;
+  if (process.env.NODE_ENV === "development") return false;
+  return true;
+};
+
+export const API = !isProduction()
+  ? "http://localhost:8008"
+  : "https://api-alkoholove.herokuapp.com";
 
 export const URL = {
   LOGIN: "/auth/token/admin",
@@ -18,7 +24,7 @@ export const URL = {
   GET_SUGGESTIONS: "/admin/suggestions",
   GET_TOTAL_SUGGESTIONS: "/admin/suggestions/total",
   GET_IMAGE: `https://res.cloudinary.com/alkoholove/${
-    process.env.NODE_ENV === "development" ? "test" : "alcohols"
+    !isProduction() ? "test" : "alcohols"
   }`,
 };
 

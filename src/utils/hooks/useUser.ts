@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
-import { useCookies } from 'react-cookie';
-import { Tokens, UserContextType } from '../../@types/user';
-import { UserContext } from '../../context/userContext';
+import { useState, useEffect, useContext } from "react";
+import { useCookies } from "react-cookie";
+import { Tokens, UserContextType } from "../../@types/user";
+import { UserContext } from "../../context/userContext";
 
 const useUser = () => {
   const { user, setAdmin } = useContext(UserContext) as UserContextType;
-  const [cookie, setCookie] = useCookies(['user']);
+  const [cookie, setCookie] = useCookies(["user"]);
 
   const get = (): Tokens => {
     const tokens = user.access_token ? user : cookie.user;
@@ -16,12 +16,12 @@ const useUser = () => {
 
   const set = (tokens: Tokens): void => {
     setAdmin({ ...tokens });
-    setCookie('user', { ...tokens }, { path: '/', sameSite: 'strict' });
+    setCookie("user", { ...tokens }, { path: "/", sameSite: "strict" });
   };
 
   const remove = (): void => {
-    setAdmin({ access_token: '', refresh_token: '' });
-    setCookie('user', '', { path: '/', sameSite: 'strict' });
+    setAdmin({ access_token: "", refresh_token: "" });
+    setCookie("user", "", { path: "/", sameSite: "strict" });
   };
 
   return { get, set, remove, checkCookie };

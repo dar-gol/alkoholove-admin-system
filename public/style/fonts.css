@@ -1,0 +1,269 @@
+@font-face {
+  font-family: "icomoon";
+  src: url("../fonts/icomoon.eot?r4a2it");
+  src: url("../fonts/icomoon.eot?r4a2it#iefix") format("embedded-opentype"),
+    url("../fonts/icomoon.ttf?r4a2it") format("truetype"),
+    url("../fonts/icomoon.woff?r4a2it") format("woff"),
+    url("../fonts/icomoon.svg?r4a2it#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chevron-right-1:before {
+  content: "\e900";
+}
+.icon-chevron-top-1:before {
+  content: "\e901";
+}
+.icon-add-beer .path1:before {
+  content: "\e903";
+}
+.icon-add-beer .path2:before {
+  content: "\e904";
+  margin-left: -0.9599609375em;
+}
+.icon-add-beer .path3:before {
+  content: "\e905";
+  margin-left: -0.9599609375em;
+}
+.icon-add-beer .path4:before {
+  content: "\e906";
+  margin-left: -0.9599609375em;
+}
+.icon-add-beer .path5:before {
+  content: "\e907";
+  margin-left: -0.9599609375em;
+}
+.icon-add-beer .path6:before {
+  content: "\e908";
+  margin-left: -0.9599609375em;
+}
+.icon-add-beer .path7:before {
+  content: "\e909";
+  margin-left: -0.9599609375em;
+}
+.icon-beer:before {
+  content: "\e90a";
+}
+.icon-chevron-left:before {
+  content: "\e90c";
+}
+.icon-Action:before {
+  content: "\e90d";
+}
+.icon-Add-Category:before {
+  content: "\e90f";
+}
+.icon-Alkoholove .path1:before {
+  content: "\e910";
+}
+.icon-Alkoholove .path2:before {
+  content: "\e911";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path3:before {
+  content: "\e912";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path4:before {
+  content: "\e913";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path5:before {
+  content: "\e914";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path6:before {
+  content: "\e915";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path7:before {
+  content: "\e916";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path8:before {
+  content: "\e917";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path9:before {
+  content: "\e918";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path10:before {
+  content: "\e919";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path11:before {
+  content: "\e91a";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path12:before {
+  content: "\e91b";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path13:before {
+  content: "\e91c";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path14:before {
+  content: "\e91d";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path15:before {
+  content: "\e91e";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path16:before {
+  content: "\e91f";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path17:before {
+  content: "\e920";
+  margin-left: -1em;
+}
+.icon-Alkoholove .path18:before {
+  content: "\e921";
+  margin-left: -1em;
+}
+.icon-Bell:before {
+  content: "\e924";
+}
+.icon-Bottle:before {
+  content: "\e925";
+}
+.icon-Camera:before {
+  content: "\e926";
+}
+.icon-CameraSmall:before {
+  content: "\e927";
+}
+.icon-Category:before {
+  content: "\e928";
+}
+  content: "\e92d";
+}
+.icon-Dashboard:before {
+  content: "\e92e";
+}
+.icon-Error:before {
+  content: "\e92f";
+}
+.icon-Exit-1:before {
+  content: "\e930";
+}
+.icon-Exit:before {
+  content: "\e931";
+}
+.icon-Facebook:before {
+  content: "\e932";
+}
+.icon-Flagged_comment:before {
+  content: "\e933";
+}
+.icon-Food:before {
+  content: "\e934";
+}
+.icon-Globe:before {
+  content: "\e935";
+}
+.icon-Google:before {
+  content: "\e936";
+}
+.icon-Heart:before {
+  content: "\e937";
+}
+.icon-House:before {
+  content: "\e938";
+}
+.icon-Info:before {
+  content: "\e93a";
+}
+.icon-Information:before {
+  content: "\e93b";
+}
+.icon-Lists:before {
+  content: "\e93c";
+}
+.icon-Login:before {
+  content: "\e93d";
+}
+.icon-Mail:before {
+  content: "\e93e";
+}
+.icon-Manufacturer:before {
+  content: "\e93f";
+}
+.icon-More:before {
+  content: "\e940";
+}
+.icon-night:before {
+  content: "\e941";
+}
+.icon-Password:before {
+  content: "\e942";
+}
+.icon-Plus:before {
+  content: "\e944";
+}
+.icon-Profil:before {
+  content: "\e945";
+}
+.icon-Rate:before {
+  content: "\e946";
+}
+.icon-Recomendation:before {
+  content: "\e947";
+}
+.icon-search:before {
+  content: "\e949";
+}
+.icon-SearchList:before {
+  content: "\e94a";
+}
+.icon-Settings:before {
+  content: "\e94b";
+}
+.icon-Social:before {
+  content: "\e94c";
+}
+.icon-Star:before {
+  content: "\e94e";
+}
+.icon-Success-1:before {
+  content: "\e94f";
+}
+.icon-success:before {
+  content: "\e950";
+}
+.icon-Success:before {
+  content: "\e951";
+}
+.icon-Suggestion:before {
+  content: "\e952";
+}
+.icon-sun:before {
+  content: "\e953";
+}
+.icon-Tag:before {
+  content: "\e954";
+}
+.icon-Wine:before {
+  content: "\e955";
+}

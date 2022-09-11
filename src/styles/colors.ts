@@ -149,33 +149,33 @@ const Grey = {
     Grey5: "#F8F8F8",
   },
   dark: {
-    Grey100: "#19191D",
-    Grey90: "#282727",
-    Grey80: "#47474A",
-    Grey70: "#5E5E61",
-    Grey60: "#757577",
-    Grey50: "#8C8C8E",
-    Grey40: "#A3A3A5",
-    Grey30: "#BABABB",
-    Grey20: "#D1D1D2",
-    Grey15: "#D8D8D8",
-    Grey10: "#E8E8E8",
-    Grey5: "#F8F8F8",
+    Grey100: "#F8F8F8",
+    Grey90: "#E8E8E8",
+    Grey80: "#D8D8D8",
+    Grey70: "#D1D1D2",
+    Grey60: "#BABABB",
+    Grey50: "#A3A3A5",
+    Grey40: "#8C8C8E",
+    Grey30: "#757577",
+    Grey20: "#5E5E61",
+    Grey15: "#47474A",
+    Grey10: "#282727",
+    Grey5: "#19191D",
   },
 };
 
 const BackgroundTransparency = {
   light: {
-    BackgroundTransparency100: "#47474A66",
-    BackgroundTransparency90: "#47474A4D",
-    BackgroundTransparency80: "#47474A33",
-    BackgroundTransparency70: "#47474A1A",
+    BackgroundTransparency40: "#47474A66",
+    BackgroundTransparency30: "#47474A4D",
+    BackgroundTransparency20: "#47474A33",
+    BackgroundTransparency10: "#47474A1A",
   },
   dark: {
-    BackgroundTransparency100: "#47474A66",
-    BackgroundTransparency90: "#47474A4D",
-    BackgroundTransparency80: "#47474A33",
-    BackgroundTransparency70: "#47474A1A",
+    BackgroundTransparency40: "#47474A66",
+    BackgroundTransparency30: "#47474A4D",
+    BackgroundTransparency20: "#47474A33",
+    BackgroundTransparency10: "#47474A1A",
   },
 };
 
@@ -193,7 +193,7 @@ const White = {
     White: "#FFF",
   },
   dark: {
-    White: "#FFF",
+    White: "#0D0D0D",
   },
 };
 

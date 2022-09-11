@@ -241,7 +241,6 @@ const AddAlcohol = () => {
     delete data.md;
     const values = prepareValues(data);
     try {
-      console.log({ values, data });
       await addOrEdit({ ...values, kind: categories.kind }, sm, md);
       setIsValid(true);
       methods.reset(resetValues(Object.keys(data)));
