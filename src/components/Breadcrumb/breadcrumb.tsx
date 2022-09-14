@@ -1,21 +1,27 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { CapitalCase } from '../../styles/global.styled';
-import { Container, Crumb, Space, Last } from './breadcrumb.styled';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { CapitalCase } from "../../styles/global.styled";
+import { Container, Crumb, Space, Last } from "./breadcrumb.styled";
+
+const namePath = {
+  home: "Panel główny",
+  alcohols: "Alkohole",
+};
 
 const Breadcrumb = () => {
   const location = useLocation();
-  const splitLocation = location?.pathname.split('/');
-  const splitPath = splitLocation.filter((el) => el !== '' && el !== 'home');
+  const splitLocation = location?.pathname.split("/");
+  splitLocation.shift();
+  const splitPath = splitLocation.filter((el) => el !== "" && el !== "home");
 
-  splitLocation[0] = 'Home';
+  splitLocation[0] = namePath.home;
 
   const paths = splitPath.reduce(
     (prev: string[], curr, index) => [
       ...prev,
-      `${prev[index] === '/home' ? '' : prev[index]}/${curr}`,
+      `${prev[index] === "/home" ? "" : prev[index]}/${curr}`,
     ],
-    ['/home']
+    ["/home"]
   );
   const { length } = paths;
 
@@ -26,7 +32,9 @@ const Breadcrumb = () => {
           <Crumb to={path}>
             <CapitalCase>{splitLocation[index]}</CapitalCase>
           </Crumb>
-          <Space> {' | '} </Space>
+          <Space>
+            <span className="icon-chevron-right" />
+          </Space>
         </>
       ) : (
         <Last>

@@ -1,31 +1,24 @@
-import React from 'react';
+import React from "react";
 
-import Header from '../../components/Header/header';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import { Col, Container, Row, Title } from '../../styles/global.styled';
-import { Block } from './home.styled';
+import { Col, Container, Row, Title } from "../../styles/global.styled";
+import { Block, Content, PanelContainer } from "./home.styled";
+import SidebarLogic from "../../components/Sidebar/Sidebar.logic";
+import HeaderLogic from "../../components/Header/header.logic";
 
 const Home = () => (
-  <>
-    <Header />
-    <Breadcrumb />
-    <Container>
+  <PanelContainer>
+    <SidebarLogic />
+    <Col flex="1">
       <Row>
-        <Col flex="1">
-          <Title>Listy</Title>
-          <Block to="/alcohol">Alkohole</Block>
-          <Block to="/category">Kategorie</Block>
-          <Block to="/users">Uzytkownicy</Block>
-          <Block to="/errors">Zgłoszone błędy</Block>
-        </Col>
-        <Col flex="1">
-          <Title>Akcje</Title>
-          <Block to="/alcohol/add">Dodaj alkohol</Block>
-          <Block to="/category/add">Dodaj kategorię</Block>
-        </Col>
+        <HeaderLogic />
       </Row>
-    </Container>
-  </>
+      <Row flex="1">
+        <Content flex="1">
+          <div />
+        </Content>
+      </Row>
+    </Col>
+  </PanelContainer>
 );
 
 export default Home;

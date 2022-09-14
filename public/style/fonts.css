@@ -26,10 +26,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chevron-right-1:before {
+.icon-chevron-right:before {
   content: "\e900";
 }
-.icon-chevron-top-1:before {
+.icon-chevron-top:before {
   content: "\e901";
 }
 .icon-add-beer .path1:before {
@@ -157,9 +157,8 @@
 .icon-Category:before {
   content: "\e928";
 }
-  content: "\e92d";
-}
-.icon-Dashboard:before {
+
+.icon-dashboard:before {
   content: "\e92e";
 }
 .icon-Error:before {

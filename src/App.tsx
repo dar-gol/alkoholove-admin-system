@@ -6,7 +6,6 @@ import { useCookies } from "react-cookie";
 import AlcoholDetails from "./containers/AlcoholDetails/alcoholDetails";
 import AddAlcohol from "./containers/AddAlcohol/addAlcohol";
 import Account from "./containers/Account/account";
-import Login from "./containers/Login/Login";
 import Home from "./containers/Home/home";
 import Category from "./containers/Category/category";
 import AddCategory from "./containers/AddCategory/addCategory";

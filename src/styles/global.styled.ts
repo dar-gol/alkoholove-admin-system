@@ -175,6 +175,7 @@ export const LinkSecondary = styled(Link)`
 `;
 
 export const CapitalCase = styled.span`
+  white-space: nowrap;
   text-transform: capitalize;
 `;
 

@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
-import Header from "../../components/Header/header";
+import HeaderLogic from "../../components/Header/header.logic";
 import FileInput from "../../components/FileInput/fileInput";
 import { Form, Title } from "./addAlcohol.styled";
 import {
@@ -260,7 +260,7 @@ const AddAlcohol = () => {
 
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       <Container>
         <Title>Formularz dodawania/edycji alkoholu</Title>

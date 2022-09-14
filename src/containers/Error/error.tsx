@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { IError } from '../../@types/errors';
-import { IUser } from '../../@types/users';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import ErrorModal from '../../components/ErrorModal/errorModal';
-import Header from '../../components/Header/header';
-import Modal from '../../components/modal/Modal';
-import { ModalTitle } from '../../components/modal/Modal.styled';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { IError } from "../../@types/errors";
+import { IUser } from "../../@types/users";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import ErrorModal from "../../components/ErrorModal/errorModal";
+import HeaderLogic from "../../components/Header/header.logic";
+import Modal from "../../components/modal/Modal";
+import { ModalTitle } from "../../components/modal/Modal.styled";
 import {
   BtnPrimary,
   BtnSecondary,
@@ -18,9 +18,9 @@ import {
   Tuple,
   Value,
   WarnText,
-} from '../../styles/global.styled';
-import { API, URL } from '../../utils/constant';
-import useAuthReq from '../../utils/hooks/useReq';
+} from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
+import useAuthReq from "../../utils/hooks/useReq";
 
 const Error = () => {
   const { id } = useParams();
@@ -28,15 +28,15 @@ const Error = () => {
   const [error, setError] = useState<IError | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [errorModal, setErrorModal] = useState<string>('');
-  const { send } = useAuthReq('GET', `${API}${URL.ERRORS}/${id}`, null, {
-    Accept: 'application/json',
+  const [errorModal, setErrorModal] = useState<string>("");
+  const { send } = useAuthReq("GET", `${API}${URL.ERRORS}/${id}`, null, {
+    Accept: "application/json",
   });
 
   const remove = async () => {
     try {
-      await send({ method: 'DELETE', url: `${API}${URL.ERRORS}/${id}` });
-      navigate('/errors');
+      await send({ method: "DELETE", url: `${API}${URL.ERRORS}/${id}` });
+      navigate("/errors");
     } catch (e: any) {
       setErrorModal(JSON.stringify(e?.statusText));
     }
@@ -76,14 +76,14 @@ const Error = () => {
       </Tuple>
       <Tuple>
         <Key>Zbanowana (Osoba zgłaszająca)</Key>
-        <Value>{user.is_banned ? 'TAK' : 'NIE'}</Value>
+        <Value>{user.is_banned ? "TAK" : "NIE"}</Value>
       </Tuple>
     </>
   );
 
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       <Container>
         <Title>Informację o błędzie</Title>
@@ -119,7 +119,7 @@ const Error = () => {
         title="Problem z usunięciem zgłoszenia"
         text=""
         details={errorModal}
-        onClose={() => setErrorModal('')}
+        onClose={() => setErrorModal("")}
       />
     </>
   );

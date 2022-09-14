@@ -1,18 +1,18 @@
-import React from 'react';
-import { IAlcohol } from '../../@types/alcohol';
+import React from "react";
+import { IAlcohol } from "../../@types/alcohol";
 import {
   Container,
   LinkPrimary,
   LinkSecondary,
   ListTitle,
   Row,
-} from '../../styles/global.styled';
-import AlcoholBlock from '../../components/AlcoholBlock/AlcoholBlock';
-import Pagination from '../../components/Pagination/pagination';
-import Searcher from '../../components/Searcher/searcher';
-import useAlcohols from '../../utils/hooks/useAlcohols';
-import Header from '../../components/Header/header';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
+} from "../../styles/global.styled";
+import AlcoholBlock from "../../components/AlcoholBlock/AlcoholBlock";
+import Pagination from "../../components/Pagination/pagination";
+import Searcher from "../../components/Searcher/searcher";
+import useAlcohols from "../../utils/hooks/useAlcohols";
+import HeaderLogic from "../../components/Header/header.logic";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
 
 const AlcoholList = () => {
   const { search, remove, changePageSize, changePage, alcohols, page } =
@@ -28,12 +28,12 @@ const AlcoholList = () => {
   ));
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       <Container>
         <ListTitle>Lista Alkoholi: </ListTitle>
         <Searcher setLimit={changePageSize} update={search} />
-        {alcoholsBlock || 'Wystąpił błąd!'}
+        {alcoholsBlock || "Wystąpił błąd!"}
         <Pagination
           lastPage={Math.ceil(page.total / page.limit)}
           offset={page.number}

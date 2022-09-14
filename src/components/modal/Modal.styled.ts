@@ -7,7 +7,7 @@ export const Test2 = styled.p``;
 
 export const StyledPopup = styled(Popup)`
   &-overlay {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -61,7 +61,7 @@ export const LoadingContainer = styled.article`
     z-index: -1;
     width: 500px;
     height: 500px;
-    background: ${({ theme }) => theme.palette.White};
+    background: ${({ theme }) => theme.palette.Grey5};
     border-radius: 100%;
     filter: blur(50px);
   }

@@ -5,7 +5,7 @@ import {
   INITIAL_LOGIN_STATE,
   loginReducer,
   Type,
-} from "../reducers/LoginReducer";
+} from "../../containers/Login/Login.reducer";
 import { API, URL } from "../constant";
 import { post, postForm } from "../fetch";
 import useUser from "./useUser";

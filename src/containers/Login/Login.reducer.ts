@@ -37,7 +37,6 @@ export const loginReducer = (
 ) => {
   switch (action.type) {
     case Type.LOGIN_START:
-      console.log("LOGIN_START");
       return {
         ...state,
         error: "",

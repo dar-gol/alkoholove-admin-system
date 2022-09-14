@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import ReactSelect from 'react-select';
-import { Types } from '../../@types/category';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import ErrorModal from '../../components/ErrorModal/errorModal';
-import Header from '../../components/Header/header';
-import Modal from '../../components/modal/Modal';
-import { ModalTitle } from '../../components/modal/Modal.styled';
-import PropertyInput from '../../components/PropertyInput/propertyInput';
-import TextInput from '../../components/SimpleInput/TextInput';
+import React, { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import ReactSelect from "react-select";
+import { Types } from "../../@types/category";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import ErrorModal from "../../components/ErrorModal/errorModal";
+import HeaderLogic from "../../components/Header/header.logic";
+import Modal from "../../components/modal/Modal";
+import { ModalTitle } from "../../components/modal/Modal.styled";
+import PropertyInput from "../../components/PropertyInput/propertyInput";
+import TextInput from "../../components/SimpleInput/TextInput";
 import {
   BtnPrimary,
   Col,
@@ -17,10 +17,10 @@ import {
   LinkSecondary,
   Row,
   Title,
-} from '../../styles/global.styled';
-import { API, INPUT_LABEL, INPUT_TYPE, URL } from '../../utils/constant';
-import useCategory from '../../utils/hooks/useCategory';
-import useAuthReq from '../../utils/hooks/useReq';
+} from "../../styles/global.styled";
+import { API, INPUT_LABEL, INPUT_TYPE, URL } from "../../utils/constant";
+import useCategory from "../../utils/hooks/useCategory";
+import useAuthReq from "../../utils/hooks/useReq";
 
 export type PropertyState = {
   name: string | null;
@@ -40,8 +40,8 @@ const generateProp = (data: any, name: any) => {
   const required = data[`${name}Required`];
   const description = data[`${name}Description`];
   const title = data[`${name}Title`];
-  const bsonType = required ? type : [type, 'null'];
-  const items = type === 'array' ? { items: { bsonType: 'string' } } : {};
+  const bsonType = required ? type : [type, "null"];
+  const items = type === "array" ? { items: { bsonType: "string" } } : {};
   return { required, description, title, bsonType, items };
 };
 
@@ -54,18 +54,18 @@ const AddCategory = () => {
   });
   const [modal, setModal] = useState<IModal>({
     open: false,
-    title: '',
-    text: '',
-    details: '',
+    title: "",
+    text: "",
+    details: "",
   });
   const { ctg, getCategory, getID, update } = useCategory();
   const [names, setNames] = useState<PropertyState[]>([]);
   const { send } = useAuthReq(
-    categoryName ? 'PUT' : 'POST',
+    categoryName ? "PUT" : "POST",
     `${API}${URL.POST_CATEGORIES}`,
-    '',
+    "",
     {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     }
   );
 
@@ -84,10 +84,10 @@ const AddCategory = () => {
   };
 
   const addProperty = () => {
-    if (names.length > 0 && names[names.length - 1].name === '') return false;
+    if (names.length > 0 && names[names.length - 1].name === "") return false;
     setNames((prev: PropertyState[]) => [
       ...prev,
-      { name: '', isNew: true, isDeleted: false },
+      { name: "", isNew: true, isDeleted: false },
     ]);
     return true;
   };
@@ -95,8 +95,8 @@ const AddCategory = () => {
   const editProperty = (index: number) => {
     if (!names[index].isNew) {
       send({
-        method: 'DELETE',
-        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || '')}`,
+        method: "DELETE",
+        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || "")}`,
         body: JSON.stringify({
           properties: [names[index].name],
         }),
@@ -113,8 +113,8 @@ const AddCategory = () => {
     const { name } = names[index];
     if (!names[index].isNew) {
       send({
-        method: 'DELETE',
-        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || '')}`,
+        method: "DELETE",
+        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || "")}`,
         body: JSON.stringify({
           properties: [name],
         }),
@@ -127,18 +127,18 @@ const AddCategory = () => {
     });
     methods.reset({
       ...methods.getValues(),
-      [`${name}Title`]: '',
-      [`${name}Description`]: '',
+      [`${name}Title`]: "",
+      [`${name}Description`]: "",
       [`${name}BsonType`]: {
-        label: '',
-        value: '',
+        label: "",
+        value: "",
       },
-      [`${name}Required`]: '',
+      [`${name}Required`]: "",
     });
   };
 
   useEffect(() => {
-    const { properties } = getCategory(categoryName || '', true);
+    const { properties } = getCategory(categoryName || "", true);
     const fieldName = properties.map((field) => ({
       name: field.name,
       isDeleted: false,
@@ -149,9 +149,9 @@ const AddCategory = () => {
       const { bsonType, description, title } = properties[index].metadata;
       const { name } = fieldName[index];
       const type = (
-        typeof bsonType === 'string' ? bsonType : bsonType[0]
+        typeof bsonType === "string" ? bsonType : bsonType[0]
       ) as Types;
-      const required = typeof bsonType === 'string';
+      const required = typeof bsonType === "string";
       return {
         ...prev,
         [`${name}Title`]: title,
@@ -172,7 +172,7 @@ const AddCategory = () => {
   const addOrEdit = async (kind: any, properties: any, required: any) => {
     if (categoryName) {
       return send({
-        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || '')}`,
+        url: `${API}${URL.POST_CATEGORIES}/${getID(categoryName || "")}`,
         body: JSON.stringify({
           properties,
         }),
@@ -223,17 +223,17 @@ const AddCategory = () => {
       await addOrEdit(data.kind, body.properties, body.required);
       setModal({
         open: true,
-        title: 'Dodanie/Edycja kategorii przebiegło pomyślnie',
-        text: '',
-        details: '',
+        title: "Dodanie/Edycja kategorii przebiegło pomyślnie",
+        text: "",
+        details: "",
       });
       update();
     } catch (e: any) {
       console.log({ e });
       setModal({
         open: true,
-        title: 'Problem z dodaniem/edycja kategorii',
-        text: 'Upewnij się, że wypełniłeś wszystkie pola',
+        title: "Problem z dodaniem/edycja kategorii",
+        text: "Upewnij się, że wypełniłeś wszystkie pola",
         details: JSON.stringify(e?.statusText),
       });
     }
@@ -241,7 +241,7 @@ const AddCategory = () => {
 
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       <Container>
         <Title>Formularz dodawania/edycji kategorii</Title>

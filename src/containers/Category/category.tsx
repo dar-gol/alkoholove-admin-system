@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
-import Pagination from '../../components/Pagination/pagination';
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import HeaderLogic from "../../components/Header/header.logic";
+import Pagination from "../../components/Pagination/pagination";
 
-import Searcher from '../../components/Searcher/searcher';
+import Searcher from "../../components/Searcher/searcher";
 import {
   CapitalCase,
   Col,
@@ -13,9 +13,9 @@ import {
   LinkSecondary,
   ListTitle,
   Row,
-} from '../../styles/global.styled';
-import useCategory from '../../utils/hooks/useCategory';
-import { Block } from './category.styled';
+} from "../../styles/global.styled";
+import useCategory from "../../utils/hooks/useCategory";
+import { Block } from "./category.styled";
 
 const Category = () => {
   const { ctg, changePage, changePageSize, page } = useCategory();
@@ -45,7 +45,7 @@ const Category = () => {
 
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       <Container>
         <ListTitle>Lista kategorii: </ListTitle>

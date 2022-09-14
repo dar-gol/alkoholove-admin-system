@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
-import Pagination from '../../components/Pagination/pagination';
-import Searcher from '../../components/Searcher/searcher';
-import { Container, ListTitle } from '../../styles/global.styled';
-import useUsers from '../../utils/hooks/useUsers';
-import { Block } from './users.styled';
+import React from "react";
+import { Link } from "react-router-dom";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import HeaderLogic from "../../components/Header/header.logic";
+import Pagination from "../../components/Pagination/pagination";
+import Searcher from "../../components/Searcher/searcher";
+import { Container, ListTitle } from "../../styles/global.styled";
+import useUsers from "../../utils/hooks/useUsers";
+import { Block } from "./users.styled";
 
 const Users = () => {
   const { users, page, changePage, changePageSize, search } = useUsers();
@@ -30,7 +30,7 @@ const Users = () => {
 
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       <Container>
         <ListTitle>Lista użytkowników: </ListTitle>

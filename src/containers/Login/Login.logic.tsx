@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { Action, State, Type } from "../../utils/reducers/LoginReducer";
+import { Action, State, Type } from "./Login.reducer";
 import LoginView from "./Login.view";
 
 const defaultValues = {

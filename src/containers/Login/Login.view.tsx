@@ -23,7 +23,7 @@ import { BtnPrimary, Col, Row } from "../../styles/global.styled";
 import CheckBox from "../../components/Inputs/CheckBox";
 import LoadingModal from "../../components/modal/LoadingModal";
 import useLogin from "../../utils/hooks/useLogin";
-import { State } from "../../utils/reducers/LoginReducer";
+import { State } from "./Login.reducer";
 
 interface Props {
   isNight: boolean;
