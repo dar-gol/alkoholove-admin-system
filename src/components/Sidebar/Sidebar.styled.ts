@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
   Heading4Large,
@@ -49,7 +50,8 @@ export const MenuLinkWrapper = styled.div`
   position: relative;
 `;
 
-export const MenuLink = styled.button`
+export const MenuLink = styled(Link)`
+  text-decoration: none;
   border-radius: 20px;
   margin: 10px 20px;
   padding: 10px 10px;

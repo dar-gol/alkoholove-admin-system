@@ -18,6 +18,7 @@ export const PanelContainer = styled.article`
 
 export const Content = styled(Col)`
   margin: 0 50px 50px 50px;
+  width: 0;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.palette.White};
 `;

@@ -148,9 +148,9 @@ const Account = () => {
               type="password"
               placeholder="***"
             />
-            <Row justifyContent="center">
+            {/* <Row justifyContent="center">
               <WarnText>{errors?.new_password_again?.message}</WarnText>
-            </Row>
+            </Row> */}
             <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
               <BtnPrimary type="submit">Zaktualizuj</BtnPrimary>
               <BtnSecondary type="button" onClick={() => setIsUpdate(false)}>
@@ -170,9 +170,9 @@ const Account = () => {
               required
               placeholder="alkohoLove@email.com"
             />
-            <Row justifyContent="center">
+            {/* <Row justifyContent="center">
               <WarnText>{errors?.email?.message}</WarnText>
-            </Row>
+            </Row> */}
             <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
               <BtnPrimary type="submit">Zaktualizuj</BtnPrimary>
               <BtnSecondary

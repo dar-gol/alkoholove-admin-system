@@ -41,46 +41,46 @@ const SidebarView = ({ handleCollapse, collapse }: Props) => {
         <span>Listy</span>
       </MenuTitle>
       <MenuLinkWrapper>
-        <MenuLink className="active">
+        <MenuLink className="active" to="/home">
           <span className="icon-dashboard" />
           <span>Dashboard</span>
         </MenuLink>
       </MenuLinkWrapper>
       <MenuLinkWrapper>
-        <MenuLink className="">
+        <MenuLink className="" to="/alcohol">
           <span className="icon-beer" />
           <span>Alkohole</span>
         </MenuLink>
       </MenuLinkWrapper>
       <MenuLinkWrapper>
-        <MenuLink className="">
+        <MenuLink className="" to="#">
           <span className="icon-Category" />
           <span>Kategorie</span>
         </MenuLink>
       </MenuLinkWrapper>
       <MenuLinkWrapper>
-        <MenuLink className="">
+        <MenuLink className="" to="#">
           <span className="icon-Social" />
           <span>Uzytkownicy</span>
         </MenuLink>
       </MenuLinkWrapper>
       <MenuLinkWrapper>
         <Indicator size={50} onClick={() => {}} text="23" type="secondary" />
-        <MenuLink className="">
+        <MenuLink className="" to="#">
           <span className="icon-Suggestion" />
           <span>Sugestie uzytkownikow</span>
         </MenuLink>
       </MenuLinkWrapper>
       <MenuLinkWrapper>
         <Indicator size={50} onClick={() => {}} text="0" type="secondary" />
-        <MenuLink className="">
+        <MenuLink className="" to="#">
           <span className="icon-Error" />
           <span>Zgłoszone błędy</span>
         </MenuLink>
       </MenuLinkWrapper>
       <MenuLinkWrapper>
         <Indicator size={50} onClick={() => {}} text="10" type="green" />
-        <MenuLink className="">
+        <MenuLink className="" to="#">
           <span className="icon-Flagged_comment" />
           <span>Oflagowane komentarze</span>
         </MenuLink>
@@ -90,13 +90,13 @@ const SidebarView = ({ handleCollapse, collapse }: Props) => {
         <span>Akcje</span>
       </MenuTitle>
       <MenuLinkWrapper>
-        <MenuLink className="">
+        <MenuLink className="" to="#">
           <span className="icon-beer" />
           <span>Dodaj alkohol</span>
         </MenuLink>
       </MenuLinkWrapper>
       <MenuLinkWrapper>
-        <MenuLink className="">
+        <MenuLink className="" to="#">
           <span className="icon-Add-Category" />
           <span>Dodaj kategorie</span>
         </MenuLink>

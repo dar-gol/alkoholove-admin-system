@@ -40,7 +40,6 @@ const HeaderLogic = () => {
         show={showPopup}
         setShow={() => setShowPopup((prev) => !prev)}
       />
-      ;
     </>
   );
 };

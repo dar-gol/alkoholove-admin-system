@@ -40,6 +40,7 @@ export const Profil = styled.div`
 
 export const PopupContainer = styled.div<{ show: boolean }>`
   position: absolute;
+  z-index: 100;
   background: ${({ theme }) => theme.palette.White};
   padding: 10px 20px;
   right: -10px;
