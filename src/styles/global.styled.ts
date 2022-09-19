@@ -206,3 +206,15 @@ export const WarnText = styled.p`
 export const Label = styled.p`
   text-transform: capitalize;
 `;
+
+export const Content = styled(Col)`
+  margin: 0 50px 50px 50px;
+  width: ${({ width }) => width || "unset"};
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.palette.White};
+`;
+
+export const PanelContainer = styled.article`
+  display: flex;
+  height: 100%;
+`;

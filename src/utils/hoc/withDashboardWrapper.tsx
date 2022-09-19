@@ -1,8 +1,7 @@
 import React, { ComponentType, ReactNode } from "react";
 import HeaderLogic from "../../components/Header/header.logic";
 import SidebarLogic from "../../components/Sidebar/Sidebar.logic";
-import { PanelContainer } from "../../containers/Home/home.styled";
-import { Col, Row } from "../../styles/global.styled";
+import { Col, PanelContainer, Row } from "../../styles/global.styled";
 
 function withDashboardWrapper<T extends {}>(Component: ComponentType<T>) {
   return (props: T) => {

@@ -9,7 +9,6 @@ import Account from "./containers/Account/account";
 import Home from "./containers/Home/home";
 import Category from "./containers/Category/category";
 import AddCategory from "./containers/AddCategory/addCategory";
-import AlcoholList from "./containers/AlcoholList/alcoholList";
 import Users from "./containers/Users/users";
 
 import { Main } from "./styles/global.styled";
@@ -20,6 +19,7 @@ import Errors from "./containers/Errors/errors";
 import Error from "./containers/Error/error";
 import createTheme from "./styles/theme";
 import LoginApollo from "./containers/Login/Login.apollo";
+import AlcoholListView from "./containers/AlcoholList/AlcoholList.view";
 
 const App = () => {
   const [cookie] = useCookies();
@@ -38,14 +38,14 @@ const App = () => {
           <Route path="/" element={<LoginApollo />} />
           <Route path="/account" element={<Account />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/alcohol/edit" element={<AlcoholList />} />
+          <Route path="/alcohol/edit" element={<AlcoholListView />} />
           <Route
             path="/alcohol/edit/:alcoholBarcode"
             element={<AddAlcohol />}
           />
           <Route path="/alcohol/add" element={<AddAlcohol />} />
           <Route path="/alcohol/:alcoholBarcode" element={<AlcoholDetails />} />
-          <Route path="/alcohol" element={<AlcoholList />} />
+          <Route path="/alcohol" element={<AlcoholListView />} />
           <Route path="/category/add" element={<AddCategory />} />
           <Route
             path="/category/edit/:categoryName"

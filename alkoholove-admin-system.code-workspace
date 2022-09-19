@@ -26,9 +26,22 @@
     },
     "peacock.color": "#42b883"
   },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "shell",
+        "command": "yarn start",
+        "problemMatcher": [],
+        "label": "yarnStart",
+        "detail": "react-scripts start"
+      }
+    ]
+  },
   "launch": {
     "configurations": [
       {
+        "preLaunchTask": "yarnStart",
         "type": "pwa-chrome",
         "name": "Admin Panel",
         "request": "launch",
