@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { CheckCircle } from 'react-feather';
-import { IReq } from '../../@types/fetch';
-import { IPageInfo } from '../../@types/pagination';
+import React, { useEffect, useState } from "react";
+import { CheckCircle } from "react-feather";
+import { IReq } from "../../@types/fetch";
+import { IPageInfo } from "../../@types/pagination";
 import {
   Suggestion,
   Suggestions,
   SuggResponse,
-} from '../../@types/suggestions';
-import { Col, ListTitle, Row } from '../../styles/global.styled';
-import { API, URL } from '../../utils/constant';
-import useAuthReq from '../../utils/hooks/useReq';
-import Pagination from '../Pagination/pagination';
-import Searcher from '../Searcher/searcher';
-import { Block, List } from './suggestion.styled';
+} from "../../@types/suggestions";
+import { Col, ListTitle, Row } from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
+import useAuthReq from "../../utils/hooks/useReq";
+import Pagination from "../Pagination/pagination";
+import Searcher from "../Searcher/searcher";
+import { Block, List } from "./suggestion.styled";
 
 type Props = {
   choose: (id: string) => void;
@@ -26,8 +26,8 @@ const initPageInfo: IPageInfo = {
 } as const;
 
 const SuggestionList = ({ choose }: Props) => {
-  const { send } = useAuthReq('GET', API + URL.GET_SUGGESTIONS, '', {
-    Accept: 'application/json',
+  const { send } = useAuthReq("GET", API + URL.GET_SUGGESTIONS, "", {
+    Accept: "application/json",
   });
   const [suggestions, setSuggestions] = useState<Suggestions | null>(null);
   const [page, setPage] = useState<IPageInfo>(initPageInfo);
@@ -100,7 +100,7 @@ const SuggestionList = ({ choose }: Props) => {
       </List>
       <Pagination
         lastPage={Math.ceil(page.total / page.limit)}
-        offset={page.number}
+        pageInfo={page}
         setOffset={changePage}
       />
     </div>

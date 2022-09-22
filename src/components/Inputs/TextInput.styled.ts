@@ -71,14 +71,6 @@ export const Label = styled.p`
   transition: 0.2s;
 `;
 
-export const Icon = styled.span`
-  &:before {
-    color: ${({ theme }) => theme.palette.Grey20};
-    ${Body("regular", "large")};
-    font-family: icomoon;
-  }
-`;
-
 export const Input = styled.input`
   background-color: transparent;
   border: none;
@@ -88,6 +80,7 @@ export const Input = styled.input`
   top: 10%;
   padding: 0 !important;
   color: ${({ theme }) => theme.palette.Grey80};
+  ${Body("regular", "large")}
   &:focus,
   &:focus-visible {
     border: none;

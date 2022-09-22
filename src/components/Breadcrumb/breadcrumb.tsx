@@ -5,13 +5,13 @@ import { Container, Crumb, Space, Last } from "./breadcrumb.styled";
 
 const namePath = {
   home: "Panel główny",
-  alcohols: "Alkohole",
+  alcohol: "Alkohole",
 };
 
 const Breadcrumb = () => {
   const location = useLocation();
   const splitLocation = location?.pathname.split("/");
-  splitLocation.shift();
+  // splitLocation.shift();
   const splitPath = splitLocation.filter((el) => el !== "" && el !== "home");
 
   splitLocation[0] = namePath.home;
@@ -24,6 +24,8 @@ const Breadcrumb = () => {
     ["/home"]
   );
   const { length } = paths;
+
+  console.log({ splitLocation, splitPath, paths });
 
   const JSX = paths?.map((path, index) => (
     <span key={path}>

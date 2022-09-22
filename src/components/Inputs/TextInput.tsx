@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Icon } from "../../styles/global.styled";
 import { autoCompleteHandler } from "../../utils/utils";
 import {
   Input,
   InputContainer,
   InputWrapper,
   Label,
-  Icon,
   Error,
 } from "./TextInput.styled";
 

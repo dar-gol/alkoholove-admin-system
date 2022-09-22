@@ -1,7 +1,12 @@
 import React, { ComponentType, ReactNode } from "react";
 import HeaderLogic from "../../components/Header/header.logic";
 import SidebarLogic from "../../components/Sidebar/Sidebar.logic";
-import { Col, PanelContainer, Row } from "../../styles/global.styled";
+import {
+  Col,
+  ContentWrapper,
+  PanelContainer,
+  Row,
+} from "../../styles/global.styled";
 
 function withDashboardWrapper<T extends {}>(Component: ComponentType<T>) {
   return (props: T) => {
@@ -13,9 +18,9 @@ function withDashboardWrapper<T extends {}>(Component: ComponentType<T>) {
           <Row>
             <HeaderLogic />
           </Row>
-          <Row flex="1">
+          <ContentWrapper flex="1">
             <Component {...(props as T)} />
-          </Row>
+          </ContentWrapper>
         </Col>
       </PanelContainer>
     );

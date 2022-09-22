@@ -36,7 +36,7 @@ const AlcoholList = () => {
         {alcoholsBlock || "Wystąpił błąd!"}
         <Pagination
           lastPage={Math.ceil(page.total / page.limit)}
-          offset={page.number}
+          pageInfo={page}
           setOffset={changePage}
         />
         <Row margin="10px 10px" justifyContent="flex-end" gap="20px">

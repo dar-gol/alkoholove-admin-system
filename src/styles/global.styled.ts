@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import styled, { css, createGlobalStyle } from "styled-components";
-import { Body, Heading2, Heading3, Heading4 } from "./typography.styled";
+import {
+  Body,
+  Heading2,
+  Heading3,
+  Heading4,
+  Heading5Large,
+} from "./typography.styled";
 
 export const Test1 = styled.section``;
 export const Test2 = styled.section``;
@@ -24,18 +30,25 @@ export type BlockType = {
   responsive?: boolean;
   width?: string;
   height?: string;
+  minWidth?: string;
+  minHeight?: string;
 };
 
 type Button = {
   margin?: string;
+  padding?: string;
+  height?: string;
+  width?: string;
 };
 
-const Btn = css`
+const Btn = css<Button>`
   border: 0;
   border-radius: ${borderRadius};
   cursor: pointer;
-  width: 200px;
-  height: 48px;
+  width: ${({ width }) => width || "unset"};
+  height: ${({ height }) => height || "48px"};
+  margin: ${({ margin }) => margin || ""};
+  padding: ${({ padding }) => padding || ""};
   white-space: nowrap;
   transition: 0.2s;
   z-index: 0;
@@ -43,10 +56,6 @@ const Btn = css`
   ${Body("medium", "large")};
   &:disabled {
     pointer-events: none;
-  }
-  &:hover {
-    box-shadow: 0px 3px 10px
-      ${({ theme }) => theme.palette.BackgroundTransparency20};
   }
   &:focus-visible,
   &:focus {
@@ -77,6 +86,8 @@ export const Div = styled.section<BlockType>`
   gap: ${({ gap }) => gap || 0};
   width: ${({ width }) => width || "unset"};
   height: ${({ height }) => height || "unset"};
+  min-width: ${({ minWidth }) => minWidth || "unset"};
+  min-height: ${({ minHeight }) => minHeight || "unset"};
 `;
 
 export const Row = styled(Div)`
@@ -105,8 +116,10 @@ export const Title = styled.h2`
 `;
 
 export const ListTitle = styled.h2`
-  ${Heading3()}
-  margin-left: 10px;
+  color: ${({ theme }) => theme.palette.Grey90};
+  margin: 10px 0;
+  padding: 0 20px;
+  ${Heading5Large("medium")};
 `;
 
 export const InputText = styled.input`
@@ -127,7 +140,6 @@ export const InputText = styled.input`
 
 export const BtnPrimary = styled.button<Button>`
   ${Btn}
-  margin: ${({ margin }) => margin || ""};
   color: ${({ theme }) => theme.palette.White};
   background-color: ${({ theme }) => theme.palette.Primary80};
   &:active {
@@ -150,13 +162,42 @@ export const BtnPrimary = styled.button<Button>`
       background-color: ${({ theme }) => theme.palette.Primary80};
     }
   }
+  &:hover {
+    box-shadow: 0px 3px 10px
+      ${({ theme }) => theme.palette.BackgroundTransparency10};
+  }
 `;
 
 export const BtnSecondary = styled.button<Button>`
   ${Btn}
-  margin: ${({ margin }) => margin || ""};
-  color: ${({ theme }) => theme.palette.White};
-  background-color: ${({ theme }) => theme.palette.btnSecondary};
+  color: ${({ theme }) => theme.palette.Secondary90};
+  background-color: ${({ theme }) => theme.palette.Secondary20};
+  &:active {
+    background-color: ${({ theme }) => theme.palette.Secondary30};
+    color: ${({ theme }) => theme.palette.Secondary100};
+  }
+  &:disabled {
+    background-color: ${({ theme }) => theme.palette.Secondary10};
+    background-color: ${({ theme }) => theme.palette.Secondary60};
+  }
+  &:focus-visible {
+    border: 1px solid ${({ theme }) => theme.palette.White};
+    &:before {
+      content: "";
+      border-radius: 10px;
+      position: absolute;
+      z-index: -1;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background-color: ${({ theme }) => theme.palette.Secondary60};
+    }
+  }
+  &:hover {
+    box-shadow: 0px 1px 5px
+      ${({ theme }) => theme.palette.BackgroundTransparency10};
+  }
 `;
 
 export const LinkPrimary = styled(Link)`
@@ -214,7 +255,25 @@ export const Content = styled(Col)`
   background-color: ${({ theme }) => theme.palette.White};
 `;
 
+export const ScrollContent = styled(Col)`
+  overflow-y: scroll;
+  margin-bottom: 20px;
+  flex: 1;
+`;
+
 export const PanelContainer = styled.article`
   display: flex;
   height: 100%;
+`;
+
+export const ContentWrapper = styled(Row)`
+  overflow: hidden;
+`;
+
+export const Icon = styled.span`
+  &:before {
+    color: ${({ theme }) => theme.palette.Grey20};
+    ${Body("regular", "large")};
+    font-family: icomoon;
+  }
 `;

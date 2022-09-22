@@ -39,7 +39,7 @@ const Errors = () => {
         {ErrorBlocks}
         <Pagination
           lastPage={Math.ceil(page.total / page.limit)}
-          offset={page.number}
+          pageInfo={page}
           setOffset={changePage}
         />
       </Container>

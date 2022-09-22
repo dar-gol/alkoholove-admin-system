@@ -110,7 +110,9 @@ const LoginView = ({
             />
           </Row>
           <Row justifyContent="center">
-            <BtnPrimary type="submit">Zaloguj się</BtnPrimary>
+            <BtnPrimary type="submit" width="150px">
+              Zaloguj się
+            </BtnPrimary>
           </Row>
         </Form>
         <ForgottenPassword href="#">Nie pamiętasz hasła?</ForgottenPassword>
