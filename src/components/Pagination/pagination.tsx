@@ -7,6 +7,7 @@ import {
   Row,
 } from "../../styles/global.styled";
 import { CurrentPage, PageInfo } from "./pagination.styled";
+import useQueryParams from "../../utils/hooks/useQueryParams";
 
 interface IProps {
   lastPage: number;
@@ -15,10 +16,12 @@ interface IProps {
 }
 
 const Pagination: React.FC<IProps> = ({ lastPage, pageInfo, setOffset }) => {
+  const { query, updateParam } = useQueryParams();
   const getIndexes = (length: number, shift: number): number[] =>
     Array.from({ length }, (_, i) => i + shift);
 
   const changePage = (page: number) => {
+    updateParam("offset", page);
     setOffset(page);
   };
 
@@ -38,6 +41,10 @@ const Pagination: React.FC<IProps> = ({ lastPage, pageInfo, setOffset }) => {
     const right = pageInfo.offset + pageInfo.limit;
     return `${left} - ${pageInfo.total < right ? pageInfo.total : right}`;
   };
+
+  useEffect(() => {
+    changePage(parseInt(query.offset, 10) || 0);
+  }, []);
 
   return (
     <div>
