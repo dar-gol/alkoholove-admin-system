@@ -139,6 +139,8 @@ const AddAlcohol = () => {
     const category = getCategory(alcohol.kind);
     setCategories({ ...category, kind: alcohol.kind });
     const coreValues = CORE.reduce((prev, { name }) => {
+      if (["rate_count", "rate_value", "avg_rating"].includes(name))
+        return prev;
       const prop = alcohol[name as keyof typeof alcohol];
       const value = { [name]: prepareField(prop) };
       return { ...prev, ...value };
@@ -240,7 +242,7 @@ const AddAlcohol = () => {
     const values = prepareValues(data);
     try {
       console.log({ values, data });
-      // await addOrEdit({ ...values, kind: categories.kind }, sm, md);
+      await addOrEdit({ ...values, kind: categories.kind }, sm, md);
       setIsValid(true);
       methods.reset(resetValues(Object.keys(data)));
     } catch (e: any) {
