@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
-import { Alcohols, IAlcohol } from '../../@types/alcohol';
-import { IReq } from '../../@types/fetch';
-import { IPageInfo } from '../../@types/pagination';
-import { API, URL } from '../constant';
-import useAuthReq from './useReq';
-import useUser from './useUser';
+import React, { useEffect, useState } from "react";
+import { Alcohols, IAlcohol } from "../../@types/alcohol";
+import { IReq } from "../../@types/fetch";
+import { IPageInfo } from "../../@types/pagination";
+import { API, URL } from "../constant";
+import useQueryParams from "./useQueryParams";
+import useAuthReq from "./useReq";
+import useUser from "./useUser";
 
 const initPageInfo: IPageInfo = {
   limit: 10,
@@ -15,7 +15,7 @@ const initPageInfo: IPageInfo = {
 } as const;
 
 const initReq = [
-  'POST',
+  "POST",
   `${API}${URL.SEARCH_ALCOHOLS}?limit=10&offset=0`,
   null,
 ] as const;
@@ -23,10 +23,9 @@ const initReq = [
 const useAlcohols = () => {
   const { get } = useUser();
   const [alcohols, setAlcohols] = useState<Alcohols | null>(null);
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>("");
   const [page, setPage] = useState<IPageInfo>(initPageInfo);
   const { send } = useAuthReq(...initReq);
-  const [cookie, setCookie] = useCookies();
 
   const update = (req: IReq = {}) => {
     send({ ...req })
@@ -39,16 +38,16 @@ const useAlcohols = () => {
   };
 
   const search = (input: string) => {
-    const phrase = input ? `&phrase=${input}` : '';
+    const phrase = input ? `&phrase=${input}` : "";
+    const shift = page.number * page.limit;
     update({
-      url: `${API}${URL.SEARCH_ALCOHOLS}?limit=${page.limit}&offset=0${phrase}`,
+      url: `${API}${URL.SEARCH_ALCOHOLS}?limit=${page.limit}&offset=${shift}${phrase}`,
     });
     setName(phrase);
   };
 
   const changePage = (index: number) => {
     const shift = index * page.limit;
-    setCookie('alcohol_page', index, { path: '/', sameSite: 'strict' });
     setPage((prev) => ({
       ...prev,
       number: index,
@@ -77,7 +76,6 @@ const useAlcohols = () => {
 
   useEffect(() => {
     if (get().access_token) update();
-    changePage(parseInt(cookie.alcohol_page, 10) || 0);
   }, [get().access_token]);
 
   return {
