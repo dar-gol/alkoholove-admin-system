@@ -17,7 +17,7 @@ const LoadingModal = ({ isOpen, title }: Props) => {
   const [delayOpen, setDelayOpen] = useState(false);
 
   useEffect(() => {
-    if (isOpen) setTimeout(() => setDelayOpen(true), 800);
+    if (isOpen) setTimeout(() => setDelayOpen(true), 0);
     else setDelayOpen(false);
   }, [isOpen]);
 
