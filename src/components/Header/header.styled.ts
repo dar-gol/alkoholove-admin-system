@@ -9,6 +9,11 @@ export const Container = styled.header`
   flex: 1;
   padding: ${({ theme }) => `0 ${theme.spacings.s6}px`};
   background-color: transparent;
+  @media (max-width: 768px) {
+    & {
+      zoom: 0.8;
+    }
+  }
 `;
 
 export const Title = styled.h2`
