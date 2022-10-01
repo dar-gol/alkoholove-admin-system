@@ -30,17 +30,27 @@ const setColor = (type: any, theme: { palette: { [k: string]: string } }) => {
 
 export const IndicatorContainer = styled.div<{
   size: number;
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+  visible: boolean;
 }>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   position: absolute;
-  right: -25px;
-  top: 10px;
+  /* right: -25px;
+  top: 10px; */
+  top: ${({ top }) => top || "auto"};
+  left: ${({ left }) => left || "auto"};
+  bottom: ${({ bottom }) => bottom || "auto"};
+  right: ${({ right }) => right || "auto"};
   justify-content: center;
-  display: flex;
+  display: ${({ visible }) => (visible ? "flex" : "none")};
   align-items: center;
   border-radius: 100%;
   background: ${({ theme }) => theme.palette.Grey5};
+  z-index: 2;
 `;
 
 export const Text = styled.span<{ typeColor: string }>`
