@@ -43,8 +43,6 @@ const LoginView = ({
   state,
 }: Props) => {
   const theme = useTheme() as { palette: { [k: string]: string } };
-
-  console.log({ ...state });
   return (
     <Container>
       <DayNightContainer>
@@ -77,11 +75,12 @@ const LoginView = ({
                 <TextInput
                   value={field.value}
                   onChange={field.onChange}
-                  icon="icon-Profil"
                   inputRef={field.ref}
+                  icon="icon-Profil"
                   placeholder="Nazwa uzytkownika"
                   error="Nazwa uzytkownika jest wymagana"
                   state={form.formState.errors.username ? "error" : ""}
+                  isAutoCompleted
                 />
               )}
             />
@@ -105,6 +104,7 @@ const LoginView = ({
                   state={form.formState.errors.password ? "error" : ""}
                   type="password"
                   autoComplete="on"
+                  isAutoCompleted
                 />
               )}
             />
