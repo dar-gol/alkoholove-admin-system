@@ -21,6 +21,12 @@ import createTheme from "./styles/theme";
 import LoginApollo from "./containers/Login/Login.apollo";
 import AlcoholListView from "./containers/AlcoholList/AlcoholList.view";
 import AlcoholListApollo from "./containers/AlcoholList/AlcoholList.apollo";
+import CategoryView from "./containers/Category/Category.view";
+import CategoryApollo from "./containers/Category/Category.apollo";
+import UsersListView from "./containers/Users/UsersList.view";
+import SuggestionListView from "./containers/SuggestionList/SuggestionList.view";
+import ErrorListView from "./containers/ErrorList/ErrorList.view";
+import ReportedReviewListView from "./containers/ReportedReviewList/ReportedReviewList.view";
 
 const App = () => {
   const [cookie] = useCookies();
@@ -39,25 +45,34 @@ const App = () => {
           <Route path="/" element={<LoginApollo />} />
           <Route path="/account" element={<Account />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/alcohol/edit" element={<AlcoholListApollo />} />
           <Route
-            path="/alcohol/edit/:alcoholBarcode"
+            path="/alcohol/:kind/edit/:alcoholBarcode"
             element={<AddAlcohol />}
           />
           <Route path="/alcohol/add" element={<AddAlcohol />} />
-          <Route path="/alcohol/:alcoholBarcode" element={<AlcoholDetails />} />
+          <Route
+            path="/alcohol/:kind/:alcoholBarcode"
+            element={<AlcoholListApollo />}
+          />
           <Route path="/alcohol" element={<AlcoholListApollo />} />
+          <Route path="/alcohol/:kind" element={<AlcoholListApollo />} />
           <Route path="/category/add" element={<AddCategory />} />
           <Route
             path="/category/edit/:categoryName"
             element={<AddCategory />}
           />
-          <Route path="/category" element={<Category />} />
-          <Route path="/category/edit" element={<Category />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<User />} />
-          <Route path="/errors" element={<Errors />} />
-          <Route path="/errors/:id" element={<Error />} />
+          <Route path="/category" element={<CategoryApollo />} />
+          <Route path="/category/edit" element={<CategoryApollo />} />
+          <Route path="/user" element={<UsersListView />} />
+          <Route path="/user/:id" element={<UsersListView />} />
+          <Route path="/error" element={<ErrorListView />} />
+          <Route path="/suggestion/" element={<SuggestionListView />} />
+          <Route path="/suggestion/:id" element={<SuggestionListView />} />
+          <Route path="/reportedReview/" element={<ReportedReviewListView />} />
+          <Route
+            path="/reportedReview/:id"
+            element={<ReportedReviewListView />}
+          />
 
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
