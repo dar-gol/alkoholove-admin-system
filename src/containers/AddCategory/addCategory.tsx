@@ -138,12 +138,19 @@ const AddCategory = () => {
   };
 
   useEffect(() => {
-    const { properties } = getCategory(categoryName || "", true);
-    const fieldName = properties.map((field) => ({
+    const { core, additional } = getCategory(categoryName || "", true);
+    const coreFieldName = core.properties.map((field) => ({
       name: field.name,
       isDeleted: false,
       isNew: false,
     }));
+    const additinalFieldName = additional.properties.map((field) => ({
+      name: field.name,
+      isDeleted: false,
+      isNew: false,
+    }));
+    const properties = { ...core.properties, ...additional.properties };
+    const fieldName = [...coreFieldName, ...additinalFieldName];
     setNames(fieldName);
     const completeFields = fieldName.reduce((prev, curr, index) => {
       const { bsonType, description, title } = properties[index].metadata;

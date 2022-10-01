@@ -21,9 +21,11 @@ const useAlcohol = (barcode: string | undefined) => {
         if (data.ok) return data.json();
         throw data;
       })
-      .then((data) => setAlcohol(data))
+      .then((data) => {
+        setAlcohol(data);
+      })
       .catch((e) => console.log({ e }));
-  }, []);
+  }, [barcode]);
 
   return alcohol;
 };

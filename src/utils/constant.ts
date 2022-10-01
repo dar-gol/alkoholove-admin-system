@@ -1,6 +1,5 @@
 /* eslint-disable no-unreachable */
 const isProduction = () => {
-  return true;
   if (process.env.NODE_ENV === "development") return false;
   return true;
 };
@@ -20,6 +19,7 @@ export const URL = {
   UPLOAD_IMAGE: "/admin/image",
   USERS: "/admin/users",
   ERRORS: "/admin/errors",
+  REPORTED_REVIEW: "/admin/reviews",
   ME: "/me",
   GET_SUGGESTIONS: "/admin/suggestions",
   GET_TOTAL_SUGGESTIONS: "/admin/suggestions/total",

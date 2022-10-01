@@ -35,3 +35,13 @@ export const autoCompleteHandler = (fn: () => void) => {
     if (e.target.hasAttribute("autocompleted")) fn();
   });
 };
+
+export const getDate = (date: Date | string) => {
+  const prepDate = typeof date === "string" ? new Date(date) : date;
+  const year = prepDate.getFullYear();
+  const month = prepDate.getMonth() + 1;
+  const day = prepDate.getDate();
+  return `${year}-${month < 10 ? `0${month}` : month}-${
+    day < 10 ? `0${day}` : day
+  }`;
+};
