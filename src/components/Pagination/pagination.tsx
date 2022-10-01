@@ -54,6 +54,7 @@ const Pagination: React.FC<IProps> = ({ lastPage, pageInfo, setOffset }) => {
         alignItems="end"
         margin="0 20px 20px 20px"
         position="relative"
+        padding="15px 0 0 0"
       >
         <PageInfo>
           {setIntervalPage()} z {pageInfo.total} rekordów

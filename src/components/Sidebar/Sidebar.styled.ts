@@ -101,4 +101,9 @@ export const SidebarContainer = styled(Col)`
       justify-content: center;
     }
   }
+  @media (max-width: 768px) {
+    & {
+      display: none;
+    }
+  }
 `;

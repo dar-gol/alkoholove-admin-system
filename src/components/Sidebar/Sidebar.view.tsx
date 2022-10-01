@@ -1,6 +1,8 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { Col, Row } from "../../styles/global.styled";
 import Indicator from "../Indicator/Indicator";
+import { AmountObject } from "./Sidebar.logic";
 import {
   SidebarContainer,
   Header,
@@ -15,94 +17,121 @@ import {
 interface Props {
   handleCollapse: () => void;
   collapse: boolean;
+  setActive: (activePage: string) => string;
+  amount: AmountObject;
 }
 
-const SidebarView = ({ handleCollapse, collapse }: Props) => {
-  const t = 1;
-  return (
-    <SidebarContainer className={`${collapse ? "collapse" : ""}`}>
-      <Header>
-        <Indicator
-          size={50}
-          onClick={handleCollapse}
-          icon={`icon-chevron-${collapse ? "right" : "left"}`}
-          type="secondary"
-        />
-        <Row height="120px" gap="20px" alignItems="center">
-          <Logo src="/logo192.png" alt="Alkoholove's logo" />
-          <Col justifyContent="center" className="rightHeader">
-            <Title>Alkoholove</Title>
-            <Subtitle>Panel administracyjny</Subtitle>
-          </Col>
-        </Row>
-      </Header>
-      <MenuTitle>
-        <span className="icon-Lists" />
-        <span>Listy</span>
-      </MenuTitle>
-      <MenuLinkWrapper>
-        <MenuLink className="active" to="/home">
-          <span className="icon-dashboard" />
-          <span>Dashboard</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <MenuLink className="" to="/alcohol">
-          <span className="icon-beer" />
-          <span>Alkohole</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <MenuLink className="" to="#">
-          <span className="icon-Category" />
-          <span>Kategorie</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <MenuLink className="" to="#">
-          <span className="icon-Social" />
-          <span>Uzytkownicy</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <Indicator size={50} onClick={() => {}} text="23" type="secondary" />
-        <MenuLink className="" to="#">
-          <span className="icon-Suggestion" />
-          <span>Sugestie uzytkownikow</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <Indicator size={50} onClick={() => {}} text="0" type="secondary" />
-        <MenuLink className="" to="#">
-          <span className="icon-Error" />
-          <span>Zgłoszone błędy</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <Indicator size={50} onClick={() => {}} text="10" type="green" />
-        <MenuLink className="" to="#">
-          <span className="icon-Flagged_comment" />
-          <span>Oflagowane komentarze</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuTitle>
-        <span className="icon-Action" />
-        <span>Akcje</span>
-      </MenuTitle>
-      <MenuLinkWrapper>
-        <MenuLink className="" to="#">
-          <span className="icon-beer" />
-          <span>Dodaj alkohol</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <MenuLink className="" to="#">
-          <span className="icon-Add-Category" />
-          <span>Dodaj kategorie</span>
-        </MenuLink>
-      </MenuLinkWrapper>
-    </SidebarContainer>
-  );
-};
+const SidebarView = ({
+  handleCollapse,
+  collapse,
+  setActive,
+  amount,
+}: Props) => (
+  <SidebarContainer className={`${collapse ? "collapse" : ""}`}>
+    <Header>
+      <Indicator
+        size={50}
+        top="10px"
+        right="-25px"
+        onClick={handleCollapse}
+        icon={`icon-chevron-${collapse ? "right" : "left"}`}
+        type="secondary"
+      />
+      <Row height="120px" gap="20px" alignItems="center">
+        <Logo src="/logo192.png" alt="Alkoholove's logo" />
+        <Col justifyContent="center" className="rightHeader">
+          <Title>Alkoholove</Title>
+          <Subtitle>Panel administracyjny</Subtitle>
+        </Col>
+      </Row>
+    </Header>
+    <MenuTitle>
+      <span className="icon-Lists" />
+      <span>Listy</span>
+    </MenuTitle>
+    <MenuLinkWrapper>
+      <MenuLink className={setActive("home")} to="/home">
+        <span className="icon-dashboard" />
+        <span>Dashboard</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuLinkWrapper>
+      <MenuLink className={setActive("alcohol")} to="/alcohol">
+        <span className="icon-beer" />
+        <span>Alkohole</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuLinkWrapper>
+      <MenuLink className={setActive("category")} to="/category">
+        <span className="icon-Category" />
+        <span>Kategorie</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuLinkWrapper>
+      <MenuLink className={setActive("user")} to="/user">
+        <span className="icon-Social" />
+        <span>Uzytkownicy</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuLinkWrapper>
+      <Indicator
+        top="10px"
+        right="-25px"
+        size={50}
+        onClick={() => {}}
+        text={amount.suggestion.value.toString()}
+        type={amount.suggestion.color}
+      />
+      <MenuLink className={setActive("suggestion")} to="/suggestion">
+        <span className="icon-Suggestion" />
+        <span>Sugestie uzytkownikow</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuLinkWrapper>
+      <Indicator
+        top="10px"
+        right="-25px"
+        size={50}
+        onClick={() => {}}
+        text={amount.error.value.toString()}
+        type={amount.error.color}
+      />
+      <MenuLink className={setActive("error")} to="/error">
+        <span className="icon-Error" />
+        <span>Zgłoszone błędy</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuLinkWrapper>
+      <Indicator
+        top="10px"
+        right="-25px"
+        size={50}
+        onClick={() => {}}
+        text={amount.reportedReview.value.toString()}
+        type={amount.reportedReview.color}
+      />
+      <MenuLink className={setActive("reportedReview")} to="/reportedReview">
+        <span className="icon-Flagged_comment" />
+        <span>Oflagowane komentarze</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuTitle>
+      <span className="icon-Action" />
+      <span>Akcje</span>
+    </MenuTitle>
+    <MenuLinkWrapper>
+      <MenuLink className={setActive("")} to="/alcohol/add/">
+        <span className="icon-beer" />
+        <span>Dodaj alkohol</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+    <MenuLinkWrapper>
+      <MenuLink className={setActive("")} to="#">
+        <span className="icon-Add-Category" />
+        <span>Dodaj kategorie</span>
+      </MenuLink>
+    </MenuLinkWrapper>
+  </SidebarContainer>
+);
 
 export default SidebarView;
