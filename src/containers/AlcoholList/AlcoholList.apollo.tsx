@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { CategoriesObject, ICategory } from "../../@types/category";
+import React, { useEffect, useRef, useState } from "react";
 import LoadingModal from "../../components/modal/LoadingModal";
-import { API, URL } from "../../utils/constant";
-import useAlcohols from "../../utils/hooks/useAlcohols";
-import useAuthReq from "../../utils/hooks/useReq";
+import useAlcohols from "../../utils/hooks/useContents";
 import AlcoholListLogic from "./AlcoholList.logic";
+import useQueryParams from "../../utils/hooks/useQueryParams";
+import { API, URL } from "../../utils/constant";
+import { IListHandlers } from "../../components/List/List.view";
 
-const initReq = [
-  "GET",
-  `${API}${URL.GET_CATEGORIES}?limit=0&offset=0`,
+const initalReq = [
+  "POST",
+  `${API}${URL.SEARCH_ALCOHOLS}?limit=10&offset=0`,
   null,
   {
     accept: "application/json",
@@ -17,46 +17,22 @@ const initReq = [
 ] as const;
 
 const AlcoholListApollo = () => {
-  const { search, changePageSize, changePage, alcohols, page } = useAlcohols();
-  const [categories, setCategories] = useState<
-    { label: string; value: string }[]
-  >([]);
-  const { send } = useAuthReq(...initReq);
+  const listRef = useRef<IListHandlers>(null);
+  const { updateParam } = useQueryParams();
 
-  const getCategories = () =>
-    send({}).then((res: Response) => res.json()) as Promise<CategoriesObject>;
-
-  const init = async () => {
-    const data = await getCategories();
-    const categoryNames = data.categories?.map(({ title }: ICategory) => ({
-      label: title,
-      value: title,
-    }));
-    setCategories(categoryNames || []);
+  const updateKind = (kind: string | null) => {
+    listRef.current?.fireSearch(null, kind);
   };
 
   useEffect(() => {
-    init();
-  }, []);
+    if (listRef.current?.getContent() !== null) return;
 
-  const isLoaded = () => {
-    if (alcohols?.length && categories?.length) return true;
-    return false;
-  };
+    updateParam("offset", 0);
+    updateParam("limit", 10);
+    listRef.current?.fireChangePage(0);
+  }, [listRef.current?.getContent()]);
 
-  if (!isLoaded())
-    return (
-      <LoadingModal isOpen title="Proszę czekać. Przygotowywujemy stronę..." />
-    );
-
-  return (
-    <AlcoholListLogic
-      page={page}
-      alcohols={alcohols || []}
-      changePage={changePage}
-      categories={categories}
-    />
-  );
+  return <AlcoholListLogic updateKind={updateKind} listRef={listRef} />;
 };
 
 export default AlcoholListApollo;
