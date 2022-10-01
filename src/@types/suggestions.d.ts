@@ -1,4 +1,4 @@
-import { IPageInfo } from './pagination';
+import { IPageInfo } from "./pagination";
 
 export type Suggestion = {
   barcode: string;

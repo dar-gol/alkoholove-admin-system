@@ -14,9 +14,10 @@ export interface IProps {
   placeholder: string;
 }
 
-export type inputType = 'string' | 'array' | 'bool' | 'int' | 'double' | 'long';
+export type inputType = "string" | "array" | "bool" | "int" | "double" | "long";
 
 export interface IFactory extends IProps {
   type: inputType;
   key?: string;
+  [k: string]: any;
 }
