@@ -14,11 +14,11 @@ function withDashboardWrapper<T extends {}>(Component: ComponentType<T>) {
     return (
       <PanelContainer>
         <SidebarLogic />
-        <Col flex="1">
+        <Col flex="1" width="100%">
           <Row>
             <HeaderLogic />
           </Row>
-          <ContentWrapper flex="1">
+          <ContentWrapper flex="1" width="100%">
             <Component {...(props as T)} />
           </ContentWrapper>
         </Col>
