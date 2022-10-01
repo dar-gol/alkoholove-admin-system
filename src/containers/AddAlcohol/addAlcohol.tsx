@@ -1,20 +1,24 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, Controller } from "react-hook-form";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
 import HeaderLogic from "../../components/Header/header.logic";
 import FileInput from "../../components/FileInput/fileInput";
-import { Form, Title } from "./addAlcohol.styled";
+import { Form, SectionBar, Title } from "./addAlcohol.styled";
 import {
   BtnPrimary,
+  CapitalCase,
   Col,
   Container,
+  Content,
+  InfoBar,
   Key,
   LinkSecondary,
   ListTitle,
   Row,
+  ScrollContent,
   Tuple,
   Value,
 } from "../../styles/global.styled";
@@ -24,7 +28,7 @@ import { ModalTitle } from "../../components/modal/Modal.styled";
 import useCategory from "../../utils/hooks/useCategory";
 import CategoryForm from "../../components/CategoryForm/categoryForm";
 import { inputType, Options } from "../../@types/inputs";
-import { SpecificCategory, Type } from "../../@types/category";
+import { Property, SpecificCategory, Type } from "../../@types/category";
 import InputFactory from "../../components/InputFactory/inputFactory";
 import {
   API,
@@ -41,6 +45,9 @@ import Suggestion from "../../components/Suggestion/suggestion";
 import ErrorModal from "../../components/ErrorModal/errorModal";
 import useAlcohol from "../../utils/hooks/useAlcohol";
 import { IAlcohol } from "../../@types/alcohol";
+import withDashboardWrapper from "../../utils/hoc/withDashboardWrapper";
+import MultiInput from "../../components/Inputs/MultiInput";
+import CategorySelect from "../../components/Inputs/CategorySelect";
 
 type IModal = {
   open: boolean;
@@ -52,8 +59,8 @@ type IModal = {
 const getValues = (array: any) =>
   array instanceof Array ? array?.map((el: any) => el.value) || [] : [];
 
-const getDouble = (number: number) => {
-  const possibleNumber = number.toFixed(2);
+const getDouble = (number: string) => {
+  const possibleNumber = Number(number).toFixed(2);
   return possibleNumber === "NaN" ? null : possibleNumber;
 };
 
@@ -92,15 +99,21 @@ const AddAlcohol = () => {
     SpecificCategory & { kind: string | null }
   >({
     kind: null,
-    required: [],
-    properties: [],
+    core: {
+      required: [],
+      properties: [],
+    },
+    additional: { required: [], properties: [] },
   });
   const { getCategory, ctg } = useCategory();
   const { send } = useAuthReq("POST", `${API}${URL.POST_ALCOHOLS}`, "");
   const alcohol = useAlcohol(alcoholBarcode) as IAlcohol;
 
   const prepareValues = (data: any) => {
-    const prepareData = categories.properties.reduce(
+    const coreProp = categories.core.properties;
+    const additionalProp = categories.additional.properties;
+    const prop = [...coreProp, ...additionalProp];
+    const prepareData = prop.reduce(
       (prev, curr) => {
         const { type } = getType(curr.metadata.bsonType);
         if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
@@ -110,6 +123,8 @@ const AddAlcohol = () => {
           return { ...prev, [curr.name]: data[curr.name].value };
         if (type === "double")
           return { ...prev, [curr.name]: getDouble(data[curr.name]) };
+        if (type === "int" || type === "long")
+          return { ...prev, [curr.name]: Number(data[curr.name]) };
         return prev;
       },
       { ...data }
@@ -134,7 +149,6 @@ const AddAlcohol = () => {
   };
 
   const handleCompleteFields = async () => {
-    console.log({ alcohol });
     if (!alcoholBarcode || !alcohol) return;
     const category = getCategory(alcohol.kind);
     setCategories({ ...category, kind: alcohol.kind });
@@ -153,8 +167,6 @@ const AddAlcohol = () => {
       {}
     );
     setID(alcohol.id);
-
-    console.log({ coreValues, additionalValues });
 
     methods.reset({
       ...coreValues,
@@ -175,7 +187,7 @@ const AddAlcohol = () => {
     navigate("/alcohol/add");
   };
 
-  const chooseCategory = async ({ kind }: Options) => {
+  const chooseCategory = async (kind: { label: string; value: string }) => {
     setCategories({ ...getCategory(kind.value), kind: kind.value });
   };
 
@@ -258,64 +270,128 @@ const AddAlcohol = () => {
     }
   };
 
+  const setValue = (value: unknown) => {
+    if (!value) return "";
+    if (value instanceof Array && value.length === 0) return "";
+    return value;
+  };
+
+  const createRowInput = (input: Property) => {
+    const { bsonType, title, description } = input.metadata;
+    const { name } = input;
+    const { type, required } = getType(bsonType);
+    return (
+      <Col key={name} margin="0 0 20px 0" minHeight="56px">
+        <Controller
+          control={methods.control}
+          name={name}
+          render={({ field }) => (
+            <InputFactory
+              value={setValue(field.value)}
+              onChange={field.onChange}
+              inputRef={field.ref}
+              type={type}
+              name={name}
+              title={title}
+              required={required}
+              placeholder={description}
+            />
+          )}
+        />
+      </Col>
+    );
+  };
+
   return (
     <>
-      <HeaderLogic />
-      <Breadcrumb />
-      <Container>
-        <Title>Formularz dodawania/edycji alkoholu</Title>
-        <CategoryForm submit={chooseCategory} kindName={categories.kind} />
-        {!!categories.properties.length && (
-          <FormProvider {...methods}>
-            <Form onSubmit={methods.handleSubmit(submit)}>
-              <MoreInput
-                name="barcode"
-                title="Kod kreskowy"
-                required
-                placeholder="9501101531000"
-              />
-              {categories.properties.map((input) => {
-                const { bsonType, title, description } = input.metadata;
-                const { name } = input;
-                const { type, required } = getType(bsonType);
-                return (
-                  <InputFactory
-                    key={name}
-                    type={type}
-                    name={name}
-                    title={title}
-                    required={required}
-                    placeholder={description}
+      <Content flex="1" width="100%" maxWidth="756px" gap="20px">
+        <Title>Formularz dodawania alkoholu</Title>
+        <Col margin="0 80px" minHeight="56px">
+          <CategorySelect
+            isAll={false}
+            value={
+              categories.kind && {
+                label: categories.kind,
+                value: categories.kind,
+              }
+            }
+            onChange={chooseCategory}
+            title="Wybierz kategorię alkoholu"
+          />
+        </Col>
+        <ScrollContent padding="0 0 20px 0">
+          {!!categories.core.properties.length && (
+            <FormProvider {...methods}>
+              <Form onSubmit={methods.handleSubmit(submit)}>
+                <SectionBar>
+                  <p>Podstawowe informacje</p>
+                </SectionBar>
+                <InfoBar margin="0 0 20px 0">
+                  <span className="icon-Info" />
+                  <p>
+                    Input ponizej pozwala na wprowadzenie kilku wartości. Aby
+                    zaakceptować wpisanie wartości nalezy wcisnąć przycisk
+                    tabulacji.
+                  </p>
+                </InfoBar>
+                {/* <Col margin="0 0 20px 0" minHeight="56px">
+                  <Controller
+                    control={methods.control}
+                    name="barcode"
+                    render={({ field }) => (
+                      <MultiInput
+                        value={setValue(field.value)}
+                        onChange={field.onChange}
+                        inputRef={field.ref}
+                      />
+                    )}
                   />
-                );
-              })}
-              <Row gap="10px">
-                <FileInput
-                  name="sm"
-                  title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
-                  required
-                  remove={removeImage}
-                  imageName={methods.getValues("sm")}
-                  placeholder="sm"
-                />
-                <FileInput
-                  name="md"
-                  title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
-                  required
-                  remove={removeImage}
-                  imageName={methods.getValues("md")}
-                  placeholder="md"
-                />
-              </Row>
-              <Row justifyContent="flex-end">
-                <BtnPrimary type="submit" margin="20px 0">
-                  Dodaj/edytuj alkohol
-                </BtnPrimary>
-              </Row>
-            </Form>
-          </FormProvider>
-        )}
-      </Container>
+                </Col> */}
+                {categories.core.properties.map((input) =>
+                  createRowInput(input)
+                )}
+                {!!categories.additional.properties.length && (
+                  <SectionBar>
+                    <p>
+                      Dodatkowe informacje o:{" "}
+                      <CapitalCase>{categories.kind}</CapitalCase>
+                    </p>
+                  </SectionBar>
+                )}
+                {categories.additional.properties.map((input) =>
+                  createRowInput(input)
+                )}
+                <SectionBar>
+                  <p>Zdjęcia alkoholu</p>
+                </SectionBar>
+                <Row gap="10px">
+                  <FileInput
+                    name="sm"
+                    title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
+                    required
+                    remove={removeImage}
+                    imageName={methods.getValues("sm")}
+                    placeholder="sm"
+                  />
+                  <FileInput
+                    name="md"
+                    title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
+                    required
+                    remove={removeImage}
+                    imageName={methods.getValues("md")}
+                    placeholder="md"
+                  />
+                </Row>
+                <Row justifyContent="flex-end">
+                  <BtnPrimary type="submit" margin="20px 0">
+                    Dodaj/edytuj alkohol
+                  </BtnPrimary>
+                </Row>
+              </Form>
+            </FormProvider>
+          )}
+        </ScrollContent>
+      </Content>
       <Modal isOpen={isLoading} onClose={() => {}} isClosable={false}>
         <ModalTitle>Dodajemy nowy alkohol</ModalTitle>
         <Row justifyContent="center">
@@ -341,4 +417,4 @@ const AddAlcohol = () => {
   );
 };
 
-export default AddAlcohol;
+export default withDashboardWrapper(AddAlcohol);
