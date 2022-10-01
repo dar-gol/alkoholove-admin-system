@@ -25,14 +25,14 @@ const Breadcrumb = () => {
   );
   const { length } = paths;
 
-  console.log({ splitLocation, splitPath, paths });
-
   const JSX = paths?.map((path, index) => (
     <span key={path}>
       {length !== index + 1 ? (
         <>
           <Crumb to={path}>
-            <CapitalCase>{splitLocation[index]}</CapitalCase>
+            <CapitalCase>
+              {decodeURIComponent(splitLocation[index])}
+            </CapitalCase>
           </Crumb>
           <Space>
             <span className="icon-chevron-right" />
@@ -40,7 +40,7 @@ const Breadcrumb = () => {
         </>
       ) : (
         <Last>
-          <CapitalCase>{splitLocation[index]}</CapitalCase>
+          <CapitalCase>{decodeURIComponent(splitLocation[index])}</CapitalCase>
         </Last>
       )}
     </span>
