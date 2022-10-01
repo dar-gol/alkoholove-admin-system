@@ -8,9 +8,6 @@ import {
   Heading5Large,
 } from "./typography.styled";
 
-export const Test1 = styled.section``;
-export const Test2 = styled.section``;
-
 export const Main = styled.main`
   height: 100%;
   background-color: ${({ theme }) => theme.palette.Grey5};
@@ -32,6 +29,9 @@ export type BlockType = {
   height?: string;
   minWidth?: string;
   minHeight?: string;
+  maxWidth?: string;
+  maxHeight?: string;
+  visible?: boolean;
 };
 
 type Button = {
@@ -88,24 +88,23 @@ export const Div = styled.section<BlockType>`
   height: ${({ height }) => height || "unset"};
   min-width: ${({ minWidth }) => minWidth || "unset"};
   min-height: ${({ minHeight }) => minHeight || "unset"};
+  max-width: ${({ maxWidth }) => maxWidth || "unset"};
+  max-height: ${({ maxHeight }) => maxHeight || "unset"};
+  display: ${({ visible = true }) => (visible ? "flex" : "none")};
 `;
 
-export const Row = styled(Div)`
-  display: flex;
-`;
+export const Row = styled(Div)``;
 
 export const Col = styled(Div)`
-  display: flex;
   flex-direction: column;
 `;
 
 export const Container = styled.article`
-  padding: 30px;
-  margin: 20px auto;
+  padding: 20px;
   border-radius: 20px;
-  background-color: #fff;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-  max-width: 678px;
+  background-color: ${({ theme }) => theme.palette.White};
+  flex: 1;
+  position: relative;
 `;
 
 export const Title = styled.h2`
@@ -118,6 +117,7 @@ export const Title = styled.h2`
 export const ListTitle = styled.h2`
   color: ${({ theme }) => theme.palette.Grey90};
   margin: 10px 0;
+  margin-top: 40px;
   padding: 0 20px;
   ${Heading5Large("medium")};
 `;
@@ -215,14 +215,13 @@ export const LinkSecondary = styled(Link)`
   line-height: 40px;
 `;
 
-export const CapitalCase = styled.span`
-  white-space: nowrap;
+export const CapitalCase = styled.span<{ isNoWrap?: boolean }>`
+  white-space: ${({ isNoWrap = true }) => (isNoWrap ? "nowrap" : "wrap")};
   text-transform: capitalize;
 `;
 
-export const Tuple = styled.section`
-  display: flex;
-  border-bottom: 2px solid ${({ theme }) => theme.palette.grey};
+export const Tuple = styled(Row)`
+  border-bottom: 1px solid ${({ theme }) => theme.palette.Grey10};
   justify-content: space-between;
   &:last-of-type {
     border-bottom: 0;
@@ -230,13 +229,14 @@ export const Tuple = styled.section`
 `;
 
 export const Key = styled.p`
-  color: ${({ theme }) => theme.palette.grey};
+  ${Body("regular", "large")}
+  color: ${({ theme }) => theme.palette.Grey40};
 `;
 
 export const Value = styled.p`
-  color: black;
-  font-weight: 600;
   text-align: right;
+  ${Body("medium", "large")}
+  color: ${({ theme }) => theme.palette.Grey80}; ;
 `;
 
 export const WarnText = styled.p`
@@ -253,10 +253,12 @@ export const Content = styled(Col)`
   width: ${({ width }) => width || "unset"};
   border-radius: 20px;
   background-color: ${({ theme }) => theme.palette.White};
+  overflow: hidden;
 `;
 
 export const ScrollContent = styled(Col)`
   overflow-y: scroll;
+  overflow-x: auto;
   margin-bottom: 20px;
   flex: 1;
 `;
@@ -268,6 +270,7 @@ export const PanelContainer = styled.article`
 
 export const ContentWrapper = styled(Row)`
   overflow: hidden;
+  justify-content: center;
 `;
 
 export const Icon = styled.span`
@@ -276,4 +279,42 @@ export const Icon = styled.span`
     ${Body("regular", "large")};
     font-family: icomoon;
   }
+`;
+
+export const InfoBar = styled(Row)`
+  background-color: ${({ theme }) => theme.palette.Secondary20};
+  color: ${({ theme }) => theme.palette.Secondary100};
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  ${Body("regular", "medium")}
+  border-radius: 20px;
+  & span::before {
+    font-size: 30px;
+  }
+`;
+
+export const ListContainer = styled(Col)`
+  position: relative;
+  background-color: ${({ theme }) => theme.palette.White};
+  border-radius: 20px;
+  max-width: 1000px;
+  width: 100%;
+  flex: 1;
+  &.hidden {
+    display: none;
+  }
+`;
+
+export const ListWrapper = styled(Col)`
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+`;
+
+export const ContentContainer = styled(Row)`
+  margin: 0 50px 50px 50px;
+  gap: 20px;
+  flex: 1;
+  justify-content: center;
 `;
