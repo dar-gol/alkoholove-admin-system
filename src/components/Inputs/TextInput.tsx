@@ -1,43 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "../../styles/global.styled";
 import { autoCompleteHandler } from "../../utils/utils";
+import { CustomInputProps, RightIcon, Type } from "./ICustomInput";
 import {
   Input,
   InputContainer,
   InputWrapper,
   Label,
   Error,
+  TextArea,
 } from "./TextInput.styled";
 
-type Type =
-  | "default"
-  | "default "
-  | "default success"
-  | "default error"
-  | "default active"
-  | "written"
-  | "written "
-  | "written success"
-  | "written error"
-  | "written active";
-type RightIcon = "icon-Error" | "icon-Success" | "";
-
-type State = "success" | "error" | "";
-
-interface Props {
-  state: State;
-  placeholder: string;
-  error: string;
-  icon?: string;
-  [k: string]: any;
-}
-
-const TextInput: React.FC<Props> = ({
+const TextInput: React.FC<CustomInputProps> = ({
   placeholder,
   error,
   state,
-  children,
   icon,
+  isAutoCompleted,
   ...rest
 }) => {
   const [type, setType] = useState<Type>("default");
@@ -60,12 +39,34 @@ const TextInput: React.FC<Props> = ({
     return "default";
   };
 
-  useEffect(() => autoCompleteHandler(() => setType("written")));
+  useEffect(() => {
+    if (isAutoCompleted) autoCompleteHandler(() => setType("written"));
+  }, []);
 
   useEffect(() => {
     setType(stateHandler());
     setRightIcon(stateRightIcon());
   }, [state, rest.value, active]);
+
+  const textAreaAdjust = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const element = event.currentTarget;
+    const parent = element.parentElement?.parentElement;
+    element.style.height = "1px";
+    element.style.height = `${35 + element.scrollHeight}px`;
+    if (parent) {
+      parent.style.minHeight = element.style.height;
+      const grandParent = parent.parentElement;
+      if (grandParent) {
+        grandParent.style.minHeight = element.style.height;
+      }
+    }
+  };
+
+  const getInputType = () => {
+    if (rest.type === "textarea")
+      return <TextArea {...rest} onKeyUp={(event) => textAreaAdjust(event)} />;
+    return <Input {...rest} />;
+  };
 
   return (
     <InputContainer
@@ -76,7 +77,7 @@ const TextInput: React.FC<Props> = ({
       <Icon className={`${icon || "icon-search"} left-icon`} />
       <InputWrapper>
         <Label>{placeholder}</Label>
-        <Input {...rest} />
+        {getInputType()}
       </InputWrapper>
       <Icon className={`${rightIcon} right-icon`} />
       <Error className="error">{error}</Error>
