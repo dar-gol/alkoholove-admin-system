@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
   Heading4Large,
@@ -50,7 +50,7 @@ export const MenuLinkWrapper = styled.div`
   position: relative;
 `;
 
-export const MenuLink = styled(Link)`
+export const MenuLink = styled(NavLink)`
   text-decoration: none;
   border-radius: 20px;
   margin: 10px 20px;

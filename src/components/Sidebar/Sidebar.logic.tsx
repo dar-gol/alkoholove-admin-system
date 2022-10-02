@@ -46,13 +46,7 @@ const SidebarLogic = () => {
   const [collapse, setCollapse] = useState<boolean>(false);
   const [amount, setAmount] = useState<AmountObject>(initAmount);
   const [cookie, setCookie] = useCookies();
-  const location = useLocation();
   const { send } = useAuthReq("GET", "", null, header);
-
-  const setActive = (activePage: string) => {
-    const siteName = location.pathname.split("/")?.[1];
-    return siteName === activePage ? "active" : "";
-  };
 
   const getSuggestionAmount = async () => {
     const data = (await send({
@@ -62,7 +56,7 @@ const SidebarLogic = () => {
       ...prev,
       suggestion: {
         value: data.page_info.total,
-        color: data.page_info.total > 5 ? "green" : "secondary",
+        color: data.page_info.total > 1 ? "green" : "secondary",
       },
     }));
   };
@@ -114,7 +108,6 @@ const SidebarLogic = () => {
     <SidebarView
       handleCollapse={collapseSidebar}
       collapse={collapse}
-      setActive={setActive}
       amount={amount}
     />
   );

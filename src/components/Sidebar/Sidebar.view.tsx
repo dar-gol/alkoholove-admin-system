@@ -17,16 +17,10 @@ import {
 interface Props {
   handleCollapse: () => void;
   collapse: boolean;
-  setActive: (activePage: string) => string;
   amount: AmountObject;
 }
 
-const SidebarView = ({
-  handleCollapse,
-  collapse,
-  setActive,
-  amount,
-}: Props) => (
+const SidebarView = ({ handleCollapse, collapse, amount }: Props) => (
   <SidebarContainer className={`${collapse ? "collapse" : ""}`}>
     <Header>
       <Indicator
@@ -50,27 +44,39 @@ const SidebarView = ({
       <span>Listy</span>
     </MenuTitle>
     <MenuLinkWrapper>
-      <MenuLink className={setActive("home")} to="/home">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/home"
+      >
         <span className="icon-dashboard" />
         <span>Dashboard</span>
       </MenuLink>
     </MenuLinkWrapper>
     <MenuLinkWrapper>
-      <MenuLink className={setActive("alcohol")} to="/alcohol">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/alcohol"
+      >
         <span className="icon-beer" />
         <span>Alkohole</span>
       </MenuLink>
     </MenuLinkWrapper>
     <MenuLinkWrapper>
-      <MenuLink className={setActive("category")} to="/category">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/category"
+      >
         <span className="icon-Category" />
         <span>Kategorie</span>
       </MenuLink>
     </MenuLinkWrapper>
     <MenuLinkWrapper>
-      <MenuLink className={setActive("user")} to="/user">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/user"
+      >
         <span className="icon-Social" />
-        <span>Uzytkownicy</span>
+        <span>Użytkownicy</span>
       </MenuLink>
     </MenuLinkWrapper>
     <MenuLinkWrapper>
@@ -81,10 +87,14 @@ const SidebarView = ({
         onClick={() => {}}
         text={amount.suggestion.value.toString()}
         type={amount.suggestion.color}
+        isPressCursor={false}
       />
-      <MenuLink className={setActive("suggestion")} to="/suggestion">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/suggestion"
+      >
         <span className="icon-Suggestion" />
-        <span>Sugestie uzytkownikow</span>
+        <span>Sugestie użytkownikow</span>
       </MenuLink>
     </MenuLinkWrapper>
     <MenuLinkWrapper>
@@ -95,8 +105,12 @@ const SidebarView = ({
         onClick={() => {}}
         text={amount.error.value.toString()}
         type={amount.error.color}
+        isPressCursor={false}
       />
-      <MenuLink className={setActive("error")} to="/error">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/error"
+      >
         <span className="icon-Error" />
         <span>Zgłoszone błędy</span>
       </MenuLink>
@@ -109,8 +123,12 @@ const SidebarView = ({
         onClick={() => {}}
         text={amount.reportedReview.value.toString()}
         type={amount.reportedReview.color}
+        isPressCursor={false}
       />
-      <MenuLink className={setActive("reportedReview")} to="/reportedReview">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/reportedReview"
+      >
         <span className="icon-Flagged_comment" />
         <span>Oflagowane komentarze</span>
       </MenuLink>
@@ -120,13 +138,19 @@ const SidebarView = ({
       <span>Akcje</span>
     </MenuTitle>
     <MenuLinkWrapper>
-      <MenuLink className={setActive("")} to="/alcohol/add/">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/add/alcohol/"
+      >
         <span className="icon-beer" />
         <span>Dodaj alkohol</span>
       </MenuLink>
     </MenuLinkWrapper>
     <MenuLinkWrapper>
-      <MenuLink className={setActive("")} to="#">
+      <MenuLink
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to="/add/category"
+      >
         <span className="icon-Add-Category" />
         <span>Dodaj kategorie</span>
       </MenuLink>
