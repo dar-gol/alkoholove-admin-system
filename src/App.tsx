@@ -46,19 +46,19 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/home" element={<Home />} />
           <Route
-            path="/alcohol/:kind/edit/:alcoholBarcode"
+            path="/adit/alcohol/:kind/:alcoholBarcode"
             element={<AddAlcohol />}
           />
-          <Route path="/alcohol/add" element={<AddAlcohol />} />
+          <Route path="/add/alcohol" element={<AddAlcohol />} />
           <Route
             path="/alcohol/:kind/:alcoholBarcode"
             element={<AlcoholListApollo />}
           />
           <Route path="/alcohol" element={<AlcoholListApollo />} />
           <Route path="/alcohol/:kind" element={<AlcoholListApollo />} />
-          <Route path="/category/add" element={<AddCategory />} />
+          <Route path="/add/category" element={<AddCategory />} />
           <Route
-            path="/category/edit/:categoryName"
+            path="/edit/category/:categoryName"
             element={<AddCategory />}
           />
           <Route path="/category" element={<CategoryApollo />} />
