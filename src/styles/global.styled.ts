@@ -217,7 +217,9 @@ export const LinkSecondary = styled(Link)`
 
 export const CapitalCase = styled.span<{ isNoWrap?: boolean }>`
   white-space: ${({ isNoWrap = true }) => (isNoWrap ? "nowrap" : "wrap")};
-  text-transform: capitalize;
+  &::first-letter {
+    text-transform: capitalize;
+  }
 `;
 
 export const Tuple = styled(Row)`
