@@ -46,7 +46,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/home" element={<Home />} />
           <Route
-            path="/adit/alcohol/:kind/:alcoholBarcode"
+            path="/edit/alcohol/:kind/:alcoholBarcode"
             element={<AddAlcohol />}
           />
           <Route path="/add/alcohol" element={<AddAlcohol />} />

@@ -28,6 +28,17 @@ export const URL = {
   }`,
 };
 
+export const NAME_PATH = {
+  home: "Panel główny",
+  alcohol: "Alkohole",
+  category: "Kategorie alkoholu",
+  user: "Użytkownicy",
+  suggestion: "Sugestie użytkowników",
+  error: "Zgłoszone błędy",
+  reportedReview: "Zgłoszone komentarze",
+  add: "Formularz",
+};
+
 export const CORE_PROPERTY = "core";
 export const BARCODE_PROPERTY = "barcode";
 
