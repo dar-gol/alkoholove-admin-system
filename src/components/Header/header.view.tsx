@@ -12,14 +12,22 @@ interface Props {
   modeHandler: () => void;
   show: boolean;
   setShow: () => void;
+  getTitle: () => string;
 }
 
-const HeaderView = ({ logout, night, modeHandler, show, setShow }: Props) => {
+const HeaderView = ({
+  logout,
+  night,
+  modeHandler,
+  show,
+  setShow,
+  getTitle,
+}: Props) => {
   const theme = useTheme() as { palette: { [k: string]: string } };
   return (
     <Container>
       <Col>
-        <Title>Panel główny</Title>
+        <Title>{getTitle()}</Title>
         <Breadcrumb />
       </Col>
       <Row alignItems="center" gap="20px">
