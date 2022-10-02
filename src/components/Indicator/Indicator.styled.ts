@@ -66,6 +66,7 @@ export const Text = styled.span<{ typeColor: string }>`
 export const IndicatorWrapper = styled.button<{
   size: number;
   typeColor: string;
+  isPressCursor: boolean;
 }>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
@@ -73,5 +74,5 @@ export const IndicatorWrapper = styled.button<{
   border: none;
   background-color: ${({ typeColor, theme }) =>
     setColor(typeColor, theme).groundColor};
-  cursor: pointer;
+  cursor: ${({ isPressCursor }) => (isPressCursor ? "pointer" : "default")};
 `;
