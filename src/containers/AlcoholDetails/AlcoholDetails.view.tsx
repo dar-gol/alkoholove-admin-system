@@ -119,7 +119,14 @@ const AlcoholDetails = ({
                 {coreValues} {additionalValues}
               </Col>
               <Row justifyContent="flex-end" gap="20px" margin="20px 0 0 0">
-                <BtnPrimary padding="0 20px">Edytuj alkohol</BtnPrimary>
+                <BtnPrimary
+                  padding="0 20px"
+                  onClick={() =>
+                    navigate(`/edit/alcohol/${alcohol.barcode[0]}`)
+                  }
+                >
+                  Edytuj alkohol
+                </BtnPrimary>
                 <BtnSecondary padding="0 20px" onClick={() => setIsOpen(true)}>
                   Usuń alkohol
                 </BtnSecondary>
@@ -143,10 +150,14 @@ const AlcoholDetails = ({
             <Value>{alcohol?.name}</Value>
           </Tuple>
         </Col>
-        <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
-          <BtnSecondary onClick={() => remove()}>TAK</BtnSecondary>
-          <BtnPrimary onClick={() => setIsOpen(false)}>NIE</BtnPrimary>
-        </Row>
+        <Col margin="20px 0 0 0" justifyContent="center" gap="30px">
+          <BtnSecondary onClick={() => remove()}>
+            Tak, chcę permanentnie usunąć alkohol
+          </BtnSecondary>
+          <BtnPrimary onClick={() => setIsOpen(false)}>
+            Nie, nie chcę permanentnie usunąć alkohol
+          </BtnPrimary>
+        </Col>
       </Modal>
     </>
   );

@@ -147,6 +147,7 @@ const Grey = {
     Grey15: "#D8D8D8",
     Grey10: "#E8E8E8",
     Grey5: "#F8F8F8",
+    Grey1: "#FCFCFC",
   },
   dark: {
     Grey100: "#F8F8F8",
@@ -161,6 +162,7 @@ const Grey = {
     Grey15: "#47474A",
     Grey10: "#282727",
     Grey5: "#19191D",
+    Grey1: "#141416",
   },
 };
 

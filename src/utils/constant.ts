@@ -1,5 +1,6 @@
 /* eslint-disable no-unreachable */
 const isProduction = () => {
+  // return true;
   if (process.env.NODE_ENV === "development") return false;
   return true;
 };
@@ -37,6 +38,7 @@ export const NAME_PATH = {
   error: "Zgłoszone błędy",
   reportedReview: "Zgłoszone komentarze",
   add: "Formularz",
+  edit: "Formularz",
 };
 
 export const CORE_PROPERTY = "core";

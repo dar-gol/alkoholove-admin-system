@@ -32,31 +32,13 @@ interface Props {
 }
 
 const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
-  const [searchValue, setSearchValue] = useState<string>("");
   const [selectedKind, setSelectedKind] = useState<string | null>(null);
-  const [selectedRowOnPage, setSelectedRowsOnPage] = useState<
-    | {
-        label: string;
-        value: number;
-      }
-    | null
-    | undefined
-  >(null);
-  const { query, updateParam } = useQueryParams();
   const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const width = document.body.clientWidth;
   const isSmallScreen = () => width < 1200 && !!params.alcoholBarcode;
   const [collapse, setCollapse] = useState<boolean>(isSmallScreen());
-  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
-
-  const onClickSearch = (value: string, kind?: string) => {
-    updateParam("search", value);
-    // handleSearch(value, kind);
-  };
 
   const onSelectedKind = (selected: { label: string; value: string }) => {
     if (selected.value === "-") {
@@ -68,12 +50,6 @@ const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
       navigate(`/alcohol/${selected.value}${location.search}`);
       updateKind(selected.value);
     }
-  };
-
-  const onRowsOnPage = (selected: unknown) => {
-    const item = selected as { label: string; value: number };
-    setSelectedRowsOnPage(item);
-    updateParam("limit", item.value);
   };
 
   const goToAlcoholDetails = (id: string, kind: string) => {
@@ -93,21 +69,9 @@ const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
   const isDetail = () => !!params.alcoholBarcode;
 
   useEffect(() => {
-    const { search, limit } = query;
     const { kind } = params;
-    setSearchValue(search || "");
-    if (limit) {
-      const option = options.find((c) => c.value === Number(limit));
-      setSelectedRowsOnPage(option);
-    }
     if (kind) {
       setSelectedKind(kind);
-      // updateKind(kind);
-    }
-    if (search || kind) {
-      setTimeout(() => {
-        // handleSearch(search, kind);
-      }, 1000);
     }
   }, []);
 

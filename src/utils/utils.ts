@@ -15,8 +15,8 @@ export const getType = (type: Type) => {
   };
 };
 
-export const createImageName = (name: string, type: string): string =>
-  `${name.toLowerCase().replaceAll(" ", "_")}_${type}`;
+export const createImageName = (name: string, type?: string): string =>
+  `${name.toLowerCase().replaceAll(" ", "_")}${type ? `_${type}` : ""}`;
 
 type FormDataType = Array<[string, string | Blob]>;
 

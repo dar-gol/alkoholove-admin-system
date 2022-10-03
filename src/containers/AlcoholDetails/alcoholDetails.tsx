@@ -91,7 +91,7 @@ const AlcoholDetails = () => {
             </Col>
           </Row>
           <Row justifyContent="flex-end" gap="20px" margin="20px 0 0 0">
-            <LinkPrimary to={`/alcohol/edit/${alcohol?.barcode[0]}`}>
+            <LinkPrimary to={`/edit/alcohol/${alcohol?.barcode[0]}`}>
               Edytuj alkohol
             </LinkPrimary>
             <BtnSecondary onClick={() => setIsOpen(true)}>

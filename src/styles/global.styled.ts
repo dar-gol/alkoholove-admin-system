@@ -230,7 +230,8 @@ export const Tuple = styled(Row)`
   }
 `;
 
-export const Key = styled.p`
+export const Key = styled.p<{ margin?: string }>`
+  margin: ${({ margin }) => margin || "auto 0"};
   ${Body("regular", "large")}
   color: ${({ theme }) => theme.palette.Grey40};
 `;
@@ -242,7 +243,7 @@ export const Value = styled.p`
 `;
 
 export const WarnText = styled.p`
-  ${Heading4()}
+  ${Body("regular", "large")}
   color: #d13030;
 `;
 
@@ -286,6 +287,19 @@ export const Icon = styled.span`
 export const InfoBar = styled(Row)`
   background-color: ${({ theme }) => theme.palette.Secondary20};
   color: ${({ theme }) => theme.palette.Secondary100};
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  ${Body("regular", "medium")}
+  border-radius: 20px;
+  & span::before {
+    font-size: 30px;
+  }
+`;
+
+export const WarnBar = styled(Row)`
+  background-color: ${({ theme }) => theme.palette.Yellow20};
+  color: ${({ theme }) => theme.palette.Yellow100};
   align-items: center;
   padding: 10px 20px;
   gap: 10px;

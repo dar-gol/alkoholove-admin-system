@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Alcohols, IAlcohol } from "../../@types/alcohol";
 import {
   BtnSecondary,
@@ -39,7 +39,7 @@ interface Props {
 
 const initalReq = [
   "POST",
-  `${API}${URL.SEARCH_ALCOHOLS}?limit=10&offset=0`,
+  `${API}${URL.SEARCH_ALCOHOLS}`,
   null,
   {
     accept: "application/json",
@@ -56,6 +56,14 @@ const AlcoholListView = ({
   isDetail,
   listRef,
 }: Props) => {
+  const navigate = useNavigate();
+  const goToEdit = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string
+  ) => {
+    e.stopPropagation();
+    navigate(`/edit/alcohol/${id}`);
+  };
   function drawContent(alcohol: IAlcohol): React.ReactNode {
     return (
       <TRow
@@ -87,7 +95,13 @@ const AlcoholListView = ({
           <Value>{alcohol.type}</Value>
         </TCell>
         <TCell width="140px" data-label="Akcje">
-          <BtnSecondary width="120px" title={`Edytuj ${alcohol.name}`}>
+          <BtnSecondary
+            width="120px"
+            title={`Edytuj ${alcohol.name}`}
+            onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+              goToEdit(e, alcohol.barcode[0])
+            }
+          >
             Edytuj
           </BtnSecondary>
         </TCell>
