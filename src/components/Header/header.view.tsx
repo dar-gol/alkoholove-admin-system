@@ -36,7 +36,7 @@ const HeaderView = ({
           leftColor={theme.palette.Yellow70}
           rightIcon="icon-night"
           rightColor={theme.palette.Grey50}
-          isActive={night}
+          initialState={night}
           onClick={modeHandler}
         />
         <Icon className="icon-Settings" />

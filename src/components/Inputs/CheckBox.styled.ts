@@ -1,6 +1,14 @@
 import styled from "styled-components";
-import { Heading5Large } from "../../styles/typography.styled";
+import { Body, Heading5Large } from "../../styles/typography.styled";
 import { Row } from "../../styles/global.styled";
+
+export const Container = styled(Row)`
+  padding: 0 10px;
+  gap: 10px;
+  align-items: center;
+  border-radius: 20px;
+  background-color: ${({ color }) => color || "transparent"};
+`;
 
 export const CheckBoxContainer = styled(Row)`
   background-color: ${({ theme }) => theme.palette.White};
@@ -47,4 +55,10 @@ export const Icon = styled.span`
     ${Heading5Large("bold")}
     font-family: icomoon;
   }
+`;
+
+export const Text = styled.p`
+  white-space: nowrap;
+  color: ${({ theme }) => theme.palette.Grey70};
+  ${Body("regular", "medium")};
 `;

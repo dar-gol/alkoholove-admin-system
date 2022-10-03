@@ -44,6 +44,8 @@ export const Profil = styled.div`
 `;
 
 export const PopupContainer = styled.div<{ show: boolean }>`
+  display: flex;
+  flex-direction: column;
   position: absolute;
   z-index: 100;
   background: ${({ theme }) => theme.palette.White};
@@ -82,6 +84,11 @@ export const ProfilName = styled(TextLine)`
 
 export const TextGreen = styled(TextLine)`
   color: ${({ theme }) => theme.palette.Green90};
+  ${Body("bold", "small")}
+`;
+
+export const TextRed = styled(TextLine)`
+  color: ${({ theme }) => theme.palette.Red90};
   ${Body("bold", "small")}
 `;
 

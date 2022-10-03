@@ -2,44 +2,65 @@ import React, { useEffect, useState } from "react";
 
 import {
   CheckBoxContainer,
+  Container,
   Icon,
   IconWrapper,
   Indicator,
+  Text,
 } from "./CheckBox.styled";
 
 interface Props {
-  leftIcon: string;
+  leftIcon?: string;
   leftColor: string;
-  rightIcon: string;
+  rightIcon?: string;
   rightColor: string;
-  isActive: boolean;
+  backgroundColor?: string;
+  initialState?: boolean;
+  text?: string;
   [k: string]: any;
 }
 
 const CheckBox: React.FC<Props> = ({
-  children,
   leftIcon,
   rightIcon,
   leftColor,
   rightColor,
-  isActive,
+  backgroundColor,
+  initialState,
+  text,
   ...rest
-}) => (
-  <CheckBoxContainer
-    className={isActive ? "active" : ""}
-    {...rest}
-    role="button"
-  >
-    <Indicator color={isActive ? rightColor : leftColor}>
-      <Icon className={isActive ? rightIcon : leftIcon} />
-    </Indicator>
-    <IconWrapper>
-      <Icon className={leftIcon} />
-    </IconWrapper>
-    <IconWrapper>
-      <Icon className={rightIcon} />
-    </IconWrapper>
-  </CheckBoxContainer>
-);
-
+}) => {
+  const [active, setActive] = useState<boolean>(initialState || false);
+  const onClick = (e: React.MouseEvent) => {
+    setActive((prev) => !prev);
+    rest.onClick?.(e);
+  };
+  useEffect(() => {
+    if (initialState !== active) setActive(initialState || false);
+  }, [initialState]);
+  console.log({ initialState, active });
+  return (
+    <Container color={backgroundColor}>
+      <CheckBoxContainer
+        className={active ? "active" : ""}
+        {...rest}
+        onClick={onClick}
+        role="button"
+        height="40px"
+        width="74px"
+      >
+        <Indicator color={active ? rightColor : leftColor}>
+          <Icon className={active ? rightIcon || "" : leftIcon || ""} />
+        </Indicator>
+        <IconWrapper>
+          <Icon className={leftIcon || ""} />
+        </IconWrapper>
+        <IconWrapper>
+          <Icon className={rightIcon || ""} />
+        </IconWrapper>
+      </CheckBoxContainer>
+      {text && <Text>{text}</Text>}
+    </Container>
+  );
+};
 export default CheckBox;
