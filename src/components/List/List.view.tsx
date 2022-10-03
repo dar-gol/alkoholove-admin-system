@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import {
   BtnSecondary,
   Icon,
@@ -16,6 +21,7 @@ import { IPageInfo } from "../../@types/pagination";
 import LoadingModal from "../modal/LoadingModal";
 import useContents from "../../utils/hooks/useContents";
 import { Table } from "./List.styled";
+import useQueryParams from "../../utils/hooks/useQueryParams";
 
 const options: ISelectValue<number>[] = [
   {
@@ -81,6 +87,7 @@ const List = forwardRef<IListHandlers, Props>(
     );
     const [option, setOption] = useState<ISelectValue<number>>(options[0]);
     const [inputValue, setInputValue] = useState<string>(initSearchValue);
+    const { query, updateParam } = useQueryParams();
 
     useImperativeHandle(ref, () => ({
       fireSearch(input: string | null, kind?: string | null | undefined) {
@@ -105,6 +112,7 @@ const List = forwardRef<IListHandlers, Props>(
 
     const changeTableSize = (value: ISelectValue<number>) => {
       changePageSize(value.value);
+      updateParam("limit", value.value);
       setOption(value);
     };
 
@@ -112,6 +120,16 @@ const List = forwardRef<IListHandlers, Props>(
       if (handleSearch) handleSearch(value);
       search(value);
     };
+
+    const getPageLimit = () => {
+      const opt = options.find((op) => op.value === Number(query.limit));
+      if (opt) return opt;
+      return options[0];
+    };
+
+    useEffect(() => {
+      changeTableSize(getPageLimit());
+    }, [query.limit]);
 
     if (contents === null)
       return (
@@ -146,7 +164,7 @@ const List = forwardRef<IListHandlers, Props>(
           </Row>
           <Row minWidth="200px" justifyContent="end" minHeight="56px">
             <CustomSelect
-              value={option}
+              value={getPageLimit()}
               options={options}
               onChange={(value) =>
                 changeTableSize(value as ISelectValue<number>)

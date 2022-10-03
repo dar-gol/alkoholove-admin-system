@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Link, useParams } from "react-router-dom";
 import ReactSelect from "react-select";
 import { Types } from "../../@types/category";
 import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
 import ErrorModal from "../../components/ErrorModal/errorModal";
 import HeaderLogic from "../../components/Header/header.logic";
+import InputFactory from "../../components/InputFactory/inputFactory";
 import Modal from "../../components/modal/Modal";
 import { ModalTitle } from "../../components/modal/Modal.styled";
 import PropertyInput from "../../components/PropertyInput/propertyInput";
@@ -14,13 +15,18 @@ import {
   BtnPrimary,
   Col,
   Container,
+  Content,
+  InfoBar,
   LinkSecondary,
   Row,
-  Title,
+  ScrollContent,
 } from "../../styles/global.styled";
 import { API, INPUT_LABEL, INPUT_TYPE, URL } from "../../utils/constant";
+import withDashboardWrapper from "../../utils/hoc/withDashboardWrapper";
 import useCategory from "../../utils/hooks/useCategory";
 import useAuthReq from "../../utils/hooks/useReq";
+import { Form, SectionBar, Title } from "../AddAlcohol/addAlcohol.styled";
+import { PropertyBtn } from "./addCategory.styled";
 
 export type PropertyState = {
   name: string | null;
@@ -38,7 +44,7 @@ type IModal = {
 const generateProp = (data: any, name: any) => {
   const type = data[`${name}BsonType`].value;
   const required = data[`${name}Required`];
-  const description = data[`${name}Description`];
+  const description = data[`${name}Placeholder`];
   const title = data[`${name}Title`];
   const bsonType = required ? type : [type, "null"];
   const items = type === "array" ? { items: { bsonType: "string" } } : {};
@@ -248,56 +254,94 @@ const AddCategory = () => {
 
   return (
     <>
-      <HeaderLogic />
-      <Breadcrumb />
-      <Container>
-        <Title>Formularz dodawania/edycji kategorii</Title>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(submit)}>
-            <TextInput
-              name="kind"
-              title="Nazwa rodzaju kategorii"
-              required
-              placeholder="piwo"
-            />
-            <p>Dodaj cechy:</p>
-            <Col gap="20px">
-              {names.map((name, index) => {
-                const key = `propertyInput${index}`;
-                return (
-                  !name.isDeleted && (
-                    <PropertyInput
-                      key={key}
-                      id={index}
-                      addName={addName}
-                      deleteProperty={deleteProperty}
-                      editProperty={editProperty}
-                      traits={name}
+      <Content flex="1" width="100%" maxWidth="756px" gap="20px">
+        <Title>Formularz dodawania kategorii</Title>
+        <ScrollContent padding="0 0 20px 0">
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(submit)}>
+              <Col
+                key="asdasfsdfsddsfsdfsdfsdfkind"
+                margin="0 0 20px 0"
+                minHeight="56px"
+              >
+                <Controller
+                  control={methods.control}
+                  name="kind"
+                  render={({ field }) => (
+                    <InputFactory
+                      value={field.value}
+                      onChange={field.onChange}
+                      inputRef={field.ref}
+                      type="string"
+                      name="kind"
+                      title="Nazwa rodzaju kategorii"
+                      required
+                      placeholder="Nazwa rodzaju kategorii"
                     />
-                  )
-                );
-              })}
-            </Col>
-            <Row justifyContent="flex-end" margin="40px 0 0 0">
-              <BtnPrimary type="button" onClick={addProperty}>
-                + Dodaj kolejną cechę
-              </BtnPrimary>
-            </Row>
-            <Row justifyContent="flex-end" margin="40px 0 0 0">
-              <BtnPrimary type="submit">Dodaj/edytuj kategorię</BtnPrimary>
-            </Row>
-          </form>
-        </FormProvider>
-        <ErrorModal
-          isOpen={modal.open}
-          title={modal.title}
-          text={modal.text}
-          details={modal.details}
-          onClose={handleOpenModal}
-        />
-      </Container>
+                  )}
+                />
+              </Col>
+              <SectionBar>
+                <p>Dodatkowe cechy kategorii</p>
+              </SectionBar>
+              <InfoBar margin="0 0 0 0">
+                <span className="icon-Info" />
+                <p>
+                  W celu wprowadzenia nowej cechy do kategorii należy nacisnąć
+                  na poniższy przycisk z ikonką plusa (+). Każda kategoria
+                  dziedziczy cechy z podstawowej kategorii (core). Jeśli nie
+                  masz pewności czy cecha znajduje się w podstawowej kategorii,
+                  upewnij się klikając{" "}
+                  <Link to="/category/core" target="_blank">
+                    tutaj
+                  </Link>
+                  .
+                </p>
+              </InfoBar>
+              <Col gap="20px" margin="20px 0 0 0" visible={names?.length !== 0}>
+                {names.map((name, index) => {
+                  const key = `propertyInput${index}`;
+                  return (
+                    !name.isDeleted && (
+                      <PropertyInput
+                        key={key}
+                        id={index}
+                        addName={addName}
+                        deleteProperty={deleteProperty}
+                        editProperty={editProperty}
+                        traits={name}
+                      />
+                    )
+                  );
+                })}
+              </Col>
+              <Row justifyContent="flex-end" margin="20px 0 0 0">
+                <PropertyBtn
+                  type="button"
+                  onClick={addProperty}
+                  title="Dodaj cechę do kategorii"
+                >
+                  +
+                </PropertyBtn>
+              </Row>
+              <Row justifyContent="center" margin="40px 0 0 0">
+                <BtnPrimary width="200px" type="submit" disabled={false}>
+                  Dodaj kategorię
+                </BtnPrimary>
+              </Row>
+            </Form>
+          </FormProvider>
+        </ScrollContent>
+      </Content>
+      <ErrorModal
+        isOpen={modal.open}
+        title={modal.title}
+        text={modal.text}
+        details={modal.details}
+        onClose={handleOpenModal}
+      />
     </>
   );
 };
 
-export default AddCategory;
+export default withDashboardWrapper(AddCategory);
