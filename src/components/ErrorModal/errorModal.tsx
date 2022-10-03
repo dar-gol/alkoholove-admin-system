@@ -1,8 +1,8 @@
-import React from 'react';
-import { BtnPrimary, Row } from '../../styles/global.styled';
-import Modal from '../modal/Modal';
-import { ModalTitle } from '../modal/Modal.styled';
-import { Text, DetailTitle, Details } from './errorModal.styled';
+import React from "react";
+import { BtnPrimary, Row } from "../../styles/global.styled";
+import Modal from "../modal/Modal";
+import { ModalTitle } from "../modal/Modal.styled";
+import { Text, DetailTitle, Details } from "./errorModal.styled";
 
 interface IProps {
   title: string;
@@ -23,7 +23,9 @@ const ErrorModal = ({ title, text, details, isOpen, onClose }: IProps) => (
       </>
     )}
     <Row gap="20px" justifyContent="center">
-      <BtnPrimary onClick={() => onClose()}>OK</BtnPrimary>
+      <BtnPrimary onClick={() => onClose()} width="120px">
+        Zamknij
+      </BtnPrimary>
     </Row>
   </Modal>
 );
