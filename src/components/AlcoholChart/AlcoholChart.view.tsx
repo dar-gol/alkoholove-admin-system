@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BarChart,
   Bar,
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const AlcoholChartView = ({ chartData }: Props) => {
-  const t = 1;
+  const navigate = useNavigate();
   return (
     <ResponsiveContainer width="100%" height="80%">
       <BarChart
@@ -35,7 +36,13 @@ const AlcoholChartView = ({ chartData }: Props) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="total" fill="#F79E64" />
+        <Bar
+          dataKey="total"
+          fill="#F79E64"
+          onClick={(data: { name: string }, index: any) =>
+            navigate(`/alcohol/${data.name}`)
+          }
+        />
       </BarChart>
     </ResponsiveContainer>
   );

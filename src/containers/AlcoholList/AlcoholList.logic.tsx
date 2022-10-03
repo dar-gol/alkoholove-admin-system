@@ -71,7 +71,7 @@ const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
   useEffect(() => {
     const { kind } = params;
     if (kind) {
-      setSelectedKind(kind);
+      onSelectedKind({ label: kind, value: kind });
     }
   }, []);
 

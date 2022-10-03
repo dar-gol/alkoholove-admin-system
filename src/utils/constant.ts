@@ -1,6 +1,6 @@
 /* eslint-disable no-unreachable */
 const isProduction = () => {
-  // return true;
+  return true;
   if (process.env.NODE_ENV === "development") return false;
   return true;
 };
