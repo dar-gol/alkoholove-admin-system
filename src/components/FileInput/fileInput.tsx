@@ -13,6 +13,7 @@ import {
   Title,
 } from "./fileInput.styled";
 import { URL as URLS } from "../../utils/constant";
+import { createImageName } from "../../utils/utils";
 
 const FileInput = ({
   name,
@@ -43,6 +44,13 @@ const FileInput = ({
   //   if (!imageName) setImg("");
   // }, [imageName]);
 
+  const getImageSrc = (value: File | string) => {
+    if (value instanceof File) return URL.createObjectURL(value);
+    return `${URLS.GET_IMAGE}/${createImageName(
+      value || ""
+    )}?t=${new Date().getTime()}`;
+  };
+
   return (
     <Row justifyContent="center" flex="1" position="relative">
       <FileStyle />
@@ -70,7 +78,7 @@ const FileInput = ({
                 </BtnDelete>
                 <PreviewBlock>
                   <ImgPreview
-                    src={URL.createObjectURL(field.value)}
+                    src={getImageSrc(field.value)}
                     alt="This introduce choosen alcohol"
                   />
                 </PreviewBlock>
