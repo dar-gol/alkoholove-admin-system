@@ -46,7 +46,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/home" element={<Home />} />
           <Route
-            path="/edit/alcohol/:kind/:alcoholBarcode"
+            path="/edit/alcohol/:alcoholBarcode"
             element={<AddAlcohol />}
           />
           <Route path="/add/alcohol" element={<AddAlcohol />} />
@@ -57,12 +57,8 @@ const App = () => {
           <Route path="/alcohol" element={<AlcoholListApollo />} />
           <Route path="/alcohol/:kind" element={<AlcoholListApollo />} />
           <Route path="/add/category" element={<AddCategory />} />
-          <Route
-            path="/edit/category/:categoryName"
-            element={<AddCategory />}
-          />
           <Route path="/category" element={<CategoryApollo />} />
-          <Route path="/category/edit" element={<CategoryApollo />} />
+          <Route path="/category/:id" element={<CategoryApollo />} />
           <Route path="/user" element={<UsersListView />} />
           <Route path="/user/:id" element={<UsersListView />} />
           <Route path="/error" element={<ErrorListView />} />
