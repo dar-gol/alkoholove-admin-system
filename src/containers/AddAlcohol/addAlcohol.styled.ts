@@ -13,6 +13,7 @@ export const Title = styled.h2`
   text-align: center;
   margin-top: 50px;
   margin-bottom: 0;
+  color: ${({ theme }) => theme.palette.Grey80};
 `;
 
 export const SectionBar = styled(Col)`

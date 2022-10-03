@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from "react";
 import { useForm, FormProvider, Controller } from "react-hook-form";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
 import HeaderLogic from "../../components/Header/header.logic";
 import FileInput from "../../components/FileInput/fileInput";
@@ -84,6 +84,7 @@ const prepareField = (field: unknown) => {
 const AddAlcohol = () => {
   const methods = useForm({});
   const navigate = useNavigate();
+  const location = useLocation();
   const { alcoholBarcode } = useParams();
   const [id, setID] = useState<string>("");
   const [modal, setModal] = useState<IModal>({
@@ -149,7 +150,11 @@ const AddAlcohol = () => {
   };
 
   const handleCompleteFields = async () => {
-    if (!alcoholBarcode || !alcohol) return;
+    const t = alcohol;
+    if (!alcoholBarcode || !alcohol) {
+      methods.reset(resetValues(Object.keys(alcohol)));
+      return;
+    }
     const category = getCategory(alcohol.kind);
     setCategories({ ...category, kind: alcohol.kind });
     const coreValues = CORE.reduce((prev, { name }) => {
@@ -171,7 +176,6 @@ const AddAlcohol = () => {
     methods.reset({
       ...coreValues,
       ...additionalValues,
-      barcode: alcohol.barcode,
       kind: alcohol.kind,
       sm: createImageName(alcohol.name, "sm"),
       md: createImageName(alcohol.name, "md"),
@@ -180,7 +184,7 @@ const AddAlcohol = () => {
 
   useEffect(() => {
     handleCompleteFields();
-  }, [alcohol]);
+  }, [alcohol, location.pathname]);
 
   const addMore = () => {
     modalIsOpen(false);
@@ -276,12 +280,29 @@ const AddAlcohol = () => {
     return value;
   };
 
+  const setInput = (name: string, value: string) => {
+    let valueToSet = value;
+    try {
+      valueToSet = JSON.parse(value);
+    } catch (e: any) {
+      console.log({ e });
+    }
+    methods.reset({
+      ...methods.getValues(),
+      [name]: valueToSet,
+    });
+  };
+
   const createRowInput = (input: Property) => {
     const { bsonType, title, description } = input.metadata;
     const { name } = input;
     const { type, required } = getType(bsonType);
     return (
-      <Col key={name} margin="0 0 20px 0" minHeight="56px">
+      <Col
+        key={`asdasfsdfsddsfsdfsdfsdf${name}`}
+        margin="0 0 20px 0"
+        minHeight="56px"
+      >
         <Controller
           control={methods.control}
           name={name}
@@ -305,8 +326,10 @@ const AddAlcohol = () => {
   return (
     <>
       <Content flex="1" width="100%" maxWidth="756px" gap="20px">
-        <Title>Formularz dodawania alkoholu</Title>
-        <Col margin="0 80px" minHeight="56px">
+        <Title>
+          Formularz {alcoholBarcode ? "edycji" : "dodawania"} alkoholu
+        </Title>
+        <Col margin="0px 80px" minHeight="56px">
           <CategorySelect
             isAll={false}
             value={
@@ -319,87 +342,87 @@ const AddAlcohol = () => {
             title="Wybierz kategorię alkoholu"
           />
         </Col>
-        <ScrollContent padding="0 0 20px 0">
-          {!!categories.core.properties.length && (
-            <FormProvider {...methods}>
-              <Form onSubmit={methods.handleSubmit(submit)}>
+        <Col margin="0 80px" visible={!categories.core.properties.length}>
+          <InfoBar margin="0 0 20px 0">
+            <span className="icon-Info" />
+            <p>
+              Pierwszym krokiem wprowadzenia nowego alkoholu jest wybranie
+              kategorii. W celu wybrania kategorii należy kliknąć na input
+              znajdujący się powyżej.
+            </p>
+          </InfoBar>
+        </Col>
+        <ScrollContent
+          padding="0 0 20px 0"
+          visible={!!categories.core.properties.length}
+        >
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(submit)}>
+              <SectionBar>
+                <p>Podstawowe informacje</p>
+              </SectionBar>
+              <InfoBar margin="0 0 20px 0">
+                <span className="icon-Info" />
+                <p>
+                  Input ponizej pozwala na wprowadzenie kilku wartości. Aby
+                  zaakceptować wpisanie wartości nalezy wcisnąć przycisk
+                  tabulacji.
+                </p>
+              </InfoBar>
+              {categories.core.properties.map((input) => createRowInput(input))}
+              {!!categories.additional.properties.length && (
                 <SectionBar>
-                  <p>Podstawowe informacje</p>
-                </SectionBar>
-                <InfoBar margin="0 0 20px 0">
-                  <span className="icon-Info" />
                   <p>
-                    Input ponizej pozwala na wprowadzenie kilku wartości. Aby
-                    zaakceptować wpisanie wartości nalezy wcisnąć przycisk
-                    tabulacji.
+                    Dodatkowe informacje o:{" "}
+                    <CapitalCase>{categories.kind}</CapitalCase>
                   </p>
-                </InfoBar>
-                {/* <Col margin="0 0 20px 0" minHeight="56px">
-                  <Controller
-                    control={methods.control}
-                    name="barcode"
-                    render={({ field }) => (
-                      <MultiInput
-                        value={setValue(field.value)}
-                        onChange={field.onChange}
-                        inputRef={field.ref}
-                      />
-                    )}
-                  />
-                </Col> */}
-                {categories.core.properties.map((input) =>
-                  createRowInput(input)
-                )}
-                {!!categories.additional.properties.length && (
-                  <SectionBar>
-                    <p>
-                      Dodatkowe informacje o:{" "}
-                      <CapitalCase>{categories.kind}</CapitalCase>
-                    </p>
-                  </SectionBar>
-                )}
-                {categories.additional.properties.map((input) =>
-                  createRowInput(input)
-                )}
-                <SectionBar>
-                  <p>Zdjęcia alkoholu</p>
                 </SectionBar>
-                <Row gap="10px">
-                  <FileInput
-                    name="sm"
-                    title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
-                    required
-                    remove={removeImage}
-                    imageName={methods.getValues("sm")}
-                    placeholder="sm"
-                  />
-                  <FileInput
-                    name="md"
-                    title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
-                    required
-                    remove={removeImage}
-                    imageName={methods.getValues("md")}
-                    placeholder="md"
-                  />
-                </Row>
-                <Row justifyContent="flex-end">
-                  <BtnPrimary type="submit" margin="20px 0">
-                    Dodaj/edytuj alkohol
-                  </BtnPrimary>
-                </Row>
-              </Form>
-            </FormProvider>
-          )}
+              )}
+              {categories.additional.properties.map((input) =>
+                createRowInput(input)
+              )}
+              <SectionBar>
+                <p>Zdjęcia alkoholu</p>
+              </SectionBar>
+              <Row gap="10px">
+                <FileInput
+                  name="sm"
+                  title="Małe zdjęcie 300 X 400 (Należy dodać zdjęcie skompresowane):"
+                  required
+                  remove={removeImage}
+                  imageName={methods.getValues("sm")}
+                  placeholder="sm"
+                />
+                <FileInput
+                  name="md"
+                  title="Duże zdjęcie 600 X 800 (Należy dodać zdjęcie skompresowane):"
+                  required
+                  remove={removeImage}
+                  imageName={methods.getValues("md")}
+                  placeholder="md"
+                />
+              </Row>
+              <Row justifyContent="center">
+                <BtnPrimary type="submit" margin="20px 0" width="200px">
+                  {alcoholBarcode ? "Edytuj" : "Dodaj"} alkohol
+                </BtnPrimary>
+              </Row>
+            </Form>
+          </FormProvider>
         </ScrollContent>
       </Content>
       <Modal isOpen={isLoading} onClose={() => {}} isClosable={false}>
-        <ModalTitle>Dodajemy nowy alkohol</ModalTitle>
+        <ModalTitle>
+          {alcoholBarcode ? "Edytujemy" : "Dodajemy"} nowy alkohol
+        </ModalTitle>
         <Row justifyContent="center">
           <Loader />
         </Row>
       </Modal>
       <Modal isOpen={modal.open && isValid} onClose={modalIsOpen}>
-        <ModalTitle>Alkohol został dodany prawidłowo</ModalTitle>
+        <ModalTitle>
+          Alkohol został {alcoholBarcode ? "zedytowany" : "dodany"} prawidłowo
+        </ModalTitle>
         <Row gap="20px">
           <BtnPrimary onClick={addMore}>Dodaje kolejny alkohol</BtnPrimary>
           <LinkSecondary to="/alcohol">Wracam do listy alkoholi</LinkSecondary>
@@ -412,7 +435,7 @@ const AddAlcohol = () => {
         details={modal.details}
         onClose={modalIsOpen}
       />
-      <Suggestion />
+      {!alcoholBarcode && <Suggestion setInput={setInput} />}
     </>
   );
 };

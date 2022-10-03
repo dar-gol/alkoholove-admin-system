@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import { BlockType, Col, Row } from '../../styles/global.styled';
-import { Common, Heading3, Heading4 } from '../../styles/typography.styled';
+import React from "react";
+import styled from "styled-components";
+import { BlockType, Col, Row } from "../../styles/global.styled";
+import { Common, Heading3, Heading4 } from "../../styles/typography.styled";
 
 export const Container = styled<any>(Col)`
   position: fixed;
   top: 30px;
-  background: white;
-  right: ${({ hide }) => (hide ? '-540px' : '0px')};
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  background: ${({ theme }) => theme.palette.White};
+  right: ${({ hide }) => (hide ? "-540px" : "0px")};
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
   padding: 20px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -30,9 +30,25 @@ export const Hide = styled.button`
   border-bottom-left-radius: 30px;
   border: 0;
   background: white;
-  box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.01);
   cursor: pointer;
   color: ${({ theme }) => theme.palette.primary};
+`;
+
+export const IndicatorContainer = styled.div`
+  background: ${({ theme }) => theme.palette.White};
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+
+  box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.01);
+
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: calc(50% - 40px);
+  left: -80px;
 `;
 
 export const GoToList = styled.button`
