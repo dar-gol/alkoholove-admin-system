@@ -56,10 +56,12 @@ export const IndicatorContainer = styled.div<{
 export const Text = styled.span<{ typeColor: string }>`
   color: ${({ typeColor, theme }) => setColor(typeColor, theme).textColor};
   ${Body("medium", "small")}
+  line-height: 12px;
   &:before {
     color: ${({ typeColor, theme }) => setColor(typeColor, theme).textColor};
     ${Body("medium", "small")}
     font-family: icomoon;
+    line-height: 12px;
   }
 `;
 
@@ -68,6 +70,7 @@ export const IndicatorWrapper = styled.button<{
   typeColor: string;
   isPressCursor: boolean;
 }>`
+  padding: 0 !important;
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   border-radius: 100%;
