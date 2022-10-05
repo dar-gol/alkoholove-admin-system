@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Heading3 } from '../../styles/typography.styled';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { Heading3 } from "../../styles/typography.styled";
 
 export const Block = styled(Link)`
   ${Heading3()}
@@ -9,4 +9,5 @@ export const Block = styled(Link)`
   text-align: center;
   border-bottom: 2px solid ${({ theme }) => theme.palette.primary};
 `;
-export const Test2 = styled.p``;
+
+export const t = 1;

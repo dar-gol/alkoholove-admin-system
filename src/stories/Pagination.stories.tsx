@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Pagination from '../components/Pagination/pagination';
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+import Pagination from "../components/Pagination/pagination";
 
 export default {
-  title: 'Lists/Pagination',
+  title: "Lists/Pagination",
   component: Pagination,
   parameters: {
     docs: {
@@ -16,19 +16,19 @@ export default {
   },
   argTypes: {
     lastPage: {
-      description: 'The last page that can be viewed by the user',
+      description: "The last page that can be viewed by the user",
       table: {
         type: {
-          summary: 'number',
+          summary: "number",
         },
       },
     },
     offset: {
       description:
-        'Offset which is the current page we are on minus one. offset = current page - 1.',
+        "Offset which is the current page we are on minus one. offset = current page - 1.",
       table: {
         type: {
-          summary: 'number',
+          summary: "number",
         },
       },
     },
@@ -37,7 +37,7 @@ export default {
         "The function that is responsible for changing the page takes the current page as an argument (current page = offset + 1). This function should change the offset's argument.",
       table: {
         type: {
-          summary: '(page: number) => void',
+          summary: "(page: number) => void",
         },
       },
     },
@@ -51,6 +51,11 @@ const Template: ComponentStory<typeof Pagination> = (args) => (
 export const Primary = Template.bind({});
 Primary.args = {
   lastPage: 20,
-  offset: 5,
+  pageInfo: {
+    number: 0,
+    limit: 10,
+    offset: 0,
+    total: 512,
+  },
   setOffset: () => {},
 };

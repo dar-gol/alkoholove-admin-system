@@ -1,3 +1,5 @@
+import { IPageInfo } from "./pagination.d";
+
 export type IAroma = string;
 
 export type IBarcode = string;
@@ -46,3 +48,8 @@ export interface IAlcohol {
 }
 
 export type Alcohols = IAlcohol[];
+
+export type AlcoholsObject = {
+  alcohols: IAlcohol[] | null;
+  page_info: IPageInfo;
+};

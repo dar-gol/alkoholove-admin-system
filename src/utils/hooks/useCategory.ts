@@ -1,14 +1,14 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState } from "react";
 import {
   CategoryContextType,
   Property,
   SpecificCategory,
-} from '../../@types/category';
-import { CategoryContext } from '../../context/categoryContext';
-import { API, BARCODE_PROPERTY, CORE_PROPERTY, URL } from '../constant';
-import useAuthReq from './useReq';
-import { IPageInfo } from '../../@types/pagination';
-import { IReq } from '../../@types/fetch';
+} from "../../@types/category";
+import { CategoryContext } from "../../context/categoryContext";
+import { API, BARCODE_PROPERTY, CORE_PROPERTY, URL } from "../constant";
+import useAuthReq from "./useReq";
+import { IPageInfo } from "../../@types/pagination";
+import { IReq } from "../../@types/fetch";
 
 const initPageInfo: IPageInfo = {
   limit: 10,
@@ -20,9 +20,9 @@ const initPageInfo: IPageInfo = {
 const useCategory = () => {
   const { ctg, set } = useContext(CategoryContext) as CategoryContextType;
   const { send } = useAuthReq(
-    'GET',
+    "GET",
     `${API}${URL.GET_CATEGORIES}?limit=100`,
-    ''
+    ""
   );
   const initPage = ctg?.page_info
     ? { ...ctg?.page_info, number: 0 }
@@ -81,41 +81,48 @@ const useCategory = () => {
     const index = ctg?.categories?.findIndex(
       (category) => category.title === name
     );
-    if (!index) return '';
+    if (!index) return "";
     const id = ctg?.categories?.[index].id;
-    return id || '';
+    return id || "";
   };
+
+  const emptyCategory = () => ({
+    core: {
+      required: [],
+      properties: [],
+    },
+    additional: {
+      required: [],
+      properties: [],
+    },
+  });
 
   const getCategory = (
     name: string,
-    onlySpecial: boolean = false,
-    isFiltered: boolean = true
+    onlySpecial: boolean = false
   ): SpecificCategory => {
-    if (!ctg?.categories) return { required: [], properties: [] };
+    if (!ctg?.categories) return emptyCategory();
     const { categories } = ctg;
     const alkoholCategories = categories.reduce<SpecificCategory>(
       (prev, curr) => {
-        if (![name, !onlySpecial ? CORE_PROPERTY : ''].includes(curr.title))
+        if (![name, !onlySpecial ? CORE_PROPERTY : ""].includes(curr.title))
           return { ...prev };
-        const { properties, required, title } = curr;
+        const { properties, required } = curr;
         const prop = filterProp(properties, [
-          'kind',
-          'rate_count',
-          'rate_value',
-          'avg_rating',
-          isFiltered ? BARCODE_PROPERTY : '',
+          "kind",
+          "rate_count",
+          "rate_value",
+          "avg_rating",
         ]);
-        if (title === 'core')
-          return {
-            required: [...(required || []), ...prev.required],
-            properties: [...prop, ...prev.properties],
-          };
         return {
-          required: [...prev.required, ...(required || [])],
-          properties: [...prev.properties, ...prop],
+          ...prev,
+          [curr.title === CORE_PROPERTY ? "core" : "additional"]: {
+            required: required || [],
+            properties: prop,
+          },
         };
       },
-      { required: [], properties: [] }
+      emptyCategory()
     );
     return alkoholCategories;
   };

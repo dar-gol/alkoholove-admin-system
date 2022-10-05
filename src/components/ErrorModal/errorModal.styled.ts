@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { Body, Heading5Large } from "../../styles/typography.styled";
 
 export const Details = styled.i`
-  font-size: 14px;
-  color: red;
+  ${Body("regular", "medium")}
+  color: ${({ theme }) => theme.palette.Red80};
   text-align: justify;
   display: block;
   height: 70px;
@@ -11,12 +12,14 @@ export const Details = styled.i`
 `;
 
 export const DetailTitle = styled.p`
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 7px;
+  ${Body("regular", "large")}
+  margin-bottom: 20px;
+  color: ${({ theme }) => theme.palette.Grey70};
 `;
 
 export const Text = styled.p`
+  ${Heading5Large("medium")}
   font-size: 14px;
   text-align: center;
+  color: ${({ theme }) => theme.palette.Grey80};
 `;

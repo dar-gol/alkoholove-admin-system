@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import useAlcohol from '../../utils/hooks/useAlcohol';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
-import { API, CORE, URL } from '../../utils/constant';
-import { createImageName } from '../../utils/utils';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useAlcohol from "../../utils/hooks/useAlcohol";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import HeaderLogic from "../../components/Header/header.logic";
+import { API, CORE, URL } from "../../utils/constant";
+import { createImageName } from "../../utils/utils";
 import {
   BtnPrimary,
   BtnSecondary,
@@ -17,34 +17,34 @@ import {
   Tuple,
   Value,
   WarnText,
-} from '../../styles/global.styled';
-import { Title } from '../AddAlcohol/addAlcohol.styled';
-import Modal from '../../components/modal/Modal';
-import { ModalTitle } from '../../components/modal/Modal.styled';
-import useAuthReq from '../../utils/hooks/useReq';
+} from "../../styles/global.styled";
+import { Title } from "../AddAlcohol/addAlcohol.styled";
+import Modal from "../../components/modal/Modal";
+import { ModalTitle } from "../../components/modal/Modal.styled";
+import useAuthReq from "../../utils/hooks/useReq";
 
 const formater = (value: any) => {
-  if (value === null || (typeof value === 'object' && value.length === 0))
-    return 'Brak danych*';
-  if (typeof value === 'object' && value !== null) return value.join(' | ');
-  if (typeof value === 'boolean') return value ? 'TAK' : 'NIE';
+  if (value === null || (typeof value === "object" && value.length === 0))
+    return "Brak danych*";
+  if (typeof value === "object" && value !== null) return value.join(" | ");
+  if (typeof value === "boolean") return value ? "TAK" : "NIE";
   return value;
 };
 
 const AlcoholDetails = () => {
   const { alcoholBarcode } = useParams();
-  const alcohol = useAlcohol(alcoholBarcode || '');
+  const alcohol = useAlcohol(alcoholBarcode || "");
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { send } = useAuthReq(
-    'DELETE',
+    "DELETE",
     `${API}${URL.POST_ALCOHOLS}/${alcohol?.id}`,
     null
   );
 
   const remove = async () => {
     await send({});
-    navigate('/alcohol');
+    navigate("/alcohol");
   };
 
   const coreValues =
@@ -71,7 +71,7 @@ const AlcoholDetails = () => {
 
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       {alcohol ? (
         <Container>
@@ -83,15 +83,15 @@ const AlcoholDetails = () => {
             <Col>
               <img
                 src={`${URL.GET_IMAGE}/${createImageName(
-                  alcohol?.name.toLowerCase() || '',
-                  'sm'
+                  alcohol?.name.toLowerCase() || "",
+                  "sm"
                 )}?t=${new Date().getTime()}`}
                 alt="Zdjęcie przedstawiające wybrany alkohol"
               />
             </Col>
           </Row>
           <Row justifyContent="flex-end" gap="20px" margin="20px 0 0 0">
-            <LinkPrimary to={`/alcohol/edit/${alcohol?.barcode[0]}`}>
+            <LinkPrimary to={`/edit/alcohol/${alcohol?.barcode[0]}`}>
               Edytuj alkohol
             </LinkPrimary>
             <BtnSecondary onClick={() => setIsOpen(true)}>

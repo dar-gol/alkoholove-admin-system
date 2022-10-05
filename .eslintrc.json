@@ -20,8 +20,16 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/jsx-props-no-spreading": "off",
-    "no-unused-vars": ["warn"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
     "camelcase": ["warn"],
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [
+      "error",
+      { "ignoreTypeValueShadow": true }
+    ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
     "react/function-component-definition": [
       2,
@@ -39,6 +47,7 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "import/prefer-default-export": "off"
   }
 }
