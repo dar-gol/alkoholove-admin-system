@@ -17,9 +17,9 @@ type captionWeight = "bold" | "medium" | "regular";
 // UTILS
 
 const setFooterWeight = (weight: footerWeight) => {
-  if (weight === "bold") return "600";
-  if (weight === "medium") return "500";
-  return "400";
+  if (weight === "bold") return "500";
+  if (weight === "medium") return "400";
+  return "300";
 };
 
 const setCaptionSize = (size: captionSize) => {
@@ -179,7 +179,7 @@ export const Caption = (
 // FOOTER
 
 export const Footer = (weight: footerWeight) => css`
-  font-size: "8px";
+  font-size: 8px;
   line-height: 22px;
   font-family: Roboto;
   font-weight: ${setFooterWeight(weight)};

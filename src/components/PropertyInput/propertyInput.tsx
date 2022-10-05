@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import ReactSelect from 'react-select';
-import { Trash2, Edit } from 'react-feather';
-import { useParams } from 'react-router-dom';
-import { PropertyState } from '../../containers/AddCategory/addCategory';
-import { BtnPrimary, Col, InputText, Row } from '../../styles/global.styled';
-import { INPUT_CATEGORY } from '../../utils/constant';
-import { Property, BtnDelete, BtnEdit } from './propertyInput.styled';
+import React, { useEffect, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import ReactSelect from "react-select";
+import { Trash2, Edit } from "react-feather";
+import { useParams } from "react-router-dom";
+import { useTheme } from "styled-components";
+import { PropertyState } from "../../containers/AddCategory/addCategory";
+import {
+  BtnPrimary,
+  Col,
+  InputText,
+  Row,
+  WarnBar,
+} from "../../styles/global.styled";
+import { INPUT_CATEGORY } from "../../utils/constant";
+import { Property, BtnDelete, BtnEdit } from "./propertyInput.styled";
+import TextInput from "../Inputs/TextInput";
+import Indicator from "../Indicator/Indicator";
+import Select from "../Inputs/Select";
+import CheckBox from "../Inputs/CheckBox";
 
 interface IPropertySelect {
   name: string;
@@ -48,9 +59,10 @@ const PropertyInput = ({
   traits,
   editProperty,
 }: IPropertyInput) => {
+  const theme = useTheme() as { palette: { [k: string]: string } };
   const { categoryName } = useParams();
-  const { register, getValues } = useFormContext();
-  const [name, setName] = useState<string>(traits.name || '');
+  const { register, getValues, control, setValue } = useFormContext();
+  const [name, setName] = useState<string>(traits.name || "");
   const [showMore, setShowMore] = useState<boolean>(!traits.isNew);
   const handleAddName = () => {
     const isName = addName(name, id);
@@ -61,16 +73,28 @@ const PropertyInput = ({
 
   return (
     <>
-      <Property gap="10px" flex="1">
-        <p>Nazwa cechy (nie może zawierać spacji):</p>
+      <Property gap="20px" flex="1">
+        <WarnBar margin="0 0 0 0">
+          <span className="icon-Error" />
+          <p>
+            Pamiętaj nazwa cechy nie powinna zawierać spacji oraz znaków
+            specjalnych.
+          </p>
+        </WarnBar>
         <Row gap="20px">
-          <InputText
+          <TextInput
             disabled={!traits.isNew}
+            error=""
+            state=""
+            placeholder="Nazwa cechy"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
           />
           <BtnPrimary
+            width="200px"
             type="button"
             onClick={handleAddName}
             disabled={!traits.isNew}
@@ -82,55 +106,89 @@ const PropertyInput = ({
           <>
             <Row gap="20px">
               <Col flex="1">
-                <p>Wybierz typ pola: </p>
-                <PropertySelect name={name} disabled={!traits.isNew} />
-              </Col>
-              <Row
-                gap="20px"
-                flex="1"
-                alignItems="center"
-                justifyContent="flex-end"
-              >
-                <input
-                  {...register(`${name}Required`)}
-                  type="checkbox"
-                  disabled={!!categoryName}
+                <Controller
+                  name={`${name}BsonType`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      name={`${name}BsonType`}
+                      isDisabled={!traits.isNew}
+                      isClearable
+                      placeholder="Wybierz typ cechy"
+                      options={INPUT_CATEGORY}
+                    />
+                  )}
                 />
-                <p>Pole wymagane</p>
+              </Col>
+              <Row>
+                <Controller
+                  name={`${name}Required`}
+                  control={control}
+                  render={({ field }) => (
+                    <CheckBox
+                      {...field}
+                      onClick={() => {
+                        console.log(field.value);
+                        setValue(`${name}Required`, !field.value);
+                      }}
+                      initialState={field.value}
+                      backgroundColor={theme.palette.Grey5}
+                      name={`${name}Required`}
+                      rightIcon="icon-success"
+                      rightColor={theme.palette.Green80}
+                      leftColor={theme.palette.Grey20}
+                      text="Cecha wymagana"
+                    />
+                  )}
+                />
               </Row>
             </Row>
-            <Row gap="20px">
-              <Col flex="1">
-                <p>Placeholder:</p>
-                <InputText
-                  {...register(`${name}Description`, { required: true })}
-                  disabled={!traits.isNew}
+            <Row gap="10px">
+              <Row flex="1">
+                <Controller
+                  name={`${name}Placeholder`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      state=""
+                      error=""
+                      placeholder="Placeholder"
+                      disabled={!traits.isNew}
+                    />
+                  )}
                 />
-              </Col>
-              <Col flex="1">
-                <p>Wyświetlana nazwa:</p>
-                <InputText
-                  {...register(`${name}Title`, { required: true })}
-                  disabled={!traits.isNew}
+              </Row>
+              <Row flex="1">
+                <Controller
+                  name={`${name}Title`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      state=""
+                      error=""
+                      placeholder="Wyświetlana nazwa"
+                      disabled={!traits.isNew}
+                    />
+                  )}
                 />
-              </Col>
+              </Row>
             </Row>
           </>
         )}
-        <BtnDelete
-          type="button"
+        <Indicator
+          icon="icon-Exit"
+          size={35}
           onClick={() => deleteProperty(id)}
-          hide={getValues(`${name}Required`) && !traits.isNew}
-        >
-          <Trash2 size={18} />
-        </BtnDelete>
-        {/* <BtnEdit
-          type="button"
-          onClick={() => editProperty(id)}
-          hide={getValues(`${name}Required`) || traits.isNew}
-        >
-          <Edit size={16} />
-        </BtnEdit> */}
+          type="red"
+          top="25px"
+          right="-17.5px"
+        />
       </Property>
     </>
   );

@@ -1,7 +1,13 @@
-export const API =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:8008"
-    : "https://api-alkoholove.herokuapp.com";
+/* eslint-disable no-unreachable */
+const isProduction = () => {
+  return true;
+  if (process.env.NODE_ENV === "development") return false;
+  return true;
+};
+
+export const API = !isProduction()
+  ? "http://localhost:8008"
+  : "https://api-alkoholove.herokuapp.com";
 
 export const URL = {
   LOGIN: "/auth/token/admin",
@@ -14,12 +20,25 @@ export const URL = {
   UPLOAD_IMAGE: "/admin/image",
   USERS: "/admin/users",
   ERRORS: "/admin/errors",
+  REPORTED_REVIEW: "/admin/reviews",
   ME: "/me",
   GET_SUGGESTIONS: "/admin/suggestions",
   GET_TOTAL_SUGGESTIONS: "/admin/suggestions/total",
   GET_IMAGE: `https://res.cloudinary.com/alkoholove/${
-    process.env.NODE_ENV === "development" ? "test" : "alcohols"
+    !isProduction() ? "test" : "alcohols"
   }`,
+};
+
+export const NAME_PATH = {
+  home: "Panel główny",
+  alcohol: "Alkohole",
+  category: "Kategorie alkoholu",
+  user: "Użytkownicy",
+  suggestion: "Sugestie użytkowników",
+  error: "Zgłoszone błędy",
+  reportedReview: "Zgłoszone komentarze",
+  add: "Formularz",
+  edit: "Formularz",
 };
 
 export const CORE_PROPERTY = "core";

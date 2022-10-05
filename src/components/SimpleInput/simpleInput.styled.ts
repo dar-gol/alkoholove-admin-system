@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { borderRadius } from '../../styles/global.styled';
-import { Heading4 } from '../../styles/typography.styled';
+import styled from "styled-components";
+import { Row, borderRadius } from "../../styles/global.styled";
+import { Body, Heading4 } from "../../styles/typography.styled";
 
 export const TextArea = styled.textarea`
   ${Heading4()};
@@ -20,4 +20,5 @@ export const TextArea = styled.textarea`
     display: none;
   }
 `;
-export const Test2 = styled.p``;
+
+export const test = "";

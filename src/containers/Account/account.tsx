@@ -1,27 +1,34 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { IUser } from '../../@types/users';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
-import Modal from '../../components/modal/Modal';
-import { ModalTitle } from '../../components/modal/Modal.styled';
-import TextInput from '../../components/SimpleInput/TextInput';
-import { UserContext } from '../../context/userContext';
+import React, { useContext, useEffect, useState } from "react";
+import { withCookies } from "react-cookie";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { IUser } from "../../@types/users";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import HeaderLogic from "../../components/Header/header.logic";
+import InputFactory from "../../components/InputFactory/inputFactory";
+import TextInput from "../../components/Inputs/TextInput";
+import Modal from "../../components/modal/Modal";
+import { ModalTitle } from "../../components/modal/Modal.styled";
+import { UserContext } from "../../context/userContext";
 import {
   BtnPrimary,
   BtnSecondary,
   Col,
   Container,
+  Content,
   Key,
   Row,
+  ScrollContent,
   Tuple,
   Value,
   WarnText,
-} from '../../styles/global.styled';
-import { API, URL } from '../../utils/constant';
-import useAuthReq from '../../utils/hooks/useReq';
-import useUser from '../../utils/hooks/useUser';
+} from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
+import withDashboardWrapper from "../../utils/hoc/withDashboardWrapper";
+import useAuthReq from "../../utils/hooks/useReq";
+import useUser from "../../utils/hooks/useUser";
+import { Title } from "../AddAlcohol/addAlcohol.styled";
+import { Form } from "./account.styled";
 
 const Account = () => {
   const methods = useForm({});
@@ -32,15 +39,15 @@ const Account = () => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [emailIsUpdate, setEmailIsUpdate] = useState<boolean>(false);
-  const { send } = useAuthReq('GET', `${API}${URL.ME}`, null, {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+  const { send } = useAuthReq("GET", `${API}${URL.ME}`, null, {
+    Accept: "application/json",
+    "Content-Type": "application/json",
   });
 
   const handleRemove = async () => {
-    await send({ method: 'DELETE' });
+    await send({ method: "DELETE" });
     remove();
-    navigate('/');
+    navigate("/");
   };
 
   const update = async () => {
@@ -53,28 +60,28 @@ const Account = () => {
     const { new_password, new_password_again } = data;
 
     if (new_password !== new_password_again) {
-      methods.setError('new_password_again', {
-        type: 'custom',
-        message: 'Hasła nie sa takie same!',
+      methods.setError("new_password_again", {
+        type: "custom",
+        message: "Hasła nie sa takie same!",
       });
       return;
     }
 
     try {
       await send({
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify({
           ...data,
         }),
       });
       await update();
     } catch (e) {
-      const field = emailIsUpdate ? 'email' : 'new_password_again';
+      const field = emailIsUpdate ? "email" : "new_password_again";
       const text = emailIsUpdate
-        ? 'Wpisz poprawny email'
-        : 'Hasło powinno zawierac duza litere, cyfre oraz 8 znakow.';
+        ? "Wpisz poprawny email"
+        : "Hasło powinno zawierac duza litere, cyfre oraz 8 znakow.";
       methods.setError(field, {
-        type: 'custom',
+        type: "custom",
         message: text,
       });
       return;
@@ -90,103 +97,157 @@ const Account = () => {
 
   return (
     <>
-      <Header />
-      <Breadcrumb />
-      <Container>
-        <Tuple>
-          <Key>ID</Key>
-          <Value>{me?.id}</Value>
-        </Tuple>
-        <Tuple>
-          <Key>Nazwa użytkownika</Key>
-          <Value>{me?.username}</Value>
-        </Tuple>
-        <Tuple>
-          <Key>Email</Key>
-          <Value>{me?.email}</Value>
-        </Tuple>
-        <Row margin="20px 0 0 0" justifyContent="flex-end" gap="20px">
-          <BtnPrimary onClick={() => setEmailIsUpdate(true)}>
-            Zmień emaila
-          </BtnPrimary>
-          <BtnPrimary onClick={() => setIsUpdate(true)}>Zmień hasło</BtnPrimary>
-          <BtnSecondary onClick={() => setIsDeleting(true)}>
-            Usuń profil
-          </BtnSecondary>
-        </Row>
-      </Container>
+      <Content flex="1" width="100%" maxWidth="756px" gap="20px">
+        <Title>Informacje o koncie</Title>
+        <ScrollContent padding="0 20px 20px 20px">
+          <Tuple>
+            <Key>ID</Key>
+            <Value>{me?.id}</Value>
+          </Tuple>
+          <Tuple>
+            <Key>Nazwa użytkownika</Key>
+            <Value>{me?.username}</Value>
+          </Tuple>
+          <Tuple>
+            <Key>Email</Key>
+            <Value>{me?.email}</Value>
+          </Tuple>
+          <Row margin="20px 0 0 0" justifyContent="flex-end" gap="20px">
+            <BtnPrimary onClick={() => setEmailIsUpdate(true)} width="160px">
+              Zmień emaila
+            </BtnPrimary>
+            <BtnPrimary onClick={() => setIsUpdate(true)} width="160px">
+              Zmień hasło
+            </BtnPrimary>
+            <BtnSecondary onClick={() => setIsDeleting(true)} width="160px">
+              Usuń profil
+            </BtnSecondary>
+          </Row>
+        </ScrollContent>
+      </Content>
       <Modal isOpen={isDeleting} onClose={() => setIsDeleting(false)}>
         <ModalTitle>Usuwanie konta</ModalTitle>
         <WarnText>Czy na pewno chcesz permanentnie usunąć konto?</WarnText>
-        <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
-          <BtnSecondary onClick={() => handleRemove()}>TAK</BtnSecondary>
-          <BtnPrimary onClick={() => setIsDeleting(false)}>NIE</BtnPrimary>
-        </Row>
+        <Col margin="20px 0 0 0" justifyContent="center" gap="30px">
+          <BtnSecondary onClick={() => handleRemove()}>
+            Tak, chcę permanentnie usunąć konto.
+          </BtnSecondary>
+          <BtnPrimary onClick={() => setIsDeleting(false)}>
+            Nie, nie chcę usunąć permanentnie konta.
+          </BtnPrimary>
+        </Col>
       </Modal>
       <Modal isOpen={isUpdate} onClose={() => setIsUpdate(false)}>
         <ModalTitle>Edycja konta</ModalTitle>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(submit)}>
-            <TextInput
-              name="password"
-              title="Stare hasło"
-              required
-              type="password"
-              placeholder="***"
-            />
-            <TextInput
-              name="new_password"
-              title="Nowe hasło"
-              required
-              type="password"
-              placeholder="***"
-            />
-            <TextInput
-              name="new_password_again"
-              title="Nowe hasło ponownie"
-              required
-              type="password"
-              placeholder="***"
-            />
-            <Row justifyContent="center">
-              <WarnText>{errors?.new_password_again?.message}</WarnText>
-            </Row>
-            <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
-              <BtnPrimary type="submit">Zaktualizuj</BtnPrimary>
-              <BtnSecondary type="button" onClick={() => setIsUpdate(false)}>
-                Wróć
-              </BtnSecondary>
-            </Row>
-          </form>
-        </FormProvider>
+        <Row>
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(submit)}>
+              <Col
+                margin="0 0 20px 0"
+                minHeight="56px"
+                key="asdasfsdfsddsfsdfsdfsdfkiasdasdasdnd"
+              >
+                <Controller
+                  name="password"
+                  control={methods.control}
+                  render={({ field }) => (
+                    <InputFactory
+                      value={field.value}
+                      onChange={field.onChange}
+                      inputRef={field.ref}
+                      type="string"
+                      name="password"
+                      title="Stare hasło"
+                      required
+                      placeholder="Stare hasło"
+                    />
+                  )}
+                />
+              </Col>
+              <Col margin="0 0 20px 0" minHeight="56px">
+                <Controller
+                  name="new_password"
+                  control={methods.control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      state=""
+                      error=""
+                      placeholder="Nowe hasło"
+                    />
+                  )}
+                />
+              </Col>
+              <Col margin="0 0 20px 0" minHeight="56px">
+                <Controller
+                  name="new_password_again"
+                  control={methods.control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      state=""
+                      error=""
+                      placeholder="Nowe hasło ponownie"
+                    />
+                  )}
+                />
+              </Col>
+              <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
+                <BtnPrimary padding="0 20px" type="submit">
+                  Zmień hasło
+                </BtnPrimary>
+                <BtnSecondary
+                  padding="0 20px"
+                  type="button"
+                  onClick={() => setIsUpdate(false)}
+                >
+                  Zamknij okno
+                </BtnSecondary>
+              </Row>
+            </Form>
+          </FormProvider>
+        </Row>
       </Modal>
       <Modal isOpen={emailIsUpdate} onClose={() => setEmailIsUpdate(false)}>
         <ModalTitle>Edycja konta</ModalTitle>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(submit)}>
-            <TextInput
-              name="email"
-              title="Nowy email"
-              required
-              placeholder="alkohoLove@email.com"
-            />
-            <Row justifyContent="center">
-              <WarnText>{errors?.email?.message}</WarnText>
-            </Row>
-            <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
-              <BtnPrimary type="submit">Zaktualizuj</BtnPrimary>
-              <BtnSecondary
-                type="button"
-                onClick={() => setEmailIsUpdate(false)}
-              >
-                Wróć
-              </BtnSecondary>
-            </Row>
-          </form>
-        </FormProvider>
+        <Row>
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(submit)}>
+              <Col margin="0 0 20px 0" minHeight="56px">
+                <Controller
+                  name="email"
+                  control={methods.control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      state=""
+                      error=""
+                      placeholder="Nowy email"
+                    />
+                  )}
+                />
+              </Col>
+              <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
+                <BtnPrimary padding="0 20px" type="submit">
+                  Zmień email
+                </BtnPrimary>
+                <BtnSecondary
+                  padding="0 20px"
+                  type="button"
+                  onClick={() => setEmailIsUpdate(false)}
+                >
+                  Zamknij okno
+                </BtnSecondary>
+              </Row>
+            </Form>
+          </FormProvider>
+        </Row>
       </Modal>
     </>
   );
 };
 
-export default Account;
+export default withDashboardWrapper(Account);

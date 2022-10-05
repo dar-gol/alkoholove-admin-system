@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { IUser } from '../../@types/users';
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { IUser } from "../../@types/users";
+import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
+import HeaderLogic from "../../components/Header/header.logic";
 import {
   BtnPrimary,
   Col,
@@ -12,16 +12,16 @@ import {
   Title,
   Tuple,
   Value,
-} from '../../styles/global.styled';
-import { API, URL } from '../../utils/constant';
-import useAuthReq from '../../utils/hooks/useReq';
-import { BtnBan } from './user.styled';
+} from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
+import useAuthReq from "../../utils/hooks/useReq";
+import { BtnBan } from "./user.styled";
 
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState<IUser | null>(null);
-  const { send } = useAuthReq('GET', `${API}${URL.USERS}/${id}`, null, {
-    accept: 'application/json',
+  const { send } = useAuthReq("GET", `${API}${URL.USERS}/${id}`, null, {
+    accept: "application/json",
   });
 
   const getUser = () => {
@@ -34,7 +34,7 @@ const User = () => {
 
   const handleBan = () => {
     send({
-      method: 'PUT',
+      method: "PUT",
       url: `${API}${URL.USERS}/${id}?to_ban=${!user?.is_banned}`,
     }).then(() => getUser());
   };
@@ -43,7 +43,7 @@ const User = () => {
 
   return (
     <>
-      <Header />
+      <HeaderLogic />
       <Breadcrumb />
       {user && (
         <Container>
@@ -63,11 +63,11 @@ const User = () => {
             </Tuple>
             <Tuple>
               <Key>Zbanowany: </Key>
-              <Value>{user.is_banned ? 'TAK' : 'NIE'}</Value>
+              <Value>{user.is_banned ? "TAK" : "NIE"}</Value>
             </Tuple>
             <Tuple>
               <Key>Admin: </Key>
-              <Value>{user.is_admin ? 'TAK' : 'NIE'}</Value>
+              <Value>{user.is_admin ? "TAK" : "NIE"}</Value>
             </Tuple>
             <Tuple>
               <Key>Ostatnie logowanie: </Key>
@@ -83,7 +83,7 @@ const User = () => {
               <>
                 <BtnPrimary>Przydziel uprawnienia administratorskie</BtnPrimary>
                 <BtnBan onClick={handleBan}>
-                  {user.is_banned ? 'Odbanuj' : 'Zbanuj'} użytkownika
+                  {user.is_banned ? "Odbanuj" : "Zbanuj"} użytkownika
                 </BtnBan>
               </>
             )}

@@ -1,110 +1,102 @@
-import React, { useEffect, useState } from 'react';
-import { CheckCircle } from 'react-feather';
-import { IReq } from '../../@types/fetch';
-import { IPageInfo } from '../../@types/pagination';
+import React, { useRef, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Suggestion } from "../../@types/suggestions";
+import { IUser } from "../../@types/users";
+import Breadcrumb from "../Breadcrumb/breadcrumb";
+import HeaderLogic from "../Header/header.logic";
+import Indicator from "../Indicator/Indicator";
+import { TCell, Title, TRow, Value } from "../List/List.styled";
+import List from "../List/List.view";
+import Pagination from "../Pagination/pagination";
+import Searcher from "../Searcher/searcher";
+import SuggestionDetails from "../../containers/SuggestionDetails/SuggestionDetails.view";
 import {
-  Suggestion,
-  Suggestions,
-  SuggResponse,
-} from '../../@types/suggestions';
-import { Col, ListTitle, Row } from '../../styles/global.styled';
-import { API, URL } from '../../utils/constant';
-import useAuthReq from '../../utils/hooks/useReq';
-import Pagination from '../Pagination/pagination';
-import Searcher from '../Searcher/searcher';
-import { Block, List } from './suggestion.styled';
+  CapitalCase,
+  Container,
+  ContentContainer,
+  ListContainer,
+  ListTitle,
+} from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
 
-type Props = {
-  choose: (id: string) => void;
-};
+const initReq = ["GET", API + URL.GET_SUGGESTIONS, ""] as const;
+const width = document.body.clientWidth;
 
-const initPageInfo: IPageInfo = {
-  limit: 10,
-  offset: 0,
-  total: 10,
-  number: 0,
-} as const;
+interface Props {
+  goToSuggestion: (id: string) => void;
+}
 
-const SuggestionList = ({ choose }: Props) => {
-  const { send } = useAuthReq('GET', API + URL.GET_SUGGESTIONS, '', {
-    Accept: 'application/json',
-  });
-  const [suggestions, setSuggestions] = useState<Suggestions | null>(null);
-  const [page, setPage] = useState<IPageInfo>(initPageInfo);
+const SuggestionListView = ({ goToSuggestion }: Props) => {
+  const { id } = useParams();
+  const listRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isSmallScreen = () => width < 1200 && !!id;
+  const [collapse, setCollapse] = useState<boolean>(isSmallScreen());
 
-  const update = (req: IReq = {}) => {
-    send(req)
-      .then((data: Response) => data.json())
-      .then((data: SuggResponse) => {
-        setSuggestions(data.suggestions.length ? data.suggestions : null);
-        setPage((prev) => ({ ...prev, ...data.page_info }));
-      });
+  const onCollapse = () => {
+    if (isSmallScreen()) {
+      setCollapse(false);
+      navigate(`/suggestion${location.search}`);
+      return;
+    }
+    setCollapse((prev) => !prev);
   };
 
-  const changePage = (index: number) => {
-    const shift = index * page.limit;
-    setPage((prev) => ({
-      ...prev,
-      number: index,
-    }));
-    update({
-      url: `${API}${URL.GET_SUGGESTIONS}?limit=${page.limit}&offset=${shift}`,
-    });
-  };
-
-  const changePageSize = (limit: number) => {
-    setPage((prev) => ({
-      ...prev,
-      limit,
-      number: 0,
-    }));
-    update({
-      url: `${API}${URL.GET_SUGGESTIONS}?limit=${limit}&offset=0`,
-    });
-  };
-
-  useEffect(() => update(), []);
-
-  const suggestionBlock =
-    suggestions &&
-    suggestions.map((suggestion: Suggestion, index: number) => (
-      <Block
-        key={suggestion.id}
-        margin="10px"
-        padding="10px 20px"
-        role="button"
-        onClick={() => choose(suggestion.id)}
+  const drawContent = (content: Suggestion) => (
+    <TRow
+      key={content.id}
+      role="link"
+      tabIndex={0}
+      onClick={() => goToSuggestion(content.id)}
+    >
+      <TCell
+        width="200px"
+        padding="20px"
+        data-label="Nazwa uzytkownika"
+        verticalAlign="top"
       >
-        <Row flex="1">
-          {index + 1}. {suggestion.kind}, {suggestion.name}
-        </Row>
-      </Block>
-    ));
+        <Title>Nazwa alkoholu</Title>
+        <Value>{content.name}</Value>
+      </TCell>
+      <TCell
+        width="100px"
+        padding="20px"
+        data-label="Email uzytkownika"
+        verticalAlign="top"
+      >
+        <Title>Rodzaj</Title>
+        <Value>{content.kind}</Value>
+      </TCell>
+      <TCell
+        padding="20px"
+        data-label="Data stworzenia konta"
+        verticalAlign="top"
+      >
+        <Title>Kod kreskowy</Title>
+        <Value>{content.barcode}</Value>
+      </TCell>
+    </TRow>
+  );
   return (
-    <div>
-      <ListTitle>Lista sugestii: </ListTitle>
-      <Searcher
-        setLimit={changePageSize}
-        update={(input) => {}}
-        isSearch={false}
-      />
-      <List>
-        {suggestions ? (
-          suggestionBlock
-        ) : (
-          <Col alignItems="center" margin="20px 0">
-            <CheckCircle size={64} color="#F47521" />
-            <p>Wszystkie sugestie zostały rozpatrzone</p>
-          </Col>
+    <>
+      <ContentContainer margin="0!important">
+        <ListContainer className={`${collapse ? "hidden" : ""}`}>
+          <List
+            isSearch={false}
+            listObjectName="suggestions"
+            ref={listRef}
+            listTitle="Lista sugestii użytkowników"
+            initReq={[...initReq]}
+            contentRow={(content) => drawContent(content as Suggestion)}
+          />
+        </ListContainer>
+        {id && (
+          <SuggestionDetails collapse={collapse} onCollapse={onCollapse} />
         )}
-      </List>
-      <Pagination
-        lastPage={Math.ceil(page.total / page.limit)}
-        offset={page.number}
-        setOffset={changePage}
-      />
-    </div>
+      </ContentContainer>
+    </>
   );
 };
 
-export default SuggestionList;
+export default SuggestionListView;

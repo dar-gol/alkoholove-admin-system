@@ -1,29 +1,30 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { CookiesProvider } from 'react-cookie';
-import { ThemeProvider } from 'styled-components';
-import { BrowserRouter } from 'react-router-dom';
-import UserProvider from './context/userContext';
-import CategoryProvider from './context/categoryContext';
-import App from './App';
-import createTheme from './styles/theme';
-import { GlobalStyle } from './styles/global.styled';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { CookiesProvider } from "react-cookie";
+import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UserProvider from "./context/userContext";
+import CategoryProvider from "./context/categoryContext";
+import App from "./App";
+import { GlobalStyle } from "./styles/global.styled";
 
-const theme = createTheme();
-
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 const root = createRoot(container!);
+
+// Create a client
+const queryClient = new QueryClient();
+
 root.render(
   <CookiesProvider>
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
+    <QueryClientProvider client={queryClient}>
+      <GlobalStyle />
       <UserProvider>
         <CategoryProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </CategoryProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CategoryProvider>
       </UserProvider>
-    </ThemeProvider>
+    </QueryClientProvider>
   </CookiesProvider>
 );

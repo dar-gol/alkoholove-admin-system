@@ -3,4 +3,5 @@ export interface IPageInfo {
   offset: number;
   total: number;
   number: number;
+  isLoading?: boolean;
 }

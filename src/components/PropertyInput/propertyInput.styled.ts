@@ -1,13 +1,11 @@
-import styled from 'styled-components';
-import { Col } from '../../styles/global.styled';
-import { Heading1 } from '../../styles/typography.styled';
+import styled from "styled-components";
+import { Col } from "../../styles/global.styled";
 
 export const Property = styled(Col)`
-  border: 1px solid ${({ theme }) => theme.palette.primary};
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   position: relative;
+  border: 2px solid ${({ theme }) => theme.palette.Grey5};
 `;
 export const BtnDelete = styled.button`
   font-weight: 900;
@@ -23,7 +21,7 @@ export const BtnDelete = styled.button`
   color: white;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  display: ${({ hide }: { hide?: boolean }) => (hide ? 'none' : 'block')};
+  display: ${({ hide }: { hide?: boolean }) => (hide ? "none" : "block")};
 `;
 
 export const BtnEdit = styled.button`
@@ -40,5 +38,5 @@ export const BtnEdit = styled.button`
   color: white;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  display: ${({ hide }: { hide?: boolean }) => (hide ? 'none' : 'block')};
+  display: ${({ hide }: { hide?: boolean }) => (hide ? "none" : "block")};
 `;

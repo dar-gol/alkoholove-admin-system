@@ -1,12 +1,12 @@
-import { IPageInfo } from './pagination';
+import { IPageInfo } from "./pagination";
 
-type Required = string;
+export type Required = string;
 
-type Types = 'string' | 'int' | 'double' | 'array' | 'bool' | 'long';
+export type Types = "string" | "int" | "double" | "array" | "bool" | "long";
 
-type Type = string | [string, boolean | 'null'];
+export type Type = string | [string, boolean | "null"];
 
-type Metadata = {
+export type Metadata = {
   bsonType: Type;
   description: string;
   title: string;
@@ -15,7 +15,7 @@ type Metadata = {
   };
 };
 
-type Property = {
+export type Property = {
   name: string;
   metadata: Metadata;
 };
@@ -33,8 +33,14 @@ export type CategoriesObject = {
 };
 
 export type SpecificCategory = {
-  required: Required[];
-  properties: Property[];
+  core: {
+    required: Required[];
+    properties: Property[];
+  };
+  additional: {
+    required: Required[];
+    properties: Property[];
+  };
 };
 
 export interface CategoryContextType {

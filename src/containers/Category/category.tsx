@@ -1,67 +1,44 @@
-import React from 'react';
-
-import Breadcrumb from '../../components/Breadcrumb/breadcrumb';
-import Header from '../../components/Header/header';
-import Pagination from '../../components/Pagination/pagination';
-
-import Searcher from '../../components/Searcher/searcher';
+import React, { useRef } from "react";
 import {
   CapitalCase,
   Col,
   Container,
+  ContentContainer,
   LinkPrimary,
   LinkSecondary,
+  ListContainer,
   ListTitle,
   Row,
-} from '../../styles/global.styled';
-import useCategory from '../../utils/hooks/useCategory';
-import { Block } from './category.styled';
+} from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
+import List, { IListHandlers } from "../../components/List/List.view";
+import { TCell, TRow } from "../../components/List/List.styled";
+
+const initReq = ["GET", `${API}${URL.GET_CATEGORIES}`, ""] as const;
 
 const Category = () => {
-  const { ctg, changePage, changePageSize, page } = useCategory();
+  const listRef = useRef(null);
 
-  const categoryBlock =
-    ctg?.categories &&
-    ctg?.categories.map((el, index) => (
-      <Block
-        justifyContent="space-between"
-        margin="10px"
-        padding="10px 20px"
-        key={el.id}
-      >
-        <Row gap="10px" alignItems="center">
-          <Col>{index + 1}.</Col>
-          <Col>
-            <CapitalCase>{el.title}</CapitalCase>
-          </Col>
-        </Row>
-        <Col>
-          <Row gap="20px">
-            <LinkPrimary to={`/category/edit/${el.title}`}>Edytuj</LinkPrimary>
-          </Row>
-        </Col>
-      </Block>
-    ));
+  const drawContent = (content: any) => (
+    <TRow key={content.id} role="link" tabIndex={0}>
+      <TCell width="80px" data-label="Zdjęcia">
+        test
+      </TCell>
+    </TRow>
+  );
 
   return (
-    <>
-      <Header />
-      <Breadcrumb />
-      <Container>
-        <ListTitle>Lista kategorii: </ListTitle>
-        <Searcher setLimit={changePageSize} update={(input) => {}} />
-        {categoryBlock}
-        <Pagination
-          lastPage={Math.ceil(page.total / page.limit)}
-          offset={page.number}
-          setOffset={changePage}
+    <ContentContainer>
+      <ListContainer>
+        <List
+          listObjectName="categories"
+          ref={listRef}
+          listTitle="Lista kategorii"
+          initReq={[...initReq]}
+          contentRow={(content) => drawContent(content)}
         />
-        <Row margin="10px 10px" justifyContent="flex-end" gap="20px">
-          <LinkSecondary to="/category/add">Dodaj kategorię</LinkSecondary>
-          <LinkPrimary to="/alcohols/add">Dodaj Alkohol</LinkPrimary>
-        </Row>
-      </Container>
-    </>
+      </ListContainer>
+    </ContentContainer>
   );
 };
 

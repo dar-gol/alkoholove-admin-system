@@ -1,9 +1,15 @@
-import styled from 'styled-components';
-import { BtnPrimary } from '../../styles/global.styled';
+import styled from "styled-components";
+import { BtnPrimary } from "../../styles/global.styled";
+import { Body } from "../../styles/typography.styled";
 
 export const CurrentPage = styled(BtnPrimary)`
-  border: 2px solid ${({ theme }) => theme.palette.iconSecondary};
-  background-color: ${({ theme }) => theme.palette.white};
-  color: ${({ theme }) => theme.palette.black};
+  background-color: ${({ theme }) => theme.palette.Primary80};
+  color: ${({ theme }) => theme.palette.White};
 `;
-export const Test2 = styled.p``;
+export const PageInfo = styled.span`
+  position: absolute;
+  top: -10px;
+  left: 0;
+  ${Body("regular", "small")}
+  color: ${({ theme }) => theme.palette.Grey40}
+`;
