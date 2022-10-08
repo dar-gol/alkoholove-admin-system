@@ -147,7 +147,8 @@ const List = forwardRef<IListHandlers, Props>(
           <Row flex="1" gap="10px" minWidth="250px" visible={isSearch}>
             <TextInput
               state=""
-              placeholder="Wyszukaj alkohol"
+              title="Wyszukaj alkohol"
+              placeholder="Harnaś"
               error=""
               value={inputValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
