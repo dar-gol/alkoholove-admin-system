@@ -276,7 +276,7 @@ const AddCategory = () => {
                       name="kind"
                       title="Nazwa rodzaju kategorii"
                       required
-                      placeholder="Nazwa rodzaju kategorii"
+                      placeholder="Piwo"
                     />
                   )}
                 />

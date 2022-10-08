@@ -3,41 +3,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm, FormProvider, Controller } from "react-hook-form";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
-import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
-import HeaderLogic from "../../components/Header/header.logic";
 import FileInput from "../../components/FileInput/fileInput";
 import { Form, SectionBar, Title } from "./addAlcohol.styled";
 import {
   BtnPrimary,
   CapitalCase,
   Col,
-  Container,
   Content,
   InfoBar,
-  Key,
   LinkSecondary,
-  ListTitle,
   Row,
   ScrollContent,
-  Tuple,
-  Value,
 } from "../../styles/global.styled";
 import Loader from "../../components/Loader/loader";
 import Modal from "../../components/modal/Modal";
 import { ModalTitle } from "../../components/modal/Modal.styled";
 import useCategory from "../../utils/hooks/useCategory";
-import CategoryForm from "../../components/CategoryForm/categoryForm";
-import { inputType, Options } from "../../@types/inputs";
 import { Property, SpecificCategory, Type } from "../../@types/category";
 import InputFactory from "../../components/InputFactory/inputFactory";
-import {
-  API,
-  BARCODE_PROPERTY,
-  CORE,
-  INPUT_TYPE,
-  URL,
-} from "../../utils/constant";
-import MoreInput from "../../components/MoreInput/moreInput";
+import { API, CORE, URL } from "../../utils/constant";
 import useAuthReq from "../../utils/hooks/useReq";
 import { getType, createImageName, createFormData } from "../../utils/utils";
 import { IReq } from "../../@types/fetch";
@@ -46,8 +30,9 @@ import ErrorModal from "../../components/ErrorModal/errorModal";
 import useAlcohol from "../../utils/hooks/useAlcohol";
 import { IAlcohol } from "../../@types/alcohol";
 import withDashboardWrapper from "../../utils/hoc/withDashboardWrapper";
-import MultiInput from "../../components/Inputs/MultiInput";
 import CategorySelect from "../../components/Inputs/CategorySelect";
+import Indicator from "../../components/Indicator/Indicator";
+import TemporaryAlcoholStorage from "../../components/TemporaryAlcoholStorage/TemporaryAlcoholStorage";
 
 type IModal = {
   open: boolean;
@@ -117,7 +102,8 @@ const AddAlcohol = () => {
     const prepareData = prop.reduce(
       (prev, curr) => {
         const { type } = getType(curr.metadata.bsonType);
-        if (data[curr.name] === undefined) return { ...prev, [curr.name]: [] };
+        if (data[curr.name] === undefined && type === "array")
+          return { ...prev, [curr.name]: [] };
         if (type === "array")
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
         if (type === "bool")
@@ -150,10 +136,9 @@ const AddAlcohol = () => {
   };
 
   const handleCompleteFields = async () => {
-    const t = alcohol;
     if (!alcoholBarcode || !alcohol) {
-      methods.reset(resetValues(Object.keys(alcohol)));
-      return;
+      // methods.reset(resetValues(Object.keys(alcohol)));
+      return null;
     }
     const category = getCategory(alcohol.kind);
     setCategories({ ...category, kind: alcohol.kind });
@@ -180,11 +165,12 @@ const AddAlcohol = () => {
       sm: createImageName(alcohol.name, "sm"),
       md: createImageName(alcohol.name, "md"),
     });
+    return null;
   };
 
   useEffect(() => {
     handleCompleteFields();
-  }, [alcohol, location.pathname]);
+  }, [alcohol, location.pathname, ctg?.categories]);
 
   const addMore = () => {
     modalIsOpen(false);
@@ -248,6 +234,30 @@ const AddAlcohol = () => {
   const removeImage = async (type: string) => {
     methods.reset({ ...methods.getValues(), [type]: null });
     setImgChanged((prev: any) => ({ ...prev, [type]: true }));
+  };
+
+  const setToStorage = () => {
+    const values = methods.getValues();
+    localStorage.setItem(
+      "alcohol_form",
+      JSON.stringify({
+        ...values,
+        kind: categories.kind,
+      })
+    );
+  };
+
+  const readFromStorage = () => {
+    const storage = localStorage.getItem("alcohol_form");
+    if (storage) {
+      const data = JSON.parse(storage);
+      data.sm = undefined;
+      data.md = undefined;
+      methods.reset({ ...data });
+      const category = getCategory(data.kind);
+      setCategories({ ...category, kind: data.kind });
+      // localStorage.removeItem("alcohol_form");
+    }
   };
 
   const submit = async (data: any) => {
@@ -431,11 +441,15 @@ const AddAlcohol = () => {
       <ErrorModal
         isOpen={modal.open && !isValid}
         title={modal.title}
-        text={modal.text}
+        text={`${modal.text}. Pamiętaj w prawym dolnym rogu jest możliwość zapisania danych w przeglądarce!`}
         details={modal.details}
         onClose={modalIsOpen}
       />
       {!alcoholBarcode && <Suggestion setInput={setInput} />}
+      <TemporaryAlcoholStorage
+        setToStorage={setToStorage}
+        readFromStorage={readFromStorage}
+      />
     </>
   );
 };

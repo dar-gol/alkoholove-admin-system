@@ -27,7 +27,7 @@ const InputFactory = ({
         error=""
         title={title}
         required={false}
-        placeholder={title}
+        placeholder={placeholder}
         {...rest}
       />
     );
@@ -39,7 +39,7 @@ const InputFactory = ({
         name={name}
         title={title}
         required={false}
-        placeholder={title}
+        placeholder={placeholder}
         {...rest}
       />
     );
@@ -70,13 +70,6 @@ const InputFactory = ({
         ]}
         {...rest}
       />
-      // <BoolInput
-      // name={name}
-      // title={title}
-      // required={false}
-      // placeholder={placeholder}
-      // {...rest}
-      // />
     );
   if (type === "int" || type === "long")
     return (
@@ -87,7 +80,7 @@ const InputFactory = ({
         name={name}
         title={title}
         required={false}
-        placeholder={title}
+        placeholder={placeholder}
         {...rest}
       />
     );
@@ -101,7 +94,7 @@ const InputFactory = ({
         name={name}
         title={title}
         required={false}
-        placeholder={title}
+        placeholder={placeholder}
         {...rest}
       />
     );

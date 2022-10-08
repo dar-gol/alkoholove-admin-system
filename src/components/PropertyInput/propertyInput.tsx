@@ -86,7 +86,8 @@ const PropertyInput = ({
             disabled={!traits.isNew}
             error=""
             state=""
-            placeholder="Nazwa cechy"
+            title="Nazwa cechy"
+            placeholder="color"
             type="text"
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -130,7 +131,6 @@ const PropertyInput = ({
                     <CheckBox
                       {...field}
                       onClick={() => {
-                        console.log(field.value);
                         setValue(`${name}Required`, !field.value);
                       }}
                       initialState={field.value}
@@ -156,7 +156,8 @@ const PropertyInput = ({
                       {...field}
                       state=""
                       error=""
-                      placeholder="Placeholder"
+                      title="Placeholder"
+                      placeholder="Czerwony"
                       disabled={!traits.isNew}
                     />
                   )}
@@ -172,7 +173,8 @@ const PropertyInput = ({
                       {...field}
                       state=""
                       error=""
-                      placeholder="Wyświetlana nazwa"
+                      title="Wyświetlana nazwa"
+                      placeholder="Kolor"
                       disabled={!traits.isNew}
                     />
                   )}

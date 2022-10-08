@@ -310,6 +310,32 @@ export const WarnBar = styled(Row)`
   }
 `;
 
+export const CriticalBar = styled(Row)`
+  background-color: ${({ theme }) => theme.palette.Red20};
+  color: ${({ theme }) => theme.palette.Red100};
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  ${Body("regular", "medium")}
+  border-radius: 20px;
+  & span::before {
+    font-size: 30px;
+  }
+`;
+
+export const GreenBar = styled(Row)`
+  background-color: ${({ theme }) => theme.palette.Green20};
+  color: ${({ theme }) => theme.palette.Green100};
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  ${Body("regular", "medium")}
+  border-radius: 20px;
+  & span::before {
+    font-size: 30px;
+  }
+`;
+
 export const ListContainer = styled(Col)`
   position: relative;
   background-color: ${({ theme }) => theme.palette.White};
