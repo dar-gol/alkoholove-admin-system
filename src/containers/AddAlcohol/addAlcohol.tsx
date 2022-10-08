@@ -256,7 +256,7 @@ const AddAlcohol = () => {
       methods.reset({ ...data });
       const category = getCategory(data.kind);
       setCategories({ ...category, kind: data.kind });
-      // localStorage.removeItem("alcohol_form");
+      localStorage.removeItem("alcohol_form");
     }
   };
 
