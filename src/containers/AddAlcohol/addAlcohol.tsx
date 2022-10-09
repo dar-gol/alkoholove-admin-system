@@ -7,9 +7,11 @@ import FileInput from "../../components/FileInput/fileInput";
 import { Form, SectionBar, Title } from "./addAlcohol.styled";
 import {
   BtnPrimary,
+  BtnSecondary,
   CapitalCase,
   Col,
   Content,
+  CriticalBar,
   InfoBar,
   LinkSecondary,
   Row,
@@ -167,7 +169,12 @@ const AddAlcohol = () => {
 
   const addMore = () => {
     modalIsOpen(false);
-    navigate("/alcohol/add");
+    navigate("/add/alcohol");
+  };
+
+  const goToAlcohol = () => {
+    modalIsOpen(false);
+    navigate(`/alcohol/${categories.kind}/${id}`);
   };
 
   const chooseCategory = async (kind: { label: string; value: string }) => {
@@ -261,6 +268,7 @@ const AddAlcohol = () => {
     try {
       await addOrEdit({ ...values, kind: categories.kind }, sm, md);
       setIsValid(true);
+      setID(data.barcode[0].value);
       methods.reset(resetValues(Object.keys(data)));
     } catch (e: any) {
       setIsValid(false);
@@ -419,7 +427,7 @@ const AddAlcohol = () => {
       </Content>
       <Modal isOpen={isLoading} onClose={() => {}} isClosable={false}>
         <ModalTitle>
-          {alcoholBarcode ? "Edytujemy" : "Dodajemy"} nowy alkohol
+          {alcoholBarcode ? "Edytujemy" : "Dodajemy nowy"} alkohol
         </ModalTitle>
         <Row justifyContent="center">
           <Loader />
@@ -430,17 +438,33 @@ const AddAlcohol = () => {
           Alkohol został {alcoholBarcode ? "zedytowany" : "dodany"} prawidłowo
         </ModalTitle>
         <Row gap="20px">
-          <BtnPrimary onClick={addMore}>Dodaje kolejny alkohol</BtnPrimary>
-          <LinkSecondary to="/alcohol">Wracam do listy alkoholi</LinkSecondary>
+          <BtnPrimary padding="0 20px" onClick={addMore}>
+            Dodaje kolejny alkohol
+          </BtnPrimary>
+          <BtnSecondary padding="0 20px" onClick={goToAlcohol}>
+            Przejdź do dodanego alkoholu
+          </BtnSecondary>
         </Row>
       </Modal>
       <ErrorModal
         isOpen={modal.open && !isValid}
         title={modal.title}
-        text={`${modal.text}. Pamiętaj w prawym dolnym rogu jest możliwość zapisania danych w przeglądarce!`}
         details={modal.details}
         onClose={modalIsOpen}
-      />
+      >
+        <CriticalBar>
+          <span className="icon-Error" />
+          <p>{modal.text}</p>
+        </CriticalBar>
+        <InfoBar margin="20px 0 0 0">
+          <span className="icon-Info" />
+          <p>
+            Pamiętaj jest możliwość zapisania danych w przeglądarce. Więcej
+            informacji o tym w jaki sposób zapisuje się dane znajdziesz po
+            naciśnięciu w okrągły przycisk z ikoną w prawym dolnym rogu.
+          </p>
+        </InfoBar>
+      </ErrorModal>
       {!alcoholBarcode && <Suggestion setInput={setInput} />}
       <TemporaryAlcoholStorage
         setToStorage={setToStorage}

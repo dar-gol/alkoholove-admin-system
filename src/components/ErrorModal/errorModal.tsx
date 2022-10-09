@@ -6,16 +6,16 @@ import { Text, DetailTitle, Details } from "./errorModal.styled";
 
 interface IProps {
   title: string;
-  text: string;
   details: string;
   isOpen: boolean;
   onClose: (isOpen?: boolean) => void;
+  children?: React.ReactNode;
 }
 
-const ErrorModal = ({ title, text, details, isOpen, onClose }: IProps) => (
+const ErrorModal = ({ title, children, details, isOpen, onClose }: IProps) => (
   <Modal isOpen={isOpen} onClose={onClose}>
     <ModalTitle>{title}</ModalTitle>
-    <Text>{text}</Text>
+    {children}
     {details && (
       <>
         <DetailTitle>Szczegóły błędu: </DetailTitle>

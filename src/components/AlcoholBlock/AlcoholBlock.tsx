@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { IAlcohol } from '../../@types/alcohol';
+import React, { useState } from "react";
+import { IAlcohol } from "../../@types/alcohol";
 import {
   BtnPrimary,
   BtnSecondary,
   Col,
   LinkSecondary,
   Row,
-} from '../../styles/global.styled';
-import { API, URL } from '../../utils/constant';
-import useAuthReq from '../../utils/hooks/useReq';
-import ErrorModal from '../ErrorModal/errorModal';
-import Loader from '../Loader/loader';
-import Modal from '../modal/Modal';
-import { ModalTitle } from '../modal/Modal.styled';
+} from "../../styles/global.styled";
+import { API, URL } from "../../utils/constant";
+import useAuthReq from "../../utils/hooks/useReq";
+import ErrorModal from "../ErrorModal/errorModal";
+import Loader from "../Loader/loader";
+import Modal from "../modal/Modal";
+import { ModalTitle } from "../modal/Modal.styled";
 import {
   Alcoholblock,
   More,
@@ -20,7 +20,7 @@ import {
   Tuple,
   Key,
   Value,
-} from './AlcoholBlock.styled';
+} from "./AlcoholBlock.styled";
 
 type IModal = {
   open: boolean;
@@ -39,9 +39,9 @@ const AlcoholBlock = ({
   index: number;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [errorModal, setErrorModal] = useState<string>('');
+  const [errorModal, setErrorModal] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { send } = useAuthReq('DELETE', '', '');
+  const { send } = useAuthReq("DELETE", "", "");
 
   const removeTrigger = () => {
     setIsOpen(true);
@@ -115,9 +115,8 @@ const AlcoholBlock = ({
       </Modal>
       <ErrorModal
         isOpen={!!errorModal}
-        onClose={() => setErrorModal('')}
+        onClose={() => setErrorModal("")}
         title="Problem z usunięciem alkoholu"
-        text=""
         details={errorModal}
       />
       <Modal isOpen={isLoading} onClose={() => {}} isClosable={false}>
