@@ -11,12 +11,6 @@ const AlcoholListApollo = () => {
     listRef.current?.fireSearch(null, kind);
   };
 
-  useEffect(() => {
-    if (listRef.current?.getContent() !== null) return;
-
-    updateParam("offset", 0);
-  }, [listRef.current?.getContent()]);
-
   return <AlcoholListLogic updateKind={updateKind} listRef={listRef} />;
 };
 
