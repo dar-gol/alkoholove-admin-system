@@ -1,8 +1,7 @@
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable camelcase */
 /* eslint-disable consistent-return */
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Method, Url, Body, Header, IReq } from "../../@types/fetch";
 import { API, STATUS_CODE } from "../constant";
 import useUser from "./useUser";

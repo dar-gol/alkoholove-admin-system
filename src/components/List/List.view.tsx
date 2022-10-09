@@ -131,6 +131,13 @@ const List = forwardRef<IListHandlers, Props>(
       changeTableSize(getPageLimit());
     }, [query.limit]);
 
+    useEffect(() => {
+      if (page.offset >= page.total) {
+        changePage(page.number - 1);
+        updateParam("offset", page.number - 1);
+      }
+    }, [contents]);
+
     if (contents === null)
       return (
         <LoadingModal
@@ -147,7 +154,8 @@ const List = forwardRef<IListHandlers, Props>(
           <Row flex="1" gap="10px" minWidth="250px" visible={isSearch}>
             <TextInput
               state=""
-              placeholder="Wyszukaj alkohol"
+              title="Wyszukaj alkohol"
+              placeholder="Harnaś"
               error=""
               value={inputValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

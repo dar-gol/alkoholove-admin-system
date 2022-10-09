@@ -47,7 +47,7 @@ const User = () => {
       <Breadcrumb />
       {user && (
         <Container>
-          <Title>Informacje o uzytkowniku: {user.username}</Title>
+          <Title>Informacje o użytkowniku: {user.username}</Title>
           <Col>
             <Tuple>
               <Key>Nazwa użytkownika: </Key>

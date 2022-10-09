@@ -62,10 +62,18 @@ const TextInput: React.FC<CustomInputProps> = ({
     }
   };
 
+  const getPlaceholder = () => (active ? placeholder : "");
+
   const getInputType = () => {
     if (rest.type === "textarea")
-      return <TextArea {...rest} onKeyUp={(event) => textAreaAdjust(event)} />;
-    return <Input {...rest} />;
+      return (
+        <TextArea
+          {...rest}
+          placeholder={getPlaceholder()}
+          onKeyUp={(event) => textAreaAdjust(event)}
+        />
+      );
+    return <Input {...rest} placeholder={getPlaceholder()} />;
   };
 
   return (
@@ -76,7 +84,7 @@ const TextInput: React.FC<CustomInputProps> = ({
     >
       <Icon className={`${icon || "icon-search"} left-icon`} />
       <InputWrapper>
-        <Label>{placeholder}</Label>
+        <Label>{rest.title}</Label>
         {getInputType()}
       </InputWrapper>
       <Icon className={`${rightIcon} right-icon`} />

@@ -1,6 +1,12 @@
+/* eslint-disable no-unreachable */
 import { Type } from "../@types/category";
 import { inputType } from "../@types/inputs";
 import { INPUT_TYPE } from "./constant";
+
+export const isProduction = () => {
+  if (process.env.NODE_ENV === "development") return false;
+  return true;
+};
 
 export const unloadType = (type: Type): [string, boolean] => {
   if (typeof type === "string") return [type, true];

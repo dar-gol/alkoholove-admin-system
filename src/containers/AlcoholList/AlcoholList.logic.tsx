@@ -41,13 +41,16 @@ const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
   const [collapse, setCollapse] = useState<boolean>(isSmallScreen());
 
   const onSelectedKind = (selected: { label: string; value: string }) => {
+    const pathame = location.pathname.split("/");
+
     if (selected.value === "-") {
       setSelectedKind(null);
       updateKind(null);
       navigate(`/alcohol${location.search}`);
     } else {
+      pathame[2] = selected.value;
       setSelectedKind(selected.value);
-      navigate(`/alcohol/${selected.value}${location.search}`);
+      navigate(`${pathame.join("/")}${location.search}`);
       updateKind(selected.value);
     }
   };

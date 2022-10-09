@@ -8,6 +8,7 @@ export const Container = styled(Row)`
   align-items: center;
   border-radius: 20px;
   background-color: ${({ color }) => color || "transparent"};
+  cursor: pointer;
 `;
 
 export const CheckBoxContainer = styled(Row)`

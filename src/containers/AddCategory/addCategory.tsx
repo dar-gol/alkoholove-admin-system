@@ -16,6 +16,7 @@ import {
   Col,
   Container,
   Content,
+  CriticalBar,
   InfoBar,
   LinkSecondary,
   Row,
@@ -276,7 +277,7 @@ const AddCategory = () => {
                       name="kind"
                       title="Nazwa rodzaju kategorii"
                       required
-                      placeholder="Nazwa rodzaju kategorii"
+                      placeholder="Piwo"
                     />
                   )}
                 />
@@ -336,10 +337,14 @@ const AddCategory = () => {
       <ErrorModal
         isOpen={modal.open}
         title={modal.title}
-        text={modal.text}
         details={modal.details}
         onClose={handleOpenModal}
-      />
+      >
+        <CriticalBar>
+          <span className="icon-Error" />
+          <p>{modal.text}</p>
+        </CriticalBar>
+      </ErrorModal>
     </>
   );
 };

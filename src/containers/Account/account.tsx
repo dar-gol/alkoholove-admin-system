@@ -159,7 +159,7 @@ const Account = () => {
                       name="password"
                       title="Stare hasło"
                       required
-                      placeholder="Stare hasło"
+                      placeholder="********"
                     />
                   )}
                 />
@@ -174,7 +174,8 @@ const Account = () => {
                       {...field}
                       state=""
                       error=""
-                      placeholder="Nowe hasło"
+                      title="Nowe hasło"
+                      placeholder="********"
                     />
                   )}
                 />
@@ -189,7 +190,8 @@ const Account = () => {
                       {...field}
                       state=""
                       error=""
-                      placeholder="Nowe hasło ponownie"
+                      title="Nowe hasło ponownie"
+                      placeholder="********"
                     />
                   )}
                 />
@@ -225,7 +227,8 @@ const Account = () => {
                       {...field}
                       state=""
                       error=""
-                      placeholder="Nowy email"
+                      placeholder="nowy_email@domena.pl"
+                      title="Nowy email"
                     />
                   )}
                 />

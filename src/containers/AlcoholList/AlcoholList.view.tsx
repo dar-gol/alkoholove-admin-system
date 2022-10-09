@@ -97,7 +97,8 @@ const AlcoholListView = ({
           <Row flex="1" gap="10px" minWidth="250px">
             <TextInput
               state=""
-              placeholder="Wyszukaj alkohol"
+              title="Wyszukaj alkohol"
+              placeholder="Harnaś"
               error=""
               value={searchValue}
               onChange={onSearch}
