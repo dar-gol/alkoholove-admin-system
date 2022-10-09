@@ -19,7 +19,7 @@ import {
 import Spacings from "../../styles/spacings";
 import ErrorModal from "../../components/ErrorModal/errorModal";
 import TextInput from "../../components/Inputs/TextInput";
-import { BtnPrimary, Col, Row } from "../../styles/global.styled";
+import { BtnPrimary, Col, CriticalBar, Row } from "../../styles/global.styled";
 import CheckBox from "../../components/Inputs/CheckBox";
 import LoadingModal from "../../components/modal/LoadingModal";
 import useLogin from "../../utils/hooks/useLogin";
@@ -51,7 +51,7 @@ const LoginView = ({
           leftColor={theme.palette.Yellow70}
           rightIcon="icon-night"
           rightColor={theme.palette.Grey50}
-          isActive={isNight}
+          value={isNight}
           onClick={modeHandler}
         />
       </DayNightContainer>
@@ -122,10 +122,14 @@ const LoginView = ({
       <ErrorModal
         isOpen={!!state.error}
         title="Problem z logowaniem"
-        text="Upewnij się, że wpisałeś poprawne dane logowania"
         details={state.error}
         onClose={cleanForm}
-      />
+      >
+        <CriticalBar>
+          <span className="icon-Error" />
+          <p>Upewnij się, że wpisałeś poprawne dane logowania</p>
+        </CriticalBar>
+      </ErrorModal>
       <LoadingModal
         isOpen={state.loading}
         title="Proszę czekać trwa logowanie do systemu"

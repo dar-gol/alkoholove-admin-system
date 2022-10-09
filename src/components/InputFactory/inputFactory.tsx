@@ -1,7 +1,10 @@
 import React from "react";
+import { useTheme } from "styled-components";
 import { IFactory } from "../../@types/inputs";
+import { Row } from "../../styles/global.styled";
 import BoolInput from "../BoolInput/boolInput";
 import CategorySelect from "../Inputs/CategorySelect";
+import CheckBox from "../Inputs/CheckBox";
 import MultiInput from "../Inputs/MultiInput";
 import Select from "../Inputs/Select";
 import TextInput from "../Inputs/TextInput";
@@ -18,6 +21,7 @@ const InputFactory = ({
   placeholder,
   ...rest
 }: IFactory) => {
+  const theme = useTheme() as { palette: { [k: string]: string } };
   if (name === "description")
     return (
       <TextInput
@@ -59,17 +63,31 @@ const InputFactory = ({
     );
   if (type === "bool")
     return (
-      <Select
-        name={name}
-        title={title}
-        required={false}
-        placeholder={title}
-        options={[
-          { label: "TAK", value: true },
-          { label: "NIE", value: false },
-        ]}
-        {...rest}
-      />
+      <Row>
+        <CheckBox
+          name={name}
+          title={title}
+          required={false}
+          rightIcon="icon-success"
+          rightColor={theme.palette.Green80}
+          leftColor={theme.palette.Grey20}
+          backgroundColor={theme.palette.Grey5}
+          {...rest}
+          value={rest.value || false}
+          onClick={() => rest.setValue(!rest.value)}
+        />
+      </Row>
+      // <Select
+      //   name={name}
+      //   title={title}
+      //   required={false}
+      //   placeholder={title}
+      //   options={[
+      //     { label: "TAK", value: true },
+      //     { label: "NIE", value: false },
+      //   ]}
+      //   {...rest}
+      // />
     );
   if (type === "int" || type === "long")
     return (

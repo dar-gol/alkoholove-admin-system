@@ -12,6 +12,7 @@ import {
   BtnSecondary,
   Col,
   Container,
+  CriticalBar,
   Key,
   Row,
   Title,
@@ -117,10 +118,17 @@ const Error = () => {
       <ErrorModal
         isOpen={!!errorModal}
         title="Problem z usunięciem zgłoszenia"
-        text=""
         details={errorModal}
         onClose={() => setErrorModal("")}
-      />
+      >
+        <CriticalBar>
+          <span className="icon-Error" />
+          <p>
+            Wystąpił problem z usunięciem zgłoszenia. Prawdopobnie takie
+            zgłoszenie nie istnieje.
+          </p>
+        </CriticalBar>
+      </ErrorModal>
     </>
   );
 };

@@ -7,9 +7,11 @@ import FileInput from "../../components/FileInput/fileInput";
 import { Form, SectionBar, Title } from "./addAlcohol.styled";
 import {
   BtnPrimary,
+  BtnSecondary,
   CapitalCase,
   Col,
   Content,
+  CriticalBar,
   InfoBar,
   LinkSecondary,
   Row,
@@ -55,14 +57,8 @@ const prepareToSelect = (data: any) =>
     value: el,
   }));
 
-const prepareBoolean = (value: boolean) => ({
-  label: value ? "TAK" : "NIE",
-  value,
-});
-
 const prepareField = (field: unknown) => {
   if (field instanceof Array) return prepareToSelect(field);
-  if (typeof field === "boolean") return prepareBoolean(field);
   return field;
 };
 
@@ -106,8 +102,7 @@ const AddAlcohol = () => {
           return { ...prev, [curr.name]: [] };
         if (type === "array")
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
-        if (type === "bool")
-          return { ...prev, [curr.name]: data[curr.name].value };
+        if (type === "bool") return { ...prev, [curr.name]: data[curr.name] };
         if (type === "double")
           return { ...prev, [curr.name]: getDouble(data[curr.name]) };
         if (type === "int" || type === "long")
@@ -174,7 +169,12 @@ const AddAlcohol = () => {
 
   const addMore = () => {
     modalIsOpen(false);
-    navigate("/alcohol/add");
+    navigate("/add/alcohol");
+  };
+
+  const goToAlcohol = () => {
+    modalIsOpen(false);
+    navigate(`/alcohol/${categories.kind}/${id}`);
   };
 
   const chooseCategory = async (kind: { label: string; value: string }) => {
@@ -256,7 +256,6 @@ const AddAlcohol = () => {
       methods.reset({ ...data });
       const category = getCategory(data.kind);
       setCategories({ ...category, kind: data.kind });
-      localStorage.removeItem("alcohol_form");
     }
   };
 
@@ -269,6 +268,7 @@ const AddAlcohol = () => {
     try {
       await addOrEdit({ ...values, kind: categories.kind }, sm, md);
       setIsValid(true);
+      setID(data.barcode[0].value);
       methods.reset(resetValues(Object.keys(data)));
     } catch (e: any) {
       setIsValid(false);
@@ -316,18 +316,22 @@ const AddAlcohol = () => {
         <Controller
           control={methods.control}
           name={name}
-          render={({ field }) => (
-            <InputFactory
-              value={setValue(field.value)}
-              onChange={field.onChange}
-              inputRef={field.ref}
-              type={type}
-              name={name}
-              title={title}
-              required={required}
-              placeholder={description}
-            />
-          )}
+          render={({ field }) => {
+            const t = 0;
+            return (
+              <InputFactory
+                value={setValue(field.value)}
+                onChange={field.onChange}
+                inputRef={field.ref}
+                setValue={(value: unknown) => methods.setValue(name, value)}
+                type={type}
+                name={name}
+                title={title}
+                required={required}
+                placeholder={description}
+              />
+            );
+          }}
         />
       </Col>
     );
@@ -423,7 +427,7 @@ const AddAlcohol = () => {
       </Content>
       <Modal isOpen={isLoading} onClose={() => {}} isClosable={false}>
         <ModalTitle>
-          {alcoholBarcode ? "Edytujemy" : "Dodajemy"} nowy alkohol
+          {alcoholBarcode ? "Edytujemy" : "Dodajemy nowy"} alkohol
         </ModalTitle>
         <Row justifyContent="center">
           <Loader />
@@ -434,17 +438,33 @@ const AddAlcohol = () => {
           Alkohol został {alcoholBarcode ? "zedytowany" : "dodany"} prawidłowo
         </ModalTitle>
         <Row gap="20px">
-          <BtnPrimary onClick={addMore}>Dodaje kolejny alkohol</BtnPrimary>
-          <LinkSecondary to="/alcohol">Wracam do listy alkoholi</LinkSecondary>
+          <BtnPrimary padding="0 20px" onClick={addMore}>
+            Dodaje kolejny alkohol
+          </BtnPrimary>
+          <BtnSecondary padding="0 20px" onClick={goToAlcohol}>
+            Przejdź do dodanego alkoholu
+          </BtnSecondary>
         </Row>
       </Modal>
       <ErrorModal
         isOpen={modal.open && !isValid}
         title={modal.title}
-        text={`${modal.text}. Pamiętaj w prawym dolnym rogu jest możliwość zapisania danych w przeglądarce!`}
         details={modal.details}
         onClose={modalIsOpen}
-      />
+      >
+        <CriticalBar>
+          <span className="icon-Error" />
+          <p>{modal.text}</p>
+        </CriticalBar>
+        <InfoBar margin="20px 0 0 0">
+          <span className="icon-Info" />
+          <p>
+            Pamiętaj jest możliwość zapisania danych w przeglądarce. Więcej
+            informacji o tym w jaki sposób zapisuje się dane znajdziesz po
+            naciśnięciu w okrągły przycisk z ikoną w prawym dolnym rogu.
+          </p>
+        </InfoBar>
+      </ErrorModal>
       {!alcoholBarcode && <Suggestion setInput={setInput} />}
       <TemporaryAlcoholStorage
         setToStorage={setToStorage}
