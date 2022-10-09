@@ -15,11 +15,18 @@ import {
   Form,
   ForgottenPassword,
   DayNightContainer,
+  BtnUIWrapper,
 } from "./Login.styled";
 import Spacings from "../../styles/spacings";
 import ErrorModal from "../../components/ErrorModal/errorModal";
 import TextInput from "../../components/Inputs/TextInput";
-import { BtnPrimary, Col, CriticalBar, Row } from "../../styles/global.styled";
+import {
+  BtnGhost,
+  BtnPrimary,
+  Col,
+  CriticalBar,
+  Row,
+} from "../../styles/global.styled";
 import CheckBox from "../../components/Inputs/CheckBox";
 import LoadingModal from "../../components/modal/LoadingModal";
 import useLogin from "../../utils/hooks/useLogin";
@@ -45,6 +52,16 @@ const LoginView = ({
   const theme = useTheme() as { palette: { [k: string]: string } };
   return (
     <Container>
+      <BtnUIWrapper>
+        <BtnGhost
+          padding="0 20px"
+          onClick={() =>
+            window.open("http://docs.design.alkoholove.com.pl/", "_blank")
+          }
+        >
+          Przejdź do AlkohoLove UI
+        </BtnGhost>
+      </BtnUIWrapper>
       <DayNightContainer>
         <CheckBox
           leftIcon="icon-sun"

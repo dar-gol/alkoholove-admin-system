@@ -64,3 +64,9 @@ export const ForgottenPassword = styled.a`
   ${Body("regular", "medium")}
   color: ${({ theme }) => theme.palette.Grey40};
 `;
+
+export const BtnUIWrapper = styled.div`
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+`;

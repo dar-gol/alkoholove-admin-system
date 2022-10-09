@@ -200,6 +200,37 @@ export const BtnSecondary = styled.button<Button>`
   }
 `;
 
+export const BtnGhost = styled.button<Button>`
+  ${Btn}
+  color: ${({ theme }) => theme.palette.Grey60};
+  background-color: ${({ theme }) => theme.palette.Grey10};
+  &:active {
+    background-color: ${({ theme }) => theme.palette.Grey10};
+    color: ${({ theme }) => theme.palette.Grey80};
+  }
+  &:disabled {
+    color: ${({ theme }) => theme.palette.Grey40};
+  }
+  &:focus-visible {
+    border: 1px solid ${({ theme }) => theme.palette.White};
+    &:before {
+      content: "";
+      border-radius: 10px;
+      position: absolute;
+      z-index: -1;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background-color: ${({ theme }) => theme.palette.White};
+    }
+  }
+  &:hover {
+    box-shadow: 0px 1px 5px
+      ${({ theme }) => theme.palette.BackgroundTransparency10};
+  }
+`;
+
 export const LinkPrimary = styled(Link)`
   ${Heading4()};
   ${Btn}

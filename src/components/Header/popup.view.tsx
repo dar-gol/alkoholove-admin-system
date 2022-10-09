@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IUser } from "../../@types/user";
 import { API, URL } from "../../utils/constant";
 import useAuthReq from "../../utils/hooks/useReq";
@@ -11,6 +11,7 @@ import {
   ArrowUp,
   Line,
   BtnLink,
+  ALink,
   TextRed,
 } from "./header.styled";
 
@@ -43,6 +44,9 @@ const Popup = ({ logout, show }: Props) => {
       <TextLine>Wprowadzonych alkoholi: 0</TextLine>
       <TextRed>Musisz Postarać się bardziej!</TextRed>
       <Line />
+      <ALink target="_blank" href="http://docs.design.alkoholove.com.pl/">
+        AlkohoLove UI
+      </ALink>
       <BtnLink onClick={() => navigate("/account")}>Przejdź do profilu</BtnLink>
       <BtnLink onClick={logout}>Wyloguj się</BtnLink>
     </PopupContainer>
