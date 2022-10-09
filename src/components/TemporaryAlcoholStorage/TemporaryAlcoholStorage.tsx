@@ -36,6 +36,10 @@ const TemporaryAlcoholStorage = ({ readFromStorage, setToStorage }: Props) => {
     setActive(false);
   };
 
+  const removeStorage = () => {
+    localStorage.removeItem("alcohol_form");
+  };
+
   const isStored = () => !localStorage.getItem("alcohol_form");
 
   const isArray = (value: unknown) => typeof value === "object";
@@ -81,14 +85,7 @@ const TemporaryAlcoholStorage = ({ readFromStorage, setToStorage }: Props) => {
       </IndicatorWrapper>
       <Modal isOpen={active} onClose={() => setActive(false)}>
         <ModalTitle>Tymczasowe przechowywanie wartości</ModalTitle>
-        <CriticalBar>
-          <span className="icon-Error" />
-          <p>
-            Dane po odtworzeniu zostają skasowane z pamięci przeglądarki! Można
-            zapisać ponownie.
-          </p>
-        </CriticalBar>
-        <WarnBar margin="20px 0">
+        <WarnBar margin="0 0 20px 0">
           <span className="icon-Error" />
           <p>
             W tej wersji systemu panelu administracyjnego niestety nie ma
@@ -107,17 +104,23 @@ const TemporaryAlcoholStorage = ({ readFromStorage, setToStorage }: Props) => {
           </p>
         </InfoBar>
         {getFirstTwoValues()}
+        <Row
+          gap="20px"
+          justifyContent="center"
+          flexWrap="wrap"
+          margin="0 0 20px 0"
+        >
+          <BtnPrimary width="240px" onClick={readStorage} disabled={isStored()}>
+            Odtwórz dane
+          </BtnPrimary>
+        </Row>
         <Row gap="20px" justifyContent="center" flexWrap="wrap">
           <BtnSecondary onClick={setStorage} padding="0 20px">
             Zapisz dane
           </BtnSecondary>
-          <BtnPrimary
-            padding="0 20px"
-            onClick={readStorage}
-            disabled={isStored()}
-          >
-            Odtwórz dane
-          </BtnPrimary>
+          <BtnSecondary onClick={removeStorage} padding="0 20px">
+            Usuń dane
+          </BtnSecondary>
         </Row>
       </Modal>
       <Modal isOpen={activeSuccess} onClose={() => setActiveSuccess(false)}>
