@@ -38,14 +38,11 @@ const CheckBox: React.FC<Props> = ({
   useEffect(() => {
     if (initialState !== active) setActive(initialState || false);
   }, [initialState]);
-  console.log({ initialState, active });
   return (
-    <Container color={backgroundColor}>
+    <Container color={backgroundColor} onClick={onClick} role="button">
       <CheckBoxContainer
         className={active ? "active" : ""}
         {...rest}
-        onClick={onClick}
-        role="button"
         height="40px"
         width="74px"
       >
