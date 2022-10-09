@@ -55,14 +55,8 @@ const prepareToSelect = (data: any) =>
     value: el,
   }));
 
-const prepareBoolean = (value: boolean) => ({
-  label: value ? "TAK" : "NIE",
-  value,
-});
-
 const prepareField = (field: unknown) => {
   if (field instanceof Array) return prepareToSelect(field);
-  if (typeof field === "boolean") return prepareBoolean(field);
   return field;
 };
 
@@ -106,8 +100,7 @@ const AddAlcohol = () => {
           return { ...prev, [curr.name]: [] };
         if (type === "array")
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
-        if (type === "bool")
-          return { ...prev, [curr.name]: data[curr.name].value };
+        if (type === "bool") return { ...prev, [curr.name]: data[curr.name] };
         if (type === "double")
           return { ...prev, [curr.name]: getDouble(data[curr.name]) };
         if (type === "int" || type === "long")
@@ -256,7 +249,6 @@ const AddAlcohol = () => {
       methods.reset({ ...data });
       const category = getCategory(data.kind);
       setCategories({ ...category, kind: data.kind });
-      localStorage.removeItem("alcohol_form");
     }
   };
 
@@ -316,18 +308,22 @@ const AddAlcohol = () => {
         <Controller
           control={methods.control}
           name={name}
-          render={({ field }) => (
-            <InputFactory
-              value={setValue(field.value)}
-              onChange={field.onChange}
-              inputRef={field.ref}
-              type={type}
-              name={name}
-              title={title}
-              required={required}
-              placeholder={description}
-            />
-          )}
+          render={({ field }) => {
+            const t = 0;
+            return (
+              <InputFactory
+                value={setValue(field.value)}
+                onChange={field.onChange}
+                inputRef={field.ref}
+                setValue={(value: unknown) => methods.setValue(name, value)}
+                type={type}
+                name={name}
+                title={title}
+                required={required}
+                placeholder={description}
+              />
+            );
+          }}
         />
       </Col>
     );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
   CheckBoxContainer,
@@ -26,28 +26,49 @@ const CheckBox: React.FC<Props> = ({
   leftColor,
   rightColor,
   backgroundColor,
-  initialState,
-  text,
+  title,
   ...rest
 }) => {
-  const [active, setActive] = useState<boolean>(initialState || false);
-  const onClick = (e: React.MouseEvent) => {
-    setActive((prev) => !prev);
-    rest.onClick?.(e);
+  const handleSpace = (e: any) => {
+    if (
+      e.code === "Space" &&
+      [...e.target.classList].includes(
+        `checkBoxComponent${encodeURIComponent(title)}`
+      )
+    ) {
+      e.preventDefault();
+      rest.onClick(e);
+    }
   };
+  const handleKeyUp = useCallback(
+    (event: any) => {
+      handleSpace(event);
+    },
+    [handleSpace]
+  );
+
   useEffect(() => {
-    if (initialState !== active) setActive(initialState || false);
-  }, [initialState]);
+    document.addEventListener("keyup", handleKeyUp);
+    return () => {
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [handleKeyUp]);
   return (
-    <Container color={backgroundColor} onClick={onClick} role="button">
+    <Container
+      className={`checkBoxComponent${encodeURIComponent(title)}`}
+      color={backgroundColor}
+      {...rest}
+      role="checkbox"
+      title={title}
+      tabIndex={0}
+    >
       <CheckBoxContainer
-        className={active ? "active" : ""}
-        {...rest}
+        className={rest.value ? "active" : ""}
         height="40px"
         width="74px"
       >
-        <Indicator color={active ? rightColor : leftColor}>
-          <Icon className={active ? rightIcon || "" : leftIcon || ""} />
+        <Indicator color={rest.value ? rightColor : leftColor}>
+          <Icon className={rest.value ? rightIcon || "" : leftIcon || ""} />
         </Indicator>
         <IconWrapper>
           <Icon className={leftIcon || ""} />
@@ -56,7 +77,7 @@ const CheckBox: React.FC<Props> = ({
           <Icon className={rightIcon || ""} />
         </IconWrapper>
       </CheckBoxContainer>
-      {text && <Text>{text}</Text>}
+      {title && <Text>{title}</Text>}
     </Container>
   );
 };

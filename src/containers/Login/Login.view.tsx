@@ -51,7 +51,7 @@ const LoginView = ({
           leftColor={theme.palette.Yellow70}
           rightIcon="icon-night"
           rightColor={theme.palette.Grey50}
-          isActive={isNight}
+          value={isNight}
           onClick={modeHandler}
         />
       </DayNightContainer>

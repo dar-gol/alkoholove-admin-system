@@ -133,13 +133,13 @@ const PropertyInput = ({
                       onClick={() => {
                         setValue(`${name}Required`, !field.value);
                       }}
-                      initialState={field.value}
+                      value={field.value}
                       backgroundColor={theme.palette.Grey5}
                       name={`${name}Required`}
                       rightIcon="icon-success"
                       rightColor={theme.palette.Green80}
                       leftColor={theme.palette.Grey20}
-                      text="Cecha wymagana"
+                      title="Cecha wymagana"
                     />
                   )}
                 />
