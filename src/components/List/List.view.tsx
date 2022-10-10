@@ -132,7 +132,7 @@ const List = forwardRef<IListHandlers, Props>(
     }, [query.limit]);
 
     useEffect(() => {
-      if (page.offset >= page.total) {
+      if (page.offset >= page.total && page.number !== 0) {
         changePage(page.number - 1);
         updateParam("offset", page.number - 1);
       }
