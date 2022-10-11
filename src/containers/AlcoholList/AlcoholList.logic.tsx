@@ -56,7 +56,7 @@ const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
   };
 
   const goToAlcoholDetails = (id: string, kind: string) => {
-    navigate(`/alcohol/${kind}/${id}${location.search}`);
+    navigate(`/alcohol/${kind}${id ? `/${id}` : ""}${location.search}`);
   };
 
   const onCollapse = () => {

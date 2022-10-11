@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Body, Header, IReq, Method, Url } from "../../@types/fetch";
 import { IPageInfo } from "../../@types/pagination";
+import useQueryParams from "./useQueryParams";
 import useAuthReq from "./useReq";
 import useUser from "./useUser";
 
@@ -35,27 +36,7 @@ const useContents = (
   const [body, setBody] = useState<string | null>(null);
   const [page, setPage] = useState<IPageInfo>(initPageInfo || initalPageInfo);
   const { send } = useAuthReq(...initReq);
-
-  const update = (req: IReq = {}, metadata: { subscribed: boolean }) => {
-    setPage((prev) => ({ ...prev, isLoading: true }));
-    requests += 1;
-    const number = requests;
-    send({ ...req })
-      .then((data: Response) => data.json())
-      .then((data: DataType) => {
-        if (metadata.subscribed && number === requests) {
-          const { offset, total } = data.page_info;
-          const preparedContent = offset > total ? null : data[listObjectName];
-          setContents(preparedContent);
-          setPage((prev) => ({ ...prev, ...data.page_info, isLoading: false }));
-        }
-      })
-      .catch((e) => {
-        if (metadata.subscribed)
-          setPage((prev) => ({ ...prev, isLoading: false }));
-        console.error(e);
-      });
-  };
+  const { query, updateParam } = useQueryParams();
 
   const getKind = (kind?: string | null) => {
     if (kind) return JSON.stringify({ kind });
@@ -76,6 +57,7 @@ const useContents = (
   };
 
   const changePage = (index: number) => {
+    updateParam("offset", index);
     setPage((prev) => ({
       ...prev,
       number: index,
@@ -94,6 +76,30 @@ const useContents = (
     setContents(
       (prev) => prev && [...prev.filter((content) => content.id !== id)]
     );
+  };
+
+  const update = (req: IReq = {}, metadata: { subscribed: boolean }) => {
+    setPage((prev) => ({ ...prev, isLoading: true }));
+    requests += 1;
+    const number = requests;
+    send({ ...req })
+      .then((data: Response) => data.json())
+      .then((data: DataType) => {
+        if (metadata.subscribed && number === requests) {
+          const { offset, total, limit } = data.page_info;
+          if (total !== 0 && offset > total) {
+            changePage(parseInt((total / limit).toString(), 10) || 0);
+          }
+          const preparedContent = offset > total ? null : data[listObjectName];
+          setContents(preparedContent);
+          setPage((prev) => ({ ...prev, ...data.page_info, isLoading: false }));
+        }
+      })
+      .catch((e) => {
+        if (metadata.subscribed)
+          setPage((prev) => ({ ...prev, isLoading: false }));
+        console.error(e);
+      });
   };
 
   useEffect(() => {

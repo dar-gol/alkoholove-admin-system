@@ -127,12 +127,7 @@ const AlcoholListView = ({
           size={50}
           top="50px"
           right="-25px"
-          onClick={() =>
-            onSelectedKind({
-              label: selectedKind || "",
-              value: selectedKind || "",
-            })
-          }
+          onClick={() => goToAlcoholDetails("", selectedKind || "")}
           icon="icon-chevron-right"
           type="secondary"
         />
