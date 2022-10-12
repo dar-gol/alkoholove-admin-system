@@ -139,6 +139,8 @@ const List = forwardRef<IListHandlers, Props>(
         />
       );
 
+    const drawContents = () => contents?.map((content) => contentRow(content));
+
     return (
       <ListWrapper>
         <ListTitle>{listTitle}</ListTitle>
@@ -175,7 +177,7 @@ const List = forwardRef<IListHandlers, Props>(
         </Row>
         <ScrollContent>
           <Table>
-            <tbody>{contents?.map((content) => contentRow(content))}</tbody>
+            <tbody>{drawContents()}</tbody>
           </Table>
         </ScrollContent>
         <Pagination

@@ -203,7 +203,7 @@ export const BtnSecondary = styled.button<Button>`
 export const BtnGhost = styled.button<Button>`
   ${Btn}
   color: ${({ theme }) => theme.palette.Grey60};
-  background-color: ${({ theme }) => theme.palette.Grey10};
+  background-color: ${({ theme }) => theme.palette.Grey5};
   &:active {
     background-color: ${({ theme }) => theme.palette.Grey10};
     color: ${({ theme }) => theme.palette.Grey80};
@@ -226,8 +226,6 @@ export const BtnGhost = styled.button<Button>`
     }
   }
   &:hover {
-    box-shadow: 0px 1px 5px
-      ${({ theme }) => theme.palette.BackgroundTransparency10};
   }
 `;
 

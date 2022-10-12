@@ -60,11 +60,12 @@ const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
   };
 
   const onCollapse = () => {
+    const pathname = location.pathname.split("/");
+    pathname.pop();
     if (isSmallScreen()) {
-      onSelectedKind({
-        label: selectedKind || "",
-        value: selectedKind || "",
-      });
+      setCollapse(false);
+      navigate(`${pathname.join("/")}${location.search}`);
+      return;
     }
     setCollapse((prev) => !prev);
   };
