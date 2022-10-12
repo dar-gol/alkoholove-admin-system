@@ -11,6 +11,21 @@ export const Container = styled(Row)`
   cursor: pointer;
 `;
 
+export const CheckBoxWrapper = styled(Row)`
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  min-width: 30px;
+  min-height: 30px;
+  background-color: ${({ theme }) => theme.palette.White};
+  border: 2px solid ${({ theme }) => theme.palette.Grey10};
+  transition: background-color 0.3s, border 0.3s;
+  &.active {
+    background-color: ${({ theme }) => theme.palette.Secondary30};
+    border: 2px solid ${({ theme }) => theme.palette.Secondary60};
+  }
+`;
+
 export const CheckBoxContainer = styled(Row)`
   background-color: ${({ theme }) => theme.palette.White};
   width: 74px;
@@ -50,7 +65,8 @@ export const IconWrapper = styled(Row)`
   flex: 1;
 `;
 
-export const Icon = styled.span`
+export const Icon = styled.span<{ visible?: boolean }>`
+  display: ${({ visible = true }) => (visible ? "block" : "none")};
   &:before {
     color: ${({ theme }) => theme.palette.Grey20};
     ${Heading5Large("bold")}

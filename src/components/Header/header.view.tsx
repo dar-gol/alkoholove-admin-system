@@ -2,9 +2,9 @@ import React from "react";
 import { useTheme } from "styled-components";
 import { Col, Row } from "../../styles/global.styled";
 import { Container, Icon, Profil, SubTitle, Title } from "./header.styled";
-import CheckBox from "../Inputs/CheckBox";
 import Breadcrumb from "../Breadcrumb/breadcrumb";
 import Popup from "./popup.view";
+import Toggle from "../Inputs/Toggle";
 
 interface Props {
   logout: () => void;
@@ -31,7 +31,7 @@ const HeaderView = ({
         <Breadcrumb />
       </Col>
       <Row alignItems="center" gap="20px">
-        <CheckBox
+        <Toggle
           leftIcon="icon-sun"
           leftColor={theme.palette.Yellow70}
           rightIcon="icon-night"
