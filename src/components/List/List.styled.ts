@@ -56,10 +56,14 @@ export const Title = styled.h6`
   white-space: nowrap;
 `;
 
-export const Value = styled.p`
+export const Value = styled.p<{ maxWidth?: string }>`
   ${Body("bold", "large")}
   color: ${({ theme }) => theme.palette.Grey90};
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: ${({ maxWidth }) => maxWidth || "200px"};
+  overflow: hidden;
 `;
 
 export const Table = styled.table`
