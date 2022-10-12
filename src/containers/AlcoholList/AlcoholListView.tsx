@@ -107,7 +107,6 @@ const AlcoholListView = ({
           contentRow={(content) => drawContent(content as IAlcohol)}
           additionalFilters={additionalFilters}
         />
-        x
       </ListContainer>
       {isDetail() && (
         <AlcoholDetails collapse={collapse} onCollapse={onCollapse} />
