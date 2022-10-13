@@ -36,7 +36,7 @@ const AlcoholBlock = ({ alcohol, goToAlcoholDetails, goToEdit }: Props) => {
       </TCell>
       <TCell data-label="Nazwa alkoholu">
         <Title>Nazwa alkoholu</Title>
-        <Value>{alcohol.name}</Value>
+        <Value maxWidth="100px">{alcohol.name}</Value>
       </TCell>
       <TCell data-label="Rodzaj">
         <Title>Rodzaj</Title>

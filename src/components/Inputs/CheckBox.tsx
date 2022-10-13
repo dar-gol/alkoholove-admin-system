@@ -1,34 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useTheme } from "styled-components";
+import { Icon } from "../../styles/global.styled";
 
-import {
-  CheckBoxContainer,
-  Container,
-  Icon,
-  IconWrapper,
-  Indicator,
-  Text,
-} from "./CheckBox.styled";
+import { CheckBoxWrapper, Container, Text } from "./CheckBox.styled";
 
 interface Props {
-  leftIcon?: string;
-  leftColor: string;
-  rightIcon?: string;
-  rightColor: string;
   backgroundColor?: string;
-  initialState?: boolean;
-  text?: string;
+  title: string;
   [k: string]: any;
 }
 
-const CheckBox: React.FC<Props> = ({
-  leftIcon,
-  rightIcon,
-  leftColor,
-  rightColor,
-  backgroundColor,
-  title,
-  ...rest
-}) => {
+const CheckBox: React.FC<Props> = ({ backgroundColor, title, ...rest }) => {
+  const theme = useTheme() as { palette: { [k: string]: string } };
   const handleSpace = (e: any) => {
     if (
       e.code === "Space" &&
@@ -62,21 +45,13 @@ const CheckBox: React.FC<Props> = ({
       title={title}
       tabIndex={0}
     >
-      <CheckBoxContainer
-        className={rest.value ? "active" : ""}
-        height="40px"
-        width="74px"
-      >
-        <Indicator color={rest.value ? rightColor : leftColor}>
-          <Icon className={rest.value ? rightIcon || "" : leftIcon || ""} />
-        </Indicator>
-        <IconWrapper>
-          <Icon className={leftIcon || ""} />
-        </IconWrapper>
-        <IconWrapper>
-          <Icon className={rightIcon || ""} />
-        </IconWrapper>
-      </CheckBoxContainer>
+      <CheckBoxWrapper className={rest.value ? "active" : ""}>
+        <Icon
+          visible={!!rest.value}
+          className="icon-success"
+          color={theme.palette.Secondary60}
+        />
+      </CheckBoxWrapper>
       {title && <Text>{title}</Text>}
     </Container>
   );
