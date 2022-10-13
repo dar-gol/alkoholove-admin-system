@@ -27,10 +27,10 @@ import {
   CriticalBar,
   Row,
 } from "../../styles/global.styled";
-import CheckBox from "../../components/Inputs/CheckBox";
 import LoadingModal from "../../components/modal/LoadingModal";
 import useLogin from "../../utils/hooks/useLogin";
 import { State } from "./Login.reducer";
+import Toggle from "../../components/Inputs/Toggle";
 
 interface Props {
   isNight: boolean;
@@ -63,7 +63,7 @@ const LoginView = ({
         </BtnGhost>
       </BtnUIWrapper>
       <DayNightContainer>
-        <CheckBox
+        <Toggle
           leftIcon="icon-sun"
           leftColor={theme.palette.Yellow70}
           rightIcon="icon-night"

@@ -305,9 +305,10 @@ export const ContentWrapper = styled(Row)`
   justify-content: center;
 `;
 
-export const Icon = styled.span`
+export const Icon = styled.span<{ color?: string; visible?: boolean }>`
+  display: ${({ visible = true }) => (visible ? "block" : "none")};
   &:before {
-    color: ${({ theme }) => theme.palette.Grey20};
+    color: ${({ theme, color }) => color || theme.palette.Grey20};
     ${Body("regular", "large")};
     font-family: icomoon;
   }
