@@ -24,13 +24,11 @@ import useAuthReq from "../../utils/hooks/useReq";
 interface Props {
   onCollapse?: () => void;
   collapse?: boolean;
-  update: () => void;
 }
 
 const ErrorDetails = ({
   onCollapse = () => {},
   collapse = undefined,
-  update,
 }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id } = useParams();
