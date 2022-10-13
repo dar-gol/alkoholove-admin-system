@@ -102,7 +102,8 @@ const AddAlcohol = () => {
           return { ...prev, [curr.name]: [] };
         if (type === "array")
           return { ...prev, [curr.name]: getValues(data[curr.name]) };
-        if (type === "bool") return { ...prev, [curr.name]: data[curr.name] };
+        if (type === "bool")
+          return { ...prev, [curr.name]: data[curr.name] || false };
         if (type === "double")
           return { ...prev, [curr.name]: getDouble(data[curr.name]) };
         if (type === "int" || type === "long")

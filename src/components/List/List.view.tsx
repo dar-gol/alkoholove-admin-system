@@ -131,13 +131,6 @@ const List = forwardRef<IListHandlers, Props>(
       changeTableSize(getPageLimit());
     }, [query.limit]);
 
-    useEffect(() => {
-      if (page.offset >= page.total) {
-        changePage(page.number - 1);
-        updateParam("offset", page.number - 1);
-      }
-    }, [contents]);
-
     if (contents === null)
       return (
         <LoadingModal
@@ -145,6 +138,8 @@ const List = forwardRef<IListHandlers, Props>(
           title="Proszę czekać. Przygotowywujemy stronę..."
         />
       );
+
+    const drawContents = () => contents?.map((content) => contentRow(content));
 
     return (
       <ListWrapper>
@@ -182,7 +177,7 @@ const List = forwardRef<IListHandlers, Props>(
         </Row>
         <ScrollContent>
           <Table>
-            <tbody>{contents?.map((content) => contentRow(content))}</tbody>
+            <tbody>{drawContents()}</tbody>
           </Table>
         </ScrollContent>
         <Pagination

@@ -1,132 +1,71 @@
 import React, { useState } from "react";
 import { IAlcohol } from "../../@types/alcohol";
-import {
-  BtnPrimary,
-  BtnSecondary,
-  Col,
-  LinkSecondary,
-  Row,
-} from "../../styles/global.styled";
+import { SmallImage } from "../../containers/AlcoholList/alcoholList.styled";
+import { BtnSecondary } from "../../styles/global.styled";
 import { API, URL } from "../../utils/constant";
-import useAuthReq from "../../utils/hooks/useReq";
-import ErrorModal from "../ErrorModal/errorModal";
-import Loader from "../Loader/loader";
-import Modal from "../modal/Modal";
-import { ModalTitle } from "../modal/Modal.styled";
-import {
-  Alcoholblock,
-  More,
-  WarnText,
-  Tuple,
-  Key,
-  Value,
-} from "./AlcoholBlock.styled";
+import { createImageName } from "../../utils/utils";
+import { TCell, Title, TRow, Value } from "../List/List.styled";
 
-type IModal = {
-  open: boolean;
-  title: string;
-  text: string;
-  details: string;
-};
-
-const AlcoholBlock = ({
-  alcohol,
-  update,
-  index,
-}: {
+interface Props {
   alcohol: IAlcohol;
-  update: (id: string) => void;
-  index: number;
-}) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [errorModal, setErrorModal] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { send } = useAuthReq("DELETE", "", "");
+  goToAlcoholDetails: (value: string, kind: string) => void;
+  goToEdit: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string
+  ) => void;
+}
 
-  const removeTrigger = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  const remove = async (id: string) => {
-    setIsOpen(false);
-    setIsLoading(true);
-    try {
-      const test = await send({ url: `${API}${URL.POST_ALCOHOLS}/${id}` });
-      update(id);
-    } catch (e: any) {
-      setErrorModal(JSON.stringify(e?.statusText));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+const AlcoholBlock = ({ alcohol, goToAlcoholDetails, goToEdit }: Props) => {
+  const t = 0;
   return (
-    <Alcoholblock
-      justifyContent="space-between"
-      padding="10px 20px;"
-      margin="10px"
+    <TRow
       key={alcohol.id}
+      title={`Pokaz wiecej informacji o alkoholu: ${alcohol.name}.`}
+      onClick={() => goToAlcoholDetails(alcohol.barcode[0], alcohol.kind)}
+      role="link"
+      tabIndex={0}
     >
-      <More to={`/alcohol/${alcohol.barcode[0]}`}>
-        <Row gap="10px" flex="1">
-          <Col justifyContent="center">{index}.</Col>
-          <Col justifyContent="center" flex="1">
-            {alcohol.name}
-          </Col>
-          <Col flex="1">
-            <Col>{alcohol.kind}</Col>
-            <Col>{alcohol.type}</Col>
-          </Col>
-        </Row>
-      </More>
-      <Row gap="10px">
-        <Col justifyContent="center">
-          <LinkSecondary to={`/alcohol/edit/${alcohol.barcode[0]}`}>
-            Edytuj
-          </LinkSecondary>
-        </Col>
-        <Col justifyContent="center">
-          <BtnSecondary onClick={removeTrigger}>Usuń</BtnSecondary>
-        </Col>
-      </Row>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <ModalTitle>Usuwanie alkoholu</ModalTitle>
-        <WarnText>
-          Czy na pewno chcesz permanentnie usunąć ten alkohol?
-        </WarnText>
-        <Col padding="0">
-          <Tuple>
-            <Key>ID</Key>
-            <Value>{alcohol.id}</Value>
-          </Tuple>
-          <Tuple>
-            <Key>Nazwa</Key>
-            <Value>{alcohol.name}</Value>
-          </Tuple>
-        </Col>
-        <Row margin="20px 0 0 0" justifyContent="center" gap="30px">
-          <BtnSecondary onClick={() => remove(alcohol.id)}>TAK</BtnSecondary>
-          <BtnPrimary onClick={closeModal}>NIE</BtnPrimary>
-        </Row>
-      </Modal>
-      <ErrorModal
-        isOpen={!!errorModal}
-        onClose={() => setErrorModal("")}
-        title="Problem z usunięciem alkoholu"
-        details={errorModal}
-      />
-      <Modal isOpen={isLoading} onClose={() => {}} isClosable={false}>
-        <ModalTitle>Proszę czekać aktualizujemy dane</ModalTitle>
-        <Row justifyContent="center">
-          <Loader />
-        </Row>
-      </Modal>
-    </Alcoholblock>
+      <TCell width="80px" data-label="Zdjęcia">
+        <SmallImage
+          src={`${URL.GET_IMAGE}/${createImageName(
+            alcohol.name.toLowerCase() || "",
+            "sm"
+          )}?t=${new Date().getTime()}`}
+          alt={`Zdjęcie przedstawiające alkohol ${alcohol.name}`}
+        />
+      </TCell>
+      <TCell data-label="Nazwa alkoholu">
+        <Title>Nazwa alkoholu</Title>
+        <Value maxWidth="100px">{alcohol.name}</Value>
+      </TCell>
+      <TCell data-label="Rodzaj">
+        <Title>Rodzaj</Title>
+        <Value>{alcohol.kind}</Value>
+      </TCell>
+      <TCell data-label="Typ">
+        <Title>Typ</Title>
+        <Value>{alcohol.type}</Value>
+      </TCell>
+      <TCell width="140px" data-label="Akcje">
+        <BtnSecondary
+          width="120px"
+          title={`Edytuj ${alcohol.name}`}
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+            goToEdit(e, alcohol.barcode[0])
+          }
+        >
+          Edytuj
+        </BtnSecondary>
+      </TCell>
+    </TRow>
   );
 };
 
-export default AlcoholBlock;
+function areEqual(
+  prevProps: { alcohol: IAlcohol },
+  nextProps: { alcohol: IAlcohol }
+) {
+  return prevProps.alcohol.id === nextProps.alcohol.id;
+}
+
+export default React.memo(AlcoholBlock, areEqual);

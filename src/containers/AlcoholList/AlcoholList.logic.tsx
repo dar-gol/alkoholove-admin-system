@@ -56,15 +56,16 @@ const AlcoholListLogic = ({ updateKind, listRef }: Props) => {
   };
 
   const goToAlcoholDetails = (id: string, kind: string) => {
-    navigate(`/alcohol/${kind}/${id}${location.search}`);
+    navigate(`/alcohol/${kind}${id ? `/${id}` : ""}${location.search}`);
   };
 
   const onCollapse = () => {
+    const pathname = location.pathname.split("/");
+    pathname.pop();
     if (isSmallScreen()) {
-      onSelectedKind({
-        label: selectedKind || "",
-        value: selectedKind || "",
-      });
+      setCollapse(false);
+      navigate(`${pathname.join("/")}${location.search}`);
+      return;
     }
     setCollapse((prev) => !prev);
   };

@@ -26,6 +26,7 @@ import Indicator from "../../components/Indicator/Indicator";
 import List, { IListHandlers } from "../../components/List/List.view";
 import { ISelectValue } from "../../components/Inputs/ICustomInput";
 import { TCell, Title, TRow, Value } from "../../components/List/List.styled";
+import AlcoholBlock from "../../components/AlcoholBlock/AlcoholBlock";
 
 interface Props {
   selectedKind: string | null;
@@ -57,6 +58,7 @@ const AlcoholListView = ({
   listRef,
 }: Props) => {
   const navigate = useNavigate();
+
   const goToEdit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string
@@ -64,48 +66,14 @@ const AlcoholListView = ({
     e.stopPropagation();
     navigate(`/edit/alcohol/${id}`);
   };
+
   function drawContent(alcohol: IAlcohol): React.ReactNode {
     return (
-      <TRow
-        key={alcohol.id}
-        title={`Pokaz wiecej informacji o alkoholu: ${alcohol.name}.`}
-        onClick={() => goToAlcoholDetails(alcohol.barcode[0], alcohol.kind)}
-        role="link"
-        tabIndex={0}
-      >
-        <TCell width="80px" data-label="Zdjęcia">
-          <SmallImage
-            src={`${URL.GET_IMAGE}/${createImageName(
-              alcohol.name.toLowerCase() || "",
-              "sm"
-            )}?t=${new Date().getTime()}`}
-            alt={`Zdjęcie przedstawiające alkohol ${alcohol.name}`}
-          />
-        </TCell>
-        <TCell data-label="Nazwa alkoholu">
-          <Title>Nazwa alkoholu</Title>
-          <Value>{alcohol.name}</Value>
-        </TCell>
-        <TCell data-label="Rodzaj">
-          <Title>Rodzaj</Title>
-          <Value>{alcohol.kind}</Value>
-        </TCell>
-        <TCell data-label="Typ">
-          <Title>Typ</Title>
-          <Value>{alcohol.type}</Value>
-        </TCell>
-        <TCell width="140px" data-label="Akcje">
-          <BtnSecondary
-            width="120px"
-            title={`Edytuj ${alcohol.name}`}
-            onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-              goToEdit(e, alcohol.barcode[0])
-            }
-          >
-            Edytuj
-          </BtnSecondary>
-        </TCell>
-      </TRow>
+      <AlcoholBlock
+        alcohol={alcohol}
+        goToAlcoholDetails={goToAlcoholDetails}
+        goToEdit={goToEdit}
+      />
     );
   }
 
@@ -127,12 +95,7 @@ const AlcoholListView = ({
           size={50}
           top="50px"
           right="-25px"
-          onClick={() =>
-            onSelectedKind({
-              label: selectedKind || "",
-              value: selectedKind || "",
-            })
-          }
+          onClick={() => goToAlcoholDetails("", selectedKind || "")}
           icon="icon-chevron-right"
           type="secondary"
         />

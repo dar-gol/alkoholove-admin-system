@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Body, Heading4Large } from "../../styles/typography.styled";
 
@@ -105,6 +106,19 @@ export const BtnLink = styled.button`
   white-space: nowrap;
   ${Body("regular", "small")}
   background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+`;
+
+export const ALink = styled.a`
+  color: ${({ theme }) => theme.palette.Secondary70};
+  margin: 5px 0;
+  white-space: nowrap;
+  ${Body("regular", "small")}
+  background: transparent;
+  text-decoration: none;
+  text-align: center;
   border: none;
   padding: 0;
   cursor: pointer;
