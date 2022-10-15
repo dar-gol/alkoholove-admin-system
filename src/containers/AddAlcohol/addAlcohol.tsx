@@ -267,7 +267,7 @@ const AddAlcohol = () => {
     delete data.md;
     const values = prepareValues(data);
     try {
-      // await addOrEdit({ ...values, kind: categories.kind }, sm, md);
+      await addOrEdit({ ...values, kind: categories.kind }, sm, md);
       setIsValid(true);
       setID(data.barcode[0].value);
       methods.reset(resetValues(Object.keys(data)));
