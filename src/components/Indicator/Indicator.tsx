@@ -13,6 +13,7 @@ interface Props {
   right?: string;
   visible?: boolean;
   isPressCursor?: boolean;
+  backgroundColor?: string;
 }
 
 const Indicator = ({
@@ -23,6 +24,7 @@ const Indicator = ({
   type,
   visible = true,
   isPressCursor = true,
+  backgroundColor,
   ...position
 }: Props) => {
   const checkTextIcon = () => {
@@ -31,7 +33,12 @@ const Indicator = ({
   };
 
   return (
-    <IndicatorContainer size={size} {...position} visible={visible}>
+    <IndicatorContainer
+      backgroundColor={backgroundColor}
+      size={size}
+      {...position}
+      visible={visible}
+    >
       <IndicatorWrapper
         isPressCursor={isPressCursor}
         typeColor={type}

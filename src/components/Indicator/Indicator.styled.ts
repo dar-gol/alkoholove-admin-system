@@ -10,7 +10,7 @@ const setColor = (type: any, theme: { palette: { [k: string]: string } }) => {
   if (type === "secondary")
     return {
       textColor: theme.palette.Secondary80,
-      groundColor: theme.palette.Secondary20,
+      groundColor: theme.palette.Secondary30,
     };
   if (type === "red")
     return {
@@ -34,6 +34,7 @@ export const IndicatorContainer = styled.div<{
   bottom?: string;
   left?: string;
   right?: string;
+  backgroundColor?: string;
   visible: boolean;
 }>`
   width: ${({ size }) => size}px;
@@ -49,7 +50,8 @@ export const IndicatorContainer = styled.div<{
   display: ${({ visible }) => (visible ? "flex" : "none")};
   align-items: center;
   border-radius: 100%;
-  background: ${({ theme }) => theme.palette.Grey5};
+  background: ${({ theme, backgroundColor }) =>
+    backgroundColor || theme.palette.Grey5};
   z-index: 2;
 `;
 
