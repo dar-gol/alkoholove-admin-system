@@ -434,24 +434,24 @@ const AddAlcohol = () => {
           <Loader />
         </Row>
       </Modal>
-      <Modal isOpen={modal.open && isValid} onClose={modalIsOpen}>
+      <Modal isOpen={modal.open && isValid} onClose={() => modalIsOpen()}>
         <ModalTitle>
           Alkohol został {alcoholBarcode ? "zedytowany" : "dodany"} prawidłowo
         </ModalTitle>
-        <Row gap="20px">
+        <Col gap="20px">
           <BtnPrimary padding="0 20px" onClick={addMore}>
             Dodaje kolejny alkohol
           </BtnPrimary>
           <BtnSecondary padding="0 20px" onClick={goToAlcohol}>
             Przejdź do dodanego alkoholu
           </BtnSecondary>
-        </Row>
+        </Col>
       </Modal>
       <ErrorModal
         isOpen={modal.open && !isValid}
         title={modal.title}
         details={modal.details}
-        onClose={modalIsOpen}
+        onClose={() => modalIsOpen()}
       >
         <CriticalBar>
           <span className="icon-Error" />
