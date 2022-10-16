@@ -1,4 +1,5 @@
 import React, {
+  BaseSyntheticEvent,
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -121,6 +122,10 @@ const List = forwardRef<IListHandlers, Props>(
       search(value);
     };
 
+    const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") handleBtnSearch(event.currentTarget.value);
+    };
+
     const getPageLimit = () => {
       const opt = options.find((op) => op.value === Number(query.limit));
       if (opt) return opt;
@@ -153,6 +158,7 @@ const List = forwardRef<IListHandlers, Props>(
               placeholder="Harnaś"
               error=""
               value={inputValue}
+              onKeyDown={handleEnter}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setInputValue(e.target.value)
               }
