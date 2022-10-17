@@ -83,7 +83,7 @@ const AlcoholDetails = () => {
             <Col>
               <img
                 src={`${URL.GET_IMAGE}/${createImageName(
-                  alcohol?.name.toLowerCase() || "",
+                  alcohol?.id.toLowerCase() || "",
                   "sm"
                 )}?t=${new Date().getTime()}`}
                 alt="Zdjęcie przedstawiające wybrany alkohol"
