@@ -28,7 +28,7 @@ const AlcoholBlock = ({ alcohol, goToAlcoholDetails, goToEdit }: Props) => {
       <TCell width="80px" data-label="Zdjęcia">
         <SmallImage
           src={`${URL.GET_IMAGE}/${createImageName(
-            alcohol.name.toLowerCase() || "",
+            alcohol.id.toLowerCase() || "",
             "sm"
           )}?t=${new Date().getTime()}`}
           alt={`Zdjęcie przedstawiające alkohol ${alcohol.name}`}
