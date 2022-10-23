@@ -28,6 +28,7 @@ export interface IAlcohol {
   name: string;
   kind: string;
   type: string;
+  username: string | null;
   alcohol_by_volume: number;
   description: string;
   color: string;
@@ -43,6 +44,12 @@ export interface IAlcohol {
   keywords: IKeywords[];
   avg_rating: number;
   rate_count: number;
+  rate_1_count: number;
+  rate_2_count: number;
+  rate_3_count: number;
+  rate_4_count: number;
+  rate_5_count: number;
+  date: Date | null;
   rate_value: number;
   additional_properties: IAdditionalProperty[];
 }

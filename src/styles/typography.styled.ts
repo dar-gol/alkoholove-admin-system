@@ -178,7 +178,7 @@ export const Caption = (
 
 // FOOTER
 
-export const Footer = (weight: footerWeight) => css`
+export const Footer = (weight: footerWeight = "bold") => css`
   font-size: 8px;
   line-height: 22px;
   font-family: Roboto;
