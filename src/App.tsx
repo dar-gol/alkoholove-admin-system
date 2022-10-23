@@ -31,7 +31,7 @@ import ReportedReviewListView from "./containers/ReportedReviewList/ReportedRevi
 const App = () => {
   const [cookie] = useCookies();
 
-  const theme = createTheme(cookie?.mode);
+  const theme = createTheme(cookie?.mode, cookie?.isHighContrast === "true");
   const { checkLogin } = useLogin();
   const location = useLocation();
 

@@ -52,6 +52,9 @@ export const IndicatorContainer = styled.div<{
   border-radius: 100%;
   background: ${({ theme, backgroundColor }) =>
     backgroundColor || theme.palette.Grey5};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   z-index: 2;
 `;
 

@@ -9,9 +9,13 @@ export const Container = styled(Row)`
   border-radius: 20px;
   background-color: ${({ color }) => color || "transparent"};
   cursor: pointer;
+  border: 2px solid
+    ${({ theme, title }) =>
+      theme.isHighContrast && title ? theme.palette.Grey50 : "transparent"};
 `;
 
 export const CheckBoxWrapper = styled(Row)`
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -28,6 +32,9 @@ export const CheckBoxWrapper = styled(Row)`
 
 export const CheckBoxContainer = styled(Row)`
   background-color: ${({ theme }) => theme.palette.White};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey50 : "transparent"};
   width: 74px;
   height: 40px;
   flex: 1;

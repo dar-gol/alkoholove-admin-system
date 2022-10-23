@@ -9,6 +9,7 @@ import HeaderView from "./header.view";
 const HeaderLogic = () => {
   const [loading, setLoading] = useState(false);
   const [night, setNight] = useState(false);
+  const [isContrast, setIsContrast] = useState<boolean>(false);
   const [showPopup, setShowPopup] = useState(false);
   const location = useLocation();
   const [cookie, setCookie] = useCookies();
@@ -37,6 +38,15 @@ const HeaderLogic = () => {
       sameSite: "strict",
     });
   };
+
+  const contrastModeHandler = () => {
+    setIsContrast((prev) => !prev);
+    setCookie("isHighContrast", isContrast ? "true" : "false", {
+      path: "/",
+      sameSite: "strict",
+    });
+  };
+
   return (
     <>
       <LoadingModal
@@ -46,7 +56,9 @@ const HeaderLogic = () => {
       <HeaderView
         logout={handleLogout}
         modeHandler={modeHandler}
+        contrastModeHandler={contrastModeHandler}
         night={night}
+        isContrast={isContrast}
         show={showPopup}
         setShow={() => setShowPopup((prev) => !prev)}
         getTitle={getTitle}
