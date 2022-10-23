@@ -4,7 +4,7 @@ import { inputType } from "../@types/inputs";
 import { INPUT_TYPE } from "./constant";
 
 export const isProduction = () => {
-  // return true;
+  return true;
   if (process.env.NODE_ENV === "development") return false;
   return true;
 };

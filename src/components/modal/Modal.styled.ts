@@ -19,6 +19,9 @@ export const StyledPopup = styled(Popup)`
 export const ModalContainer = styled.article`
   padding: 50px;
   background-color: ${({ theme }) => theme.palette.White};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   min-width: 300px;
   max-width: 450px;
   border-radius: 20px;

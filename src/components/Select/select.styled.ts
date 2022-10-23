@@ -12,9 +12,12 @@ export const CustomSelect = styled(Select).attrs(() => ({
     border-radius: 20px !important;
     border: none !important;
     background: ${({ theme }) => theme.palette.Grey5};
+    box-shadow: 0 0 0 2px
+      ${({ theme }) =>
+        theme.isHighContrast ? theme.palette.Grey70 : "transparent"} !important;
   }
   & .react-select__control.react-select__control--is-focused {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.palette.Primary70} !important;
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.palette.Primary70} !important;
   }
   & .react-select__indicator-separator {
     display: none;

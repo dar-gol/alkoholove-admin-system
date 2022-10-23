@@ -21,6 +21,12 @@ export const DayNightContainer = styled(Row)`
   right: 20px;
 `;
 
+export const ContrastModeContrainer = styled(Row)`
+  position: absolute;
+  top: 20px;
+  right: 120px;
+`;
+
 export const Title = styled.h1`
   ${Heading3Large("bold")}
   color: ${({ theme }) => theme.palette.Primary80};
@@ -54,6 +60,9 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.palette.White};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey80 : "transparent"};
   padding: 80px 80px;
   gap: 20px;
   border-radius: 20px;
