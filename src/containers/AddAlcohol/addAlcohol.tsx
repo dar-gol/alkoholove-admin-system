@@ -158,8 +158,8 @@ const AddAlcohol = () => {
       ...coreValues,
       ...additionalValues,
       kind: alcohol.kind,
-      sm: createImageName(alcohol.name, "sm"),
-      md: createImageName(alcohol.name, "md"),
+      sm: createImageName(alcohol.id, "sm"),
+      md: createImageName(alcohol.id, "md"),
     });
     return null;
   };
@@ -183,51 +183,28 @@ const AddAlcohol = () => {
   };
 
   const addOrEdit = async (data: any, sm: any, md: any) => {
-    const req = {
-      body: JSON.stringify({ ...data }),
-      header: {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-      },
-      ...(alcoholBarcode
-        ? {
-            method: "PUT",
-            url: `${API}${URL.POST_ALCOHOLS}/${id}`,
-          }
-        : {}),
+    const getEdit = (): { method: "PUT"; url: string } | {} => {
+      if (alcoholBarcode)
+        return {
+          method: "PUT",
+          url: `${API}${URL.POST_ALCOHOLS}/${id}`,
+        };
+      return {};
     };
-    const result = await send({ ...req } as IReq);
-    if (![200, 201].includes(result.status))
-      throw new Error("It is problem with add alcohol!");
 
-    if ((!!alcoholBarcode && imgChanged.sm) || !alcoholBarcode) {
-      const formDataSM = createFormData([
-        ["image_name", createImageName(data.name, "sm")],
-        ["file", sm],
-      ]);
-      const resSM = await send({
-        url: `${API}${URL.UPLOAD_IMAGE}`,
-        body: formDataSM,
-      });
+    const dataList: Array<[string, string | Blob]> = [
+      ["payload", JSON.stringify(data)],
+    ];
+    if ((!!alcoholBarcode && imgChanged.sm) || !alcoholBarcode)
+      dataList.push(["sm", sm]);
+    if ((!!alcoholBarcode && imgChanged.md) || !alcoholBarcode)
+      dataList.push(["md", md]);
+    const formData = createFormData(dataList);
 
-      if (resSM.status !== 201)
-        throw new Error("It is problem with add alcohol's small image !");
-    }
-
-    if ((!!alcoholBarcode && imgChanged.md) || !alcoholBarcode) {
-      const formDataMD = createFormData([
-        ["image_name", createImageName(data.name, "md")],
-        ["file", md],
-      ]);
-      const resMD = await send({
-        url: `${API}${URL.UPLOAD_IMAGE}`,
-        body: formDataMD,
-        header: { Accept: "*/*" },
-      });
-
-      if (resMD.status !== 201)
-        throw new Error("It is problem with add alcohol's medium image");
-    }
+    const result = await send({
+      body: formData,
+      ...getEdit(),
+    });
 
     return result;
   };

@@ -2,10 +2,23 @@ import { Link } from "react-router-dom";
 import styled, { css, createGlobalStyle } from "styled-components";
 import {
   Body,
+  Caption,
+  Footer,
+  Heading1Large,
+  Heading1Small,
   Heading2,
+  Heading2Large,
+  Heading2Small,
   Heading3,
+  Heading3Large,
+  Heading3Small,
   Heading4,
+  Heading4Large,
+  Heading4Small,
   Heading5Large,
+  Heading5Small,
+  Heading6Large,
+  Heading6Small,
 } from "./typography.styled";
 
 export const Main = styled.main`
@@ -389,4 +402,89 @@ export const ContentContainer = styled(Row)`
   gap: 20px;
   flex: 1;
   justify-content: center;
+`;
+
+interface IText {
+  margin?: string;
+  padding?: string;
+  width?: string;
+  isNoWrap?: boolean;
+  isCapitalize?: boolean;
+  textTransform?: string;
+  type?:
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "body"
+    | "caption"
+    | "footer";
+  weight?: "bold" | "medium" | "regular";
+  size?: "large" | "medium" | "small";
+  color?: string;
+  textAlign?: string;
+  textDecoration?: string;
+  zIndex?: number;
+}
+
+const getFontStyle = (
+  type: IText["type"],
+  weight: IText["weight"],
+  size: IText["size"]
+) => {
+  if (type === "body") return Body(weight, size);
+  if (type === "caption")
+    return Caption(weight, size === "medium" ? undefined : size);
+  if (type === "footer") return Footer(weight);
+
+  if (type === "h1" && size === "large")
+    return Heading1Large(weight === "regular" ? undefined : weight);
+  if (type === "h1" && size === "small")
+    return Heading1Small(weight === "regular" ? undefined : weight);
+
+  if (type === "h2" && size === "large")
+    return Heading2Large(weight === "regular" ? undefined : weight);
+  if (type === "h2" && size === "small")
+    return Heading2Small(weight === "regular" ? undefined : weight);
+
+  if (type === "h3" && size === "large")
+    return Heading3Large(weight === "regular" ? undefined : weight);
+  if (type === "h3" && size === "small")
+    return Heading3Small(weight === "regular" ? undefined : weight);
+
+  if (type === "h4" && size === "large")
+    return Heading4Large(weight === "regular" ? undefined : weight);
+  if (type === "h4" && size === "small")
+    return Heading4Small(weight === "regular" ? undefined : weight);
+
+  if (type === "h5" && size === "large")
+    return Heading5Large(weight === "regular" ? undefined : weight);
+  if (type === "h5" && size === "small")
+    return Heading5Small(weight === "regular" ? undefined : weight);
+
+  if (type === "h6" && size === "large")
+    return Heading6Large(weight === "regular" ? undefined : weight);
+  if (type === "h6" && size === "small")
+    return Heading6Small(weight === "regular" ? undefined : weight);
+
+  return "";
+};
+
+export const Text = styled.p<IText>`
+  ${({ type, weight, size }) => (type ? getFontStyle(type, weight, size) : "")}
+  white-space: ${({ isNoWrap = false }) => (isNoWrap ? "nowrap" : "wrap")};
+  text-transform: ${({ textTransform }) => textTransform || "none"};
+  margin: ${({ margin }) => margin || "0"};
+  padding: ${({ padding }) => padding || "0"};
+  width: ${({ width }) => width || "unset"};
+  color: ${({ color, theme }) => color || theme.palette.Grey90};
+  text-decoration: ${({ textDecoration }) => textDecoration || "none"};
+  text-align: ${({ textAlign }) => textAlign || "left"};
+  z-index: ${({ zIndex }) => zIndex || 0};
+  &::first-letter {
+    text-transform: ${({ isCapitalize = false }) =>
+      isCapitalize ? "capitalize" : "none"};
+  }
 `;
