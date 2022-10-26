@@ -89,6 +89,15 @@ export const STATUS_CODE = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+export const WEEK_USER_ALCOHOLS = 13;
+
+export const USER_ALCOHOLS_STATE = [
+  "Musisz postarać się bardziej!",
+  "Masz do wprowadzenia kilka alkoholi.",
+  "Dobra robota!",
+  "Gratulację!",
+];
+
 export const CORE = [
   {
     name: "barcode",

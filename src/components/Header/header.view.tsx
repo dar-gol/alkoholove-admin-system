@@ -3,8 +3,8 @@ import { useTheme } from "styled-components";
 import { Col, Row } from "../../styles/global.styled";
 import { Container, Icon, Profil, SubTitle, Title } from "./header.styled";
 import Breadcrumb from "../Breadcrumb/breadcrumb";
-import Popup from "./popup.view";
 import Toggle from "../Inputs/Toggle";
+import PopupApollo from "./popup.apollo";
 
 interface Props {
   logout: () => void;
@@ -54,7 +54,7 @@ const HeaderView = ({
         <Icon className="icon-Settings" />
         <Profil>
           <Icon className="icon-Profil" onClick={setShow} />
-          <Popup logout={logout} show={show} />
+          <PopupApollo logout={logout} show={show} />
         </Profil>
       </Row>
     </Container>
