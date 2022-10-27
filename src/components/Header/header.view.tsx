@@ -9,7 +9,9 @@ import PopupApollo from "./popup.apollo";
 interface Props {
   logout: () => void;
   night: boolean;
+  isContrast: boolean;
   modeHandler: () => void;
+  contrastModeHandler: () => void;
   show: boolean;
   setShow: () => void;
   getTitle: () => string;
@@ -19,6 +21,8 @@ const HeaderView = ({
   logout,
   night,
   modeHandler,
+  isContrast,
+  contrastModeHandler,
   show,
   setShow,
   getTitle,
@@ -31,6 +35,14 @@ const HeaderView = ({
         <Breadcrumb />
       </Col>
       <Row alignItems="center" gap="20px">
+        <Toggle
+          value={isContrast}
+          onClick={contrastModeHandler}
+          title={`${isContrast ? "Włącz" : "Wyłącz"} wysoki kontrast`}
+          color={theme.palette.Grey10}
+          rightColor={theme.palette.Grey30}
+          leftColor={theme.palette.Green70}
+        />
         <Toggle
           leftIcon="icon-sun"
           leftColor={theme.palette.Yellow70}

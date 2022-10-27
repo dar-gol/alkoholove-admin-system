@@ -37,6 +37,7 @@ export const MenuTitle = styled.div`
   justify-content: center;
   ${Heading4Large("medium")}
   padding: 10px 0;
+  color: ${({ theme }) => theme.palette.Grey90};
   & span:nth-child(1):before {
     display: none;
     color: ${({ theme }) => theme.palette.Grey50};
@@ -89,6 +90,9 @@ export const SidebarContainer = styled(Col)`
   background-color: ${({ theme }) => theme.palette.White};
   min-width: 280px;
   transition: 0.2s;
+  border-right: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   &.collapse {
     min-width: 100px;
     ${MenuTitle} span:nth-child(1):before {

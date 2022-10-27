@@ -5,7 +5,9 @@ export const inputContainer = css`
   box-sizing: border-box;
   position: relative;
   background-color: ${({ theme }) => theme.palette.Grey5};
-  border: 2px solid ${({ theme }) => theme.palette.Grey5};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey50 : theme.palette.Grey5};
   align-items: center;
   padding: 0 15px;
   border-radius: 20px;

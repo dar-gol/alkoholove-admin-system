@@ -18,10 +18,12 @@ interface Props {
 const LoginLogic = ({ onSubmit, dispatch, state }: Props) => {
   const [cookie, setCookie] = useCookies();
   const [isNight, setIsNight] = useState<boolean>(false);
+  const [isContrast, setIsContrast] = useState<boolean>(false);
   const form = useForm({ defaultValues });
 
   useEffect(() => {
     setIsNight(cookie.mode === "dark");
+    setIsContrast(cookie.isHighContrast === "true");
   }, []);
 
   const cleanForm = () => {
@@ -37,10 +39,20 @@ const LoginLogic = ({ onSubmit, dispatch, state }: Props) => {
     });
   };
 
+  const contrastModeHandler = () => {
+    setIsContrast((prev) => !prev);
+    setCookie("isHighContrast", isContrast ? "true" : "false", {
+      path: "/",
+      sameSite: "strict",
+    });
+  };
+
   return (
     <LoginView
       isNight={isNight}
+      isContrast={isContrast}
       modeHandler={modeHandler}
+      contrastModeHandler={contrastModeHandler}
       form={form}
       onSubmit={onSubmit}
       cleanForm={cleanForm}

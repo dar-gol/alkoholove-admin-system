@@ -16,6 +16,7 @@ import {
   ForgottenPassword,
   DayNightContainer,
   BtnUIWrapper,
+  ContrastModeContrainer,
 } from "./Login.styled";
 import Spacings from "../../styles/spacings";
 import ErrorModal from "../../components/ErrorModal/errorModal";
@@ -34,7 +35,9 @@ import Toggle from "../../components/Inputs/Toggle";
 
 interface Props {
   isNight: boolean;
+  isContrast: boolean;
   modeHandler: () => void;
+  contrastModeHandler: () => void;
   form: UseFormReturn<{ username: string; password: string }>;
   onSubmit: SubmitHandler<FieldValues>;
   cleanForm: () => void;
@@ -43,7 +46,9 @@ interface Props {
 
 const LoginView = ({
   isNight,
+  isContrast,
   modeHandler,
+  contrastModeHandler,
   form,
   onSubmit,
   cleanForm,
@@ -72,6 +77,16 @@ const LoginView = ({
           onClick={modeHandler}
         />
       </DayNightContainer>
+      <ContrastModeContrainer>
+        <Toggle
+          value={isContrast}
+          onClick={contrastModeHandler}
+          title="Włącz wysoki kontrast"
+          color={theme.palette.Grey10}
+          rightColor={theme.palette.Grey30}
+          leftColor={theme.palette.Green70}
+        />
+      </ContrastModeContrainer>
       <Col gap={`${Spacings.s3}px`} justifyContent="center" alignItems="center">
         <LogoWrapper>
           <Logo src="./logo192.png" alt="This is a alkohoLove's logo" />

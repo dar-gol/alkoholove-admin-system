@@ -18,14 +18,25 @@ export const TCell = styled.td<ITCell>`
   vertical-align: ${({ verticalAlign }) => verticalAlign || "middle"};
   width: ${({ width }) => width || "unset"};
   transition: 0.1s;
-
+  border-top: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
+  border-bottom: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   &:first-child {
     border-top-left-radius: ${tableSetting.radius};
     border-bottom-left-radius: ${tableSetting.radius};
+    border-left: 2px solid
+      ${({ theme }) =>
+        theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   }
   &:last-child {
     border-bottom-right-radius: ${tableSetting.radius};
     border-top-right-radius: ${tableSetting.radius};
+    border-right: 2px solid
+      ${({ theme }) =>
+        theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   }
   @media (max-width: 768px) {
     &:nth-child(3),

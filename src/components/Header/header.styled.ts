@@ -50,6 +50,9 @@ export const PopupContainer = styled.div<{ show: boolean }>`
   position: absolute;
   z-index: 100;
   background: ${({ theme }) => theme.palette.White};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   padding: 10px 20px;
   right: -10px;
   bottom: -10px;
@@ -65,7 +68,9 @@ export const ArrowUp = styled.div`
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid ${({ theme }) => theme.palette.White};
+  border-bottom: 10px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : theme.palette.White};
   position: absolute;
   top: -10px;
   right: 12px;

@@ -12,6 +12,9 @@ export const selectControl = css`
   border-radius: 20px !important;
   border: none !important;
   background: ${({ theme }) => theme.palette.Grey5};
+  box-shadow: 0 0 0 2px
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"} !important;
   &::before {
     content: "${({ placeholder }: any) => placeholder}";
     margin: 0;

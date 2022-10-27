@@ -77,6 +77,9 @@ const Btn = css<Button>`
 `;
 
 export const GlobalStyle = createGlobalStyle`
+  /* * {
+    box-sizing: border-box;
+  } */
   body {
     margin: 0;
     background-color: #F8F8F8;
@@ -185,6 +188,9 @@ export const BtnSecondary = styled.button<Button>`
   ${Btn}
   color: ${({ theme }) => theme.palette.Secondary90};
   background-color: ${({ theme }) => theme.palette.Secondary20};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Secondary100 : "transparent"};
   &:active {
     background-color: ${({ theme }) => theme.palette.Secondary30};
     color: ${({ theme }) => theme.palette.Secondary100};
@@ -281,7 +287,7 @@ export const Key = styled.p<{ margin?: string }>`
 export const Value = styled.p`
   text-align: right;
   ${Body("medium", "large")}
-  color: ${({ theme }) => theme.palette.Grey80}; ;
+  color: ${({ theme }) => theme.palette.Grey80};
 `;
 
 export const WarnText = styled.p`
@@ -299,6 +305,9 @@ export const Content = styled(Col)`
   border-radius: 20px;
   background-color: ${({ theme }) => theme.palette.White};
   overflow: hidden;
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
 `;
 
 export const ScrollContent = styled(Col)`
@@ -348,6 +357,7 @@ export const WarnBar = styled(Row)`
   gap: 10px;
   ${Body("regular", "medium")}
   border-radius: 20px;
+  position: relative;
   & span::before {
     font-size: 30px;
   }
@@ -361,6 +371,9 @@ export const CriticalBar = styled(Row)`
   gap: 10px;
   ${Body("regular", "medium")}
   border-radius: 20px;
+  & span {
+    background-color: ${({ theme }) => theme.palette.Red100};
+  }
   & span::before {
     font-size: 30px;
   }
@@ -382,6 +395,9 @@ export const GreenBar = styled(Row)`
 export const ListContainer = styled(Col)`
   position: relative;
   background-color: ${({ theme }) => theme.palette.White};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
   border-radius: 20px;
   max-width: 1000px;
   width: 100%;

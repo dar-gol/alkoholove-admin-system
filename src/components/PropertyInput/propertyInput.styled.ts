@@ -5,7 +5,9 @@ export const Property = styled(Col)`
   padding: 20px;
   border-radius: 20px;
   position: relative;
-  border: 2px solid ${({ theme }) => theme.palette.Grey5};
+  border: 2px solid
+    ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Grey70 : theme.palette.Grey5};
 `;
 export const BtnDelete = styled.button`
   font-weight: 900;
