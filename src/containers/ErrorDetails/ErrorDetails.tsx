@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTheme } from "styled-components";
 import { IError } from "../../@types/errors";
 import Indicator from "../../components/Indicator/Indicator";
 import Modal from "../../components/modal/Modal";
@@ -14,6 +15,7 @@ import {
   ListWrapper,
   Row,
   ScrollContent,
+  Text,
   Tuple,
   Value,
   WarnText,
@@ -32,6 +34,7 @@ const ErrorDetails = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id } = useParams();
+  const theme = useTheme() as { palette: { [k: string]: string } };
   const navigate = useNavigate();
   const [error, setError] = useState<IError | null>(null);
   const { send } = useAuthReq("GET", `${API}${URL.ERRORS}/${id}`, null, {
@@ -73,6 +76,21 @@ const ErrorDetails = ({
                   <Value>{error.id}</Value>
                 </Tuple>
                 <Tuple>
+                  <Key>Nazwa użytkownika </Key>
+                  <Value>
+                    <Text
+                      as="a"
+                      type="body"
+                      weight="medium"
+                      size="large"
+                      href={`/user/${error.user_id}`}
+                      color={theme.palette.Secondary70}
+                    >
+                      {error.username}
+                    </Text>
+                  </Value>
+                </Tuple>
+                <Tuple>
                   <Key>Opis błędu </Key>
                   <Value>{error.description}</Value>
                 </Tuple>
@@ -101,10 +119,10 @@ const ErrorDetails = ({
         </Col>
         <Col margin="20px 0 0 0" justifyContent="center" gap="30px">
           <BtnSecondary onClick={() => remove()}>
-            Tak, chcę permanentnie usunąć zgłoszony błąd
+            Tak, chcę permanentnie usunąć zgłoszony błąd.
           </BtnSecondary>
           <BtnPrimary onClick={() => setIsOpen(false)}>
-            Nie, nie chcę permanentnie usunąć zgłoszonego błędu
+            Nie, nie chcę permanentnie usunąć tego błędu.
           </BtnPrimary>
         </Col>
       </Modal>

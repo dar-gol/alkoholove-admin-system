@@ -82,9 +82,9 @@ const LoginView = ({
           value={isContrast}
           onClick={contrastModeHandler}
           title="Włącz wysoki kontrast"
-          color={theme.palette.Grey10}
-          rightColor={theme.palette.Grey30}
-          leftColor={theme.palette.Green70}
+          color={theme.palette.Grey5}
+          rightColor={theme.palette.Green70}
+          leftColor={theme.palette.Grey30}
         />
       </ContrastModeContrainer>
       <Col gap={`${Spacings.s3}px`} justifyContent="center" alignItems="center">

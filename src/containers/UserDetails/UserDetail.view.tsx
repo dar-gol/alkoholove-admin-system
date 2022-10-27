@@ -9,6 +9,7 @@ import {
   ListContainer,
   ListTitle,
   ListWrapper,
+  Row,
   ScrollContent,
   Tuple,
   Value,
@@ -90,9 +91,11 @@ const UserDetail = ({ onCollapse = () => {}, collapse = undefined }: Props) => {
               </Tuple>
             </Col>
           )}
-          <BtnSecondary onClick={handleBan}>
-            {user && user.is_banned ? "Odbanuj" : "Zbanuj"} użytkownika
-          </BtnSecondary>
+          <Row justifyContent="end">
+            <BtnSecondary onClick={handleBan} width="200px">
+              {user && user.is_banned ? "Odbanuj" : "Zbanuj"} użytkownika
+            </BtnSecondary>
+          </Row>
         </ScrollContent>
       </ListWrapper>
     </ListContainer>
