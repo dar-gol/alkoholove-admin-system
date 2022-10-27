@@ -1,9 +1,10 @@
-import { IPageInfo } from './pagination';
+import { IPageInfo } from "./pagination";
 
 export interface IError {
   description: string;
   id: string;
   user_id: string;
+  username: string;
 }
 
 export interface IErrors {
