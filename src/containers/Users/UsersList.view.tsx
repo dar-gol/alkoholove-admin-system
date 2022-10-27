@@ -58,7 +58,7 @@ const UsersListView = () => {
         data-label="Nazwa uzytkownika"
         verticalAlign="top"
       >
-        <Title>Nazwa uzytkownika</Title>
+        <Title>Nazwa użytkownika</Title>
         <Value>{content.username}</Value>
       </TCell>
       <TCell
