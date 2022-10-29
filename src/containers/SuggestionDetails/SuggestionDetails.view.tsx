@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Suggestion } from "../../@types/suggestions";
 import { IUser } from "../../@types/users";
 import Indicator from "../../components/Indicator/Indicator";
@@ -26,10 +26,18 @@ import { getDate } from "../../utils/utils";
 interface Props {
   onCollapse?: () => void;
   collapse?: boolean;
+  refresh: () => void;
+  closeDetails: () => void;
 }
 
-const UserDetail = ({ onCollapse = () => {}, collapse = undefined }: Props) => {
+const UserDetail = ({
+  onCollapse = () => {},
+  collapse = undefined,
+  refresh,
+  closeDetails,
+}: Props) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [suggestionBlock, setSuggestionBlock] = useState<Suggestion | null>(
     null
   );
@@ -45,11 +53,18 @@ const UserDetail = ({ onCollapse = () => {}, collapse = undefined }: Props) => {
       });
   };
 
-  const removeSuggestion = () => {
-    send({
+  const removeSuggestion = async () => {
+    await send({
       method: "DELETE",
       url: `${API}${URL.GET_SUGGESTIONS}/${id}`,
     });
+    refresh();
+    closeDetails();
+    setIsOpen(false);
+  };
+
+  const addSuggestion = () => {
+    navigate(`/add/alcohol/?suggestion=${id}`);
   };
 
   useEffect(() => getSuggestion(), [id]);
@@ -96,10 +111,13 @@ const UserDetail = ({ onCollapse = () => {}, collapse = undefined }: Props) => {
                 </Tuple>
               </Col>
             )}
-            <Row justifyContent="end">
+            <Row justifyContent="end" gap="20px" margin="20px 0 0 0">
               <BtnSecondary onClick={() => setIsOpen(true)} width="200px">
                 Usuń sugestie
               </BtnSecondary>
+              <BtnPrimary onClick={addSuggestion} width="200px">
+                Dodaj sugestię
+              </BtnPrimary>
             </Row>
           </ScrollContent>
         </ListWrapper>

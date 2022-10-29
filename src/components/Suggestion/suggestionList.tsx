@@ -92,7 +92,12 @@ const SuggestionListView = ({ goToSuggestion }: Props) => {
           />
         </ListContainer>
         {id && (
-          <SuggestionDetails collapse={collapse} onCollapse={onCollapse} />
+          <SuggestionDetails
+            collapse={collapse}
+            onCollapse={onCollapse}
+            refresh={() => {}}
+            closeDetails={() => {}}
+          />
         )}
       </ContentContainer>
     </>

@@ -66,6 +66,7 @@ export interface IListHandlers {
   getContent: () => unknown[] | null;
   getPage: () => IPageInfo | null;
   isLoading: () => boolean;
+  refresh: () => void;
 }
 
 const List = forwardRef<IListHandlers, Props>(
@@ -82,10 +83,8 @@ const List = forwardRef<IListHandlers, Props>(
     }: Props,
     ref
   ) => {
-    const { search, changePageSize, changePage, contents, page } = useContents(
-      initReq,
-      listObjectName
-    );
+    const { search, changePageSize, changePage, contents, page, refresh } =
+      useContents(initReq, listObjectName);
     const [option, setOption] = useState<ISelectValue<number>>(options[0]);
     const [inputValue, setInputValue] = useState<string>(initSearchValue);
     const { query, updateParam } = useQueryParams();
@@ -108,6 +107,9 @@ const List = forwardRef<IListHandlers, Props>(
       },
       isLoading() {
         return contents === null || contents === undefined;
+      },
+      refresh() {
+        refresh();
       },
     }));
 

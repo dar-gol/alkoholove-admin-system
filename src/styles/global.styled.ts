@@ -344,6 +344,11 @@ export const InfoBar = styled(Row)`
   gap: 10px;
   ${Body("regular", "medium")}
   border-radius: 20px;
+  & span {
+    border-radius: 20px;
+    background-color: ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Secondary100 : "transparent"};
+  }
   & span::before {
     font-size: 30px;
   }
@@ -357,9 +362,26 @@ export const WarnBar = styled(Row)`
   gap: 10px;
   ${Body("regular", "medium")}
   border-radius: 20px;
-  position: relative;
+  & span {
+    width: 30px;
+    height: 30px;
+    position: relative;
+  }
   & span::before {
+    display: ${({ theme }) => (theme.isHighContrast ? "none" : "block")};
     font-size: 30px;
+  }
+  & span::after {
+    content: "";
+    display: ${({ theme }) => (theme.isHighContrast ? "block" : "none")};
+    height: 0;
+    width: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 30px solid ${({ theme }) => theme.palette.Yellow100};
   }
 `;
 
@@ -372,7 +394,8 @@ export const CriticalBar = styled(Row)`
   ${Body("regular", "medium")}
   border-radius: 20px;
   & span {
-    background-color: ${({ theme }) => theme.palette.Red100};
+    background-color: ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Red100 : "transparent"};
   }
   & span::before {
     font-size: 30px;
@@ -387,6 +410,11 @@ export const GreenBar = styled(Row)`
   gap: 10px;
   ${Body("regular", "medium")}
   border-radius: 20px;
+  & span {
+    border-radius: 20px;
+    background-color: ${({ theme }) =>
+      theme.isHighContrast ? theme.palette.Green100 : "transparent"};
+  }
   & span::before {
     font-size: 30px;
   }

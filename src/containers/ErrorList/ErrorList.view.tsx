@@ -40,6 +40,10 @@ const ErrorListView = () => {
     setCollapse((prev) => !prev);
   };
 
+  const refresh = () => {
+    listRef.current?.refresh();
+  };
+
   const drawContent = (content: IError) => (
     <TRow
       key={content.id}
@@ -78,7 +82,14 @@ const ErrorListView = () => {
           contentRow={(content) => drawContent(content as IError)}
         />
       </ListContainer>
-      {id && <ErrorDetails collapse={collapse} onCollapse={onCollapse} />}
+      {id && (
+        <ErrorDetails
+          collapse={collapse}
+          onCollapse={onCollapse}
+          closeDetails={() => goToErrorDetails()}
+          refresh={refresh}
+        />
+      )}
     </ContentContainer>
   );
 };

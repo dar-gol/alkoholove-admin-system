@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Col, Row } from "../../styles/global.styled";
 import Indicator from "../Indicator/Indicator";
 import { AmountObject } from "./Sidebar.logic";
@@ -31,13 +31,20 @@ const SidebarView = ({ handleCollapse, collapse, amount }: Props) => (
         icon={`icon-chevron-${collapse ? "right" : "left"}`}
         type="secondary"
       />
-      <Row height="120px" gap="20px" alignItems="center">
-        <Logo src="/logo192.png" alt="Alkoholove's logo" />
-        <Col justifyContent="center" className="rightHeader">
-          <Title>Alkoholove</Title>
-          <Subtitle>Panel administracyjny</Subtitle>
-        </Col>
-      </Row>
+      <Link to="/home" style={{ all: "unset", cursor: "pointer" }}>
+        <Row
+          height="120px"
+          gap="20px"
+          alignItems="center"
+          className="logoWrapper"
+        >
+          <Logo src="/logo192.png" alt="Alkoholove's logo" />
+          <Col justifyContent="center" className="rightHeader">
+            <Title>Alkoholove</Title>
+            <Subtitle>Panel administracyjny</Subtitle>
+          </Col>
+        </Row>
+      </Link>
     </Header>
     <MenuTitle>
       <span className="icon-Lists" />

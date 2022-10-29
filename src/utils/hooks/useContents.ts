@@ -51,7 +51,8 @@ const useContents = (
   };
 
   const search = (input: string | null, kind?: string | null) => {
-    if (typeof input === "string") setName(getPhrase(input));
+    const phrase = getPhrase(input);
+    if (typeof input === "string") setName(phrase);
     if (kind) setBody(kind);
     if (kind === null) setBody(null);
   };
@@ -102,6 +103,21 @@ const useContents = (
       });
   };
 
+  const refresh = () => {
+    setContents(null);
+    const shift = page.number * page.limit;
+    const metadata = {
+      subscribed: true,
+    };
+    update(
+      {
+        url: `${initReq[1]}?limit=${page.limit}&offset=${shift}${name}`,
+        body: getKind(),
+      },
+      metadata
+    );
+  };
+
   useEffect(() => {
     if (!get().access_token) return () => {};
     const shift = page.number * page.limit;
@@ -138,6 +154,7 @@ const useContents = (
     changePage,
     contents,
     page,
+    refresh,
   };
 };
 

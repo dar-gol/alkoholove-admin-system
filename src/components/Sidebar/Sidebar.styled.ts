@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { LogoWrapper } from "../../containers/Login/Login.styled";
 import {
   Heading4Large,
   Body,
@@ -15,6 +16,12 @@ export const Header = styled(Row)`
 export const Logo = styled.img`
   width: 48px;
   height: 48px;
+  @media (max-height: 800px) {
+    & {
+      width: 36px;
+      height: 36px;
+    }
+  }
 `;
 
 export const Title = styled.h1`
@@ -90,6 +97,8 @@ export const SidebarContainer = styled(Col)`
   background-color: ${({ theme }) => theme.palette.White};
   min-width: 280px;
   transition: 0.2s;
+  height: 100%;
+  z-index: 2;
   border-right: 2px solid
     ${({ theme }) =>
       theme.isHighContrast ? theme.palette.Grey70 : "transparent"};
@@ -105,9 +114,24 @@ export const SidebarContainer = styled(Col)`
       justify-content: center;
     }
   }
+  @media (max-height: 800px) {
+    & .rightHeader {
+      display: none;
+    }
+    & .logoWrapper {
+      height: 60px;
+    }
+  }
   @media (max-width: 768px) {
     & {
-      display: none;
+      position: absolute;
+      left: 0;
+      box-shadow: 5px 0px 200px 0px
+        ${({ theme }) => theme.palette.BackgroundTransparency30};
+    }
+    &.collapse {
+      left: -75px;
+      box-shadow: none;
     }
   }
 `;
