@@ -41,7 +41,7 @@ const LoginLogic = ({ onSubmit, dispatch, state }: Props) => {
 
   const contrastModeHandler = () => {
     setIsContrast((prev) => !prev);
-    setCookie("isHighContrast", isContrast ? "true" : "false", {
+    setCookie("isHighContrast", !isContrast ? "true" : "false", {
       path: "/",
       sameSite: "strict",
     });

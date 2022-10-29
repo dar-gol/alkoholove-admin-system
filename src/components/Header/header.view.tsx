@@ -38,10 +38,10 @@ const HeaderView = ({
         <Toggle
           value={isContrast}
           onClick={contrastModeHandler}
-          title={`${isContrast ? "Włącz" : "Wyłącz"} wysoki kontrast`}
-          color={theme.palette.Grey10}
-          rightColor={theme.palette.Grey30}
-          leftColor={theme.palette.Green70}
+          title={`${!isContrast ? "Włącz" : "Wyłącz"} wysoki kontrast`}
+          color={theme.palette.Grey5}
+          rightColor={theme.palette.Green70}
+          leftColor={theme.palette.Grey30}
         />
         <Toggle
           leftIcon="icon-sun"

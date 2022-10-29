@@ -17,6 +17,7 @@ const HeaderLogic = () => {
 
   useEffect(() => {
     setNight(cookie.mode === "dark");
+    setIsContrast(cookie.isHighContrast === "true");
   }, []);
 
   const getTitle = () => {
@@ -41,7 +42,7 @@ const HeaderLogic = () => {
 
   const contrastModeHandler = () => {
     setIsContrast((prev) => !prev);
-    setCookie("isHighContrast", isContrast ? "true" : "false", {
+    setCookie("isHighContrast", !isContrast ? "true" : "false", {
       path: "/",
       sameSite: "strict",
     });

@@ -68,7 +68,7 @@ const SidebarLogic = () => {
       ...prev,
       error: {
         value: data.page_info.total,
-        color: data.page_info.total > 5 ? "red" : "secondary",
+        color: data.page_info.total >= 5 ? "red" : "secondary",
       },
     }));
   };
@@ -80,7 +80,7 @@ const SidebarLogic = () => {
       ...prev,
       reportedReview: {
         value: data.page_info.total,
-        color: data.page_info.total > 5 ? "red" : "secondary",
+        color: data.page_info.total >= 5 ? "red" : "secondary",
       },
     }));
   };
