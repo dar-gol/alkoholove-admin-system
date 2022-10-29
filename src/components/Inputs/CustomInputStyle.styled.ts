@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Body, Footer } from "../../styles/typography.styled";
+import { Body, Caption, Footer } from "../../styles/typography.styled";
 
 export const inputContainer = css`
   box-sizing: border-box;
@@ -102,10 +102,10 @@ export const errorImage = css`
 
 export const errorBar = css`
   display: none;
-  bottom: -6px;
+  bottom: -8px;
   left: 50%;
-  height: 12px;
-  line-height: 12px !important;
+  height: 16px;
+  line-height: 16px !important;
   text-align: center;
   border-radius: 5px;
   transform: translateX(-50%);
@@ -113,5 +113,5 @@ export const errorBar = css`
   position: absolute;
   background-color: ${({ theme }) => theme.palette.Red80};
   color: ${({ theme }) => theme.palette.White};
-  ${Footer("regular")}
+  ${Caption("regular", "small")}
 `;

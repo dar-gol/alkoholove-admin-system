@@ -53,24 +53,16 @@ const UsersListView = () => {
       tabIndex={0}
       onClick={() => goToUserDetails(content.id)}
     >
-      <TCell
-        padding="10px 20px"
-        data-label="Nazwa uzytkownika"
-        verticalAlign="top"
-      >
+      <TCell padding="20px" data-label="Nazwa uzytkownika" verticalAlign="top">
         <Title>Nazwa użytkownika</Title>
         <Value>{content.username}</Value>
       </TCell>
-      <TCell
-        padding="10px 20px"
-        data-label="Email uzytkownika"
-        verticalAlign="top"
-      >
+      <TCell padding="20px" data-label="Email uzytkownika" verticalAlign="top">
         <Title>Email uzytkownika</Title>
         <Value>{content.email}</Value>
       </TCell>
       <TCell
-        padding="10px 20px"
+        padding="20px"
         data-label="Data stworzenia konta"
         verticalAlign="top"
       >

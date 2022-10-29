@@ -51,7 +51,8 @@ const useContents = (
   };
 
   const search = (input: string | null, kind?: string | null) => {
-    if (typeof input === "string") setName(getPhrase(input));
+    const phrase = getPhrase(input);
+    if (typeof input === "string") setName(phrase);
     if (kind) setBody(kind);
     if (kind === null) setBody(null);
   };
@@ -73,7 +74,6 @@ const useContents = (
   };
 
   const remove = (id: string) => {
-    setContents(null);
     setContents(
       (prev) => prev && [...prev.filter((content) => content.id !== id)]
     );
@@ -104,6 +104,7 @@ const useContents = (
   };
 
   const refresh = () => {
+    setContents(null);
     const shift = page.number * page.limit;
     const metadata = {
       subscribed: true,

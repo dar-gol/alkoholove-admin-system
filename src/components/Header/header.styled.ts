@@ -12,6 +12,7 @@ export const Container = styled.header`
   background-color: transparent;
   @media (max-width: 768px) {
     & {
+      padding-left: 75px;
       zoom: 0.8;
     }
   }

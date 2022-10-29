@@ -6,7 +6,7 @@ import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
 import HeaderLogic from "../../components/Header/header.logic";
 import Indicator from "../../components/Indicator/Indicator";
 import { TCell, Title, TRow, Value } from "../../components/List/List.styled";
-import List from "../../components/List/List.view";
+import List, { IListHandlers } from "../../components/List/List.view";
 import Pagination from "../../components/Pagination/pagination";
 import Searcher from "../../components/Searcher/searcher";
 import {
@@ -28,7 +28,7 @@ const width = document.body.clientWidth;
 
 const ReportedReviewList = () => {
   const { id } = useParams();
-  const listRef = useRef(null);
+  const listRef = useRef<IListHandlers>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const isSmallScreen = () => width < 1200 && !!id;
@@ -48,6 +48,10 @@ const ReportedReviewList = () => {
     setCollapse((prev) => !prev);
   };
 
+  const refresh = () => {
+    listRef.current?.refresh();
+  };
+
   const drawContent = (content: IReportedReview) => (
     <TRow
       key={content.id}
@@ -55,16 +59,12 @@ const ReportedReviewList = () => {
       tabIndex={0}
       onClick={() => goToReviewDetails(content.id)}
     >
-      <TCell
-        padding="10px 20px"
-        data-label="Nazwa uzytkownika"
-        verticalAlign="top"
-      >
+      <TCell padding="20px" data-label="Nazwa uzytkownika" verticalAlign="top">
         <Title>Komentarz stworzył</Title>
         <Value>{content.username}</Value>
       </TCell>
       <TCell
-        padding="10px 20px"
+        padding="20px"
         data-label="Komentarz stworzył dnia"
         verticalAlign="top"
       >
@@ -72,7 +72,7 @@ const ReportedReviewList = () => {
         <Value>{getDate(content.date)}</Value>
       </TCell>
       <TCell
-        padding="10px 20px"
+        padding="20px"
         data-label="ID skomentowanego alkoholu"
         verticalAlign="top"
       >
@@ -95,7 +95,7 @@ const ReportedReviewList = () => {
             type="secondary"
           />
           <List
-            isSearch={false}
+            isSearch
             listObjectName="reviews"
             ref={listRef}
             listTitle="Lista zgłoszonych komentarzy"
@@ -104,7 +104,12 @@ const ReportedReviewList = () => {
           />
         </ListContainer>
         {id && (
-          <ReportedReviewDetail collapse={collapse} onCollapse={onCollapse} />
+          <ReportedReviewDetail
+            collapse={collapse}
+            onCollapse={onCollapse}
+            refresh={refresh}
+            closeDetails={() => goToReviewDetails()}
+          />
         )}
       </ContentContainer>
     </>

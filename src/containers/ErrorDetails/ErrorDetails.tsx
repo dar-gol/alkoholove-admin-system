@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { IError } from "../../@types/errors";
 import Indicator from "../../components/Indicator/Indicator";
@@ -26,16 +26,19 @@ import useAuthReq from "../../utils/hooks/useReq";
 interface Props {
   onCollapse?: () => void;
   collapse?: boolean;
+  refresh: () => void;
+  closeDetails: () => void;
 }
 
 const ErrorDetails = ({
   onCollapse = () => {},
   collapse = undefined,
+  refresh,
+  closeDetails,
 }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id } = useParams();
   const theme = useTheme() as { palette: { [k: string]: string } };
-  const navigate = useNavigate();
   const [error, setError] = useState<IError | null>(null);
   const { send } = useAuthReq("GET", `${API}${URL.ERRORS}/${id}`, null, {
     accept: "application/json",
@@ -50,7 +53,9 @@ const ErrorDetails = ({
 
   const remove = async () => {
     await send({ method: "DELETE" });
-    navigate("/error");
+    closeDetails();
+    refresh();
+    setIsOpen(false);
   };
 
   useEffect(() => getError(), [id]);

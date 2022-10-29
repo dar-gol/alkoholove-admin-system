@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Suggestion } from "../../@types/suggestions";
 import { IUser } from "../../@types/users";
 import Indicator from "../../components/Indicator/Indicator";
@@ -27,14 +27,17 @@ interface Props {
   onCollapse?: () => void;
   collapse?: boolean;
   refresh: () => void;
+  closeDetails: () => void;
 }
 
 const UserDetail = ({
   onCollapse = () => {},
   collapse = undefined,
   refresh,
+  closeDetails,
 }: Props) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [suggestionBlock, setSuggestionBlock] = useState<Suggestion | null>(
     null
   );
@@ -56,7 +59,12 @@ const UserDetail = ({
       url: `${API}${URL.GET_SUGGESTIONS}/${id}`,
     });
     refresh();
-    onCollapse();
+    closeDetails();
+    setIsOpen(false);
+  };
+
+  const addSuggestion = () => {
+    navigate(`/add/alcohol/?suggestion=${id}`);
   };
 
   useEffect(() => getSuggestion(), [id]);
@@ -103,10 +111,13 @@ const UserDetail = ({
                 </Tuple>
               </Col>
             )}
-            <Row justifyContent="end">
+            <Row justifyContent="end" gap="20px" margin="20px 0 0 0">
               <BtnSecondary onClick={() => setIsOpen(true)} width="200px">
                 Usuń sugestie
               </BtnSecondary>
+              <BtnPrimary onClick={addSuggestion} width="200px">
+                Dodaj sugestię
+              </BtnPrimary>
             </Row>
           </ScrollContent>
         </ListWrapper>

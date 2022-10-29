@@ -114,6 +114,7 @@ const SuggestionListView = () => {
             collapse={collapse}
             onCollapse={onCollapse}
             refresh={refresh}
+            closeDetails={() => goToSuggestionDetails()}
           />
         )}
       </ContentContainer>
