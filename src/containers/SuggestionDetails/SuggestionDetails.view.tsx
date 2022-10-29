@@ -21,9 +21,14 @@ import { getDate } from "../../utils/utils";
 interface Props {
   onCollapse?: () => void;
   collapse?: boolean;
+  refresh: () => void;
 }
 
-const UserDetail = ({ onCollapse = () => {}, collapse = undefined }: Props) => {
+const UserDetail = ({
+  onCollapse = () => {},
+  collapse = undefined,
+  refresh,
+}: Props) => {
   const { id } = useParams();
   const [suggestionBlock, setSuggestionBlock] = useState<Suggestion | null>(
     null
@@ -39,11 +44,13 @@ const UserDetail = ({ onCollapse = () => {}, collapse = undefined }: Props) => {
       });
   };
 
-  const removeSuggestion = () => {
-    send({
+  const removeSuggestion = async () => {
+    await send({
       method: "DELETE",
       url: `${API}${URL.GET_SUGGESTIONS}/${id}`,
     });
+    refresh();
+    onCollapse();
   };
 
   useEffect(() => getSuggestion(), [id]);

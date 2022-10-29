@@ -6,7 +6,7 @@ import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
 import HeaderLogic from "../../components/Header/header.logic";
 import Indicator from "../../components/Indicator/Indicator";
 import { TCell, Title, TRow, Value } from "../../components/List/List.styled";
-import List from "../../components/List/List.view";
+import List, { IListHandlers } from "../../components/List/List.view";
 import Pagination from "../../components/Pagination/pagination";
 import Searcher from "../../components/Searcher/searcher";
 import SuggestionDetails from "../SuggestionDetails/SuggestionDetails.view";
@@ -28,7 +28,7 @@ const width = document.body.clientWidth;
 
 const SuggestionListView = () => {
   const { id } = useParams();
-  const listRef = useRef(null);
+  const listRef = useRef<IListHandlers>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const isSmallScreen = () => width < 1200 && !!id;
@@ -46,6 +46,10 @@ const SuggestionListView = () => {
   const goToSuggestionDetails = (index?: string) => {
     setCollapse(width < 1200);
     navigate(`/suggestion${index ? `/${index}` : ""}`);
+  };
+
+  const refresh = () => {
+    listRef.current?.refresh();
   };
 
   const drawContent = (content: Suggestion) => (
@@ -106,7 +110,11 @@ const SuggestionListView = () => {
           />
         </ListContainer>
         {id && (
-          <SuggestionDetails collapse={collapse} onCollapse={onCollapse} />
+          <SuggestionDetails
+            collapse={collapse}
+            onCollapse={onCollapse}
+            refresh={refresh}
+          />
         )}
       </ContentContainer>
     </>

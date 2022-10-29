@@ -73,6 +73,7 @@ const useContents = (
   };
 
   const remove = (id: string) => {
+    setContents(null);
     setContents(
       (prev) => prev && [...prev.filter((content) => content.id !== id)]
     );
@@ -100,6 +101,20 @@ const useContents = (
           setPage((prev) => ({ ...prev, isLoading: false }));
         console.error(e);
       });
+  };
+
+  const refresh = () => {
+    const shift = page.number * page.limit;
+    const metadata = {
+      subscribed: true,
+    };
+    update(
+      {
+        url: `${initReq[1]}?limit=${page.limit}&offset=${shift}${name}`,
+        body: getKind(),
+      },
+      metadata
+    );
   };
 
   useEffect(() => {
@@ -138,6 +153,7 @@ const useContents = (
     changePage,
     contents,
     page,
+    refresh,
   };
 };
 
