@@ -46,9 +46,7 @@ const FileInput = ({
 
   const getImageSrc = (value: File | string) => {
     if (value instanceof File) return URL.createObjectURL(value);
-    return `${URLS.GET_IMAGE}/${createImageName(
-      value || ""
-    )}?t=${new Date().getTime()}`;
+    return `${URLS.GET_IMAGE}/${createImageName(value || "")}`;
   };
 
   return (

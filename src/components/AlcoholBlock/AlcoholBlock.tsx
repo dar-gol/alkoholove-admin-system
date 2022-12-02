@@ -30,7 +30,7 @@ const AlcoholBlock = ({ alcohol, goToAlcoholDetails, goToEdit }: Props) => {
           src={`${URL.GET_IMAGE}/${createImageName(
             alcohol.id.toLowerCase() || "",
             "sm"
-          )}?t=${new Date().getTime()}`}
+          )}`}
           alt={`Zdjęcie przedstawiające alkohol ${alcohol.name}`}
         />
       </TCell>
