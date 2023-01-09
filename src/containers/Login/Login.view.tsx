@@ -149,7 +149,7 @@ const LoginView = ({
             </BtnPrimary>
           </Row>
         </Form>
-        <ForgottenPassword href="alkoholove.com.pl/reset_password">
+        <ForgottenPassword href="https://alkoholove.com.pl/reset_password">
           Nie pamiętasz hasła?
         </ForgottenPassword>
       </Col>
