@@ -18,6 +18,7 @@ import {
   ListTitle,
 } from "../../styles/global.styled";
 import { API, URL } from "../../utils/constant";
+import { ListWrapper } from "./suggestion.styled";
 
 const initReq = ["GET", API + URL.GET_SUGGESTIONS, ""] as const;
 const width = document.body.clientWidth;
@@ -80,7 +81,7 @@ const SuggestionListView = ({ goToSuggestion }: Props) => {
   );
   return (
     <>
-      <ContentContainer margin="0!important">
+      <ListWrapper>
         <ListContainer className={`${collapse ? "hidden" : ""}`}>
           <List
             isSearch={false}
@@ -99,7 +100,7 @@ const SuggestionListView = ({ goToSuggestion }: Props) => {
             closeDetails={() => {}}
           />
         )}
-      </ContentContainer>
+      </ListWrapper>
     </>
   );
 };

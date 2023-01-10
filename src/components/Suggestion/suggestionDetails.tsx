@@ -15,6 +15,7 @@ import {
   Key,
   ListTitle,
   Row,
+  ScrollContent,
   Tuple,
   Value,
 } from "../../styles/global.styled";
@@ -162,7 +163,7 @@ const SuggestionDetails = ({
       .then((data: Suggestion) => getBlock(data));
   }, []);
   return (
-    <>
+    <ScrollContent>
       <Row alignItems="center" visible={!hide}>
         <Indicator
           size={40}
@@ -190,7 +191,7 @@ const SuggestionDetails = ({
           <p>Nie ma takiej sugestii!</p>
         </Col>
       )}
-    </>
+    </ScrollContent>
   );
 };
 

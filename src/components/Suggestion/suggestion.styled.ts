@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { BlockType, Col, Row } from "../../styles/global.styled";
+import { Col, ContentContainer, Row } from "../../styles/global.styled";
 import { Common, Heading3, Heading4 } from "../../styles/typography.styled";
+
+export const ListWrapper = styled(ContentContainer)`
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+`;
 
 export const Container = styled<any>(Col)`
   position: fixed;
@@ -14,6 +20,7 @@ export const Container = styled<any>(Col)`
   border-bottom-left-radius: 20px;
   width: 500px;
   transition: 0.4s;
+  max-height: 80%;
 `;
 
 export const Hide = styled.button`
