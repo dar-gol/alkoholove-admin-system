@@ -43,6 +43,7 @@ export const autoCompleteHandler = (fn: () => void) => {
 };
 
 export const getDate = (date: Date | string) => {
+  if (!date) return "";
   const prepDate = typeof date === "string" ? new Date(date) : date;
   const year = prepDate.getFullYear();
   const month = prepDate.getMonth() + 1;
