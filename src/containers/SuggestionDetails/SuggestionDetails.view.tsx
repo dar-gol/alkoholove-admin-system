@@ -21,7 +21,7 @@ import {
 } from "../../styles/global.styled";
 import { API, URL } from "../../utils/constant";
 import useAuthReq from "../../utils/hooks/useReq";
-import { getDate } from "../../utils/utils";
+import { createImageName, getDate } from "../../utils/utils";
 
 interface Props {
   onCollapse?: () => void;
@@ -85,6 +85,17 @@ const UserDetail = ({
           <ScrollContent padding="0 30px">
             {suggestionBlock && (
               <Col>
+                <Row justifyContent="center">
+                  <Col>
+                    <img
+                      height="600px"
+                      src={`${URL.GET_USER_IMAGE}/${createImageName(
+                        `${suggestionBlock.barcode}_${suggestionBlock.user_ids[0]}`
+                      )}`}
+                      alt="Zdjęcie przedstawiające wybrany alkohol"
+                    />
+                  </Col>
+                </Row>
                 <Tuple>
                   <Key>Kod kreskowy </Key>
                   <Value>{suggestionBlock.barcode}</Value>

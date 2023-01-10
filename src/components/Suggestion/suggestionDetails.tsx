@@ -24,6 +24,7 @@ import useQueryParams from "../../utils/hooks/useQueryParams";
 import useAuthReq from "../../utils/hooks/useReq";
 import Indicator from "../Indicator/Indicator";
 import { GoToList } from "./suggestion.styled";
+import { createImageName } from "../../utils/utils";
 
 interface IProps {
   deleteSuggestion: (id: string) => void;
@@ -105,6 +106,17 @@ const SuggestionDetails = ({
     const userBlock = await usersBlock(suggestion);
     const block = (
       <Col padding="0 10px">
+        <Row justifyContent="center">
+          <Col>
+            <img
+              height="300px"
+              src={`${URL.GET_USER_IMAGE}/${createImageName(
+                `${suggestion?.barcode}_${suggestion?.user_ids[0]}`
+              )}`}
+              alt="Zdjęcie przedstawiające wybrany alkohol"
+            />
+          </Col>
+        </Row>
         <Tuple>
           <Key>Uzytkownicy</Key>
           <Value>{userBlock}</Value>

@@ -1,10 +1,10 @@
 import { isProduction } from "./utils";
 
-export const API = !isProduction()
-  ? "http://localhost:8008"
-  : "https://api-alkoholove.herokuapp.com";
+// export const API = !isProduction()
+//   ? "http://localhost:8008"
+//   : "https://api-alkoholove.herokuapp.com";
 
-// export const API = "https://api-alkoholove.herokuapp.com";
+export const API = "https://api-alkoholove.herokuapp.com";
 
 export const URL = {
   LOGIN: "/auth/token/admin",
@@ -24,6 +24,7 @@ export const URL = {
   GET_IMAGE: `https://res.cloudinary.com/alkoholove/${
     !isProduction() ? "test" : "alcohols"
   }`,
+  GET_USER_IMAGE: "https://res.cloudinary.com/alkoholove/alcohol_suggestions",
 };
 
 export const NAME_PATH = {
