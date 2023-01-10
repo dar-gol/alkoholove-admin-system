@@ -51,7 +51,6 @@ const HeaderView = ({
           value={night}
           onClick={modeHandler}
         />
-        <Icon className="icon-Settings" />
         <Profil>
           <Icon className="icon-Profil" onClick={setShow} />
           <PopupApollo logout={logout} show={show} />
