@@ -37,13 +37,13 @@ const InputFactory = ({
     );
   if (type === "string")
     return (
-      <TextInput
-        state=""
-        error=""
+      <Select
+        type="creatable"
         name={name}
         title={title}
         required={false}
-        placeholder={placeholder}
+        placeholder={title}
+        options={[]}
         {...rest}
       />
     );

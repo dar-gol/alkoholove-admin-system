@@ -1,4 +1,4 @@
-import styled, { AnyStyledComponent } from "styled-components";
+import styled from "styled-components";
 import Select from "react-select";
 import Creatable from "react-select/creatable";
 import {
