@@ -109,7 +109,14 @@ const SuggestionDetails = ({
       })
     );
 
-    setInput("name", suggestion?.name);
+    setInput(
+      "name",
+      JSON.stringify({
+        label: suggestion?.name,
+        value: suggestion?.name,
+      })
+    );
+
     suggestion?.descriptions?.map((desc: any) => setInput("description", desc));
   };
 
@@ -167,7 +174,15 @@ const SuggestionDetails = ({
             size={40}
             top="calc(50% - 20px)"
             left="0"
-            onClick={() => setInput("name", suggestion?.name)}
+            onClick={() =>
+              setInput(
+                "name",
+                JSON.stringify({
+                  label: suggestion?.name,
+                  value: suggestion?.name,
+                })
+              )
+            }
             icon="icon-chevron-right"
             type="secondary"
           />
