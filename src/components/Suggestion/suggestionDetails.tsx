@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from "react";
 import { AlertCircle, CheckCircle, ChevronLeft } from "react-feather";
 import {
@@ -92,9 +93,19 @@ const SuggestionDetails = ({
     )) as Suggestion;
     setInput(
       "barcode",
+      JSON.stringify([
+        {
+          label: suggestion?.barcode,
+          value: suggestion?.barcode,
+        },
+      ])
+    );
+
+    setInput(
+      "kind",
       JSON.stringify({
-        label: suggestion?.barcode,
-        value: suggestion?.barcode,
+        label: suggestion?.kind,
+        value: suggestion?.kind,
       })
     );
 
@@ -109,6 +120,14 @@ const SuggestionDetails = ({
         <Row justifyContent="center">
           <Col>
             <img
+              onLoad={({ currentTarget }) => {
+                currentTarget.alt = "Zdjęcie przedstawiające alkohol";
+                currentTarget.height = 600;
+              }}
+              onError={({ currentTarget }) => {
+                currentTarget.alt = "";
+                currentTarget.height = 0;
+              }}
               height="300px"
               src={`${URL.GET_USER_IMAGE}/${createImageName(
                 `${suggestion?.barcode}_${suggestion?.user_ids[0]}`
@@ -129,10 +148,12 @@ const SuggestionDetails = ({
             onClick={() =>
               setInput(
                 "barcode",
-                JSON.stringify({
-                  label: suggestion?.barcode,
-                  value: suggestion?.barcode,
-                })
+                JSON.stringify([
+                  {
+                    label: suggestion?.barcode,
+                    value: suggestion?.barcode,
+                  },
+                ])
               )
             }
             icon="icon-chevron-right"
@@ -153,8 +174,24 @@ const SuggestionDetails = ({
           <Key margin="auto 0 auto 50px">Nazwa alkoholu</Key>
           <Value>{suggestion?.name}</Value>
         </Tuple>
-        <Tuple>
-          <Key>Rodzaj</Key>
+        <Tuple position="relative">
+          <Indicator
+            size={40}
+            top="calc(50% - 20px)"
+            left="0"
+            onClick={() =>
+              setInput(
+                "kind",
+                JSON.stringify({
+                  label: suggestion?.kind,
+                  value: suggestion?.kind,
+                })
+              )
+            }
+            icon="icon-chevron-right"
+            type="secondary"
+          />
+          <Key margin="auto 0 auto 50px">Rodzaj</Key>
           <Value>{suggestion?.kind}</Value>
         </Tuple>
         {descriptionBlock(suggestion)}

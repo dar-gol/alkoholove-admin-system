@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Suggestion } from "../../@types/suggestions";
@@ -92,6 +93,14 @@ const UserDetail = ({
                       src={`${URL.GET_USER_IMAGE}/${createImageName(
                         `${suggestionBlock.barcode}_${suggestionBlock.user_ids[0]}`
                       )}`}
+                      onLoad={({ currentTarget }) => {
+                        currentTarget.alt = "Zdjęcie przedstawiające alkohol";
+                        currentTarget.height = 600;
+                      }}
+                      onError={({ currentTarget }) => {
+                        currentTarget.alt = "";
+                        currentTarget.height = 0;
+                      }}
                       alt="Zdjęcie przedstawiające wybrany alkohol"
                     />
                   </Col>

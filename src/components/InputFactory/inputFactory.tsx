@@ -77,17 +77,6 @@ const InputFactory = ({
           onClick={() => rest.setValue(!rest.value)}
         />
       </Row>
-      // <Select
-      //   name={name}
-      //   title={title}
-      //   required={false}
-      //   placeholder={title}
-      //   options={[
-      //     { label: "TAK", value: true },
-      //     { label: "NIE", value: false },
-      //   ]}
-      //   {...rest}
-      // />
     );
   if (type === "int" || type === "long")
     return (

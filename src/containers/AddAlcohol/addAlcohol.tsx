@@ -269,12 +269,22 @@ const AddAlcohol = () => {
   };
 
   const setInput = (name: string, value: string) => {
-    let valueToSet = value;
+    let valueToSet: unknown;
+
     try {
-      valueToSet = JSON.parse(value);
+      valueToSet = JSON.parse(value) as { label: string; value: string };
     } catch (e: any) {
       console.log({ e });
     }
+
+    if (!valueToSet) valueToSet = value;
+
+    if (name === "kind") {
+      const category = valueToSet as { label: string; value: string };
+      chooseCategory(category);
+      return;
+    }
+
     methods.reset({
       ...methods.getValues(),
       [name]: valueToSet,

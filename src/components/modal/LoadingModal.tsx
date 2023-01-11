@@ -30,7 +30,7 @@ const LoadingModal = ({ isOpen, title }: Props) => {
       closeOnEscape={false}
     >
       <LoadingContainer>
-        <img src="./logo192.png" alt="This is a alkohoLove's logo" />
+        <img src="/logo192.png" alt="This is a alkohoLove's logo" />
         <LoadingTitle>{title}</LoadingTitle>
         <Row justifyContent="center">
           <Loader />
