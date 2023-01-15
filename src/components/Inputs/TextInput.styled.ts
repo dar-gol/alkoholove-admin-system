@@ -19,6 +19,9 @@ import { Body, Footer } from "../../styles/typography.styled";
 
 export const InputContainer = styled(Row)`
   ${inputContainer}
+  &.without-icon {
+    gap: 0 !important;
+  }
   & .right-icon {
     display: none;
   }

@@ -26,7 +26,7 @@ const InputFactory = ({
     return (
       <TextInput
         type="textarea"
-        icon=""
+        icon="without"
         state=""
         error=""
         title={title}
@@ -81,6 +81,7 @@ const InputFactory = ({
   if (type === "int" || type === "long")
     return (
       <TextInput
+        icon="without"
         state=""
         error=""
         type="number"
@@ -94,6 +95,7 @@ const InputFactory = ({
   if (type === "double")
     return (
       <TextInput
+        icon="without"
         state=""
         error=""
         type="number"

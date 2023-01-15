@@ -75,12 +75,11 @@ const TextInput: React.FC<CustomInputProps> = ({
       );
     return <Input {...rest} placeholder={getPlaceholder()} />;
   };
-
   return (
     <InputContainer
       onFocus={activeHandler}
       onBlur={blurHandler}
-      className={`${type}`}
+      className={`${type} ${icon === "without" ? "without-icon" : ""}`}
     >
       <Icon className={`${icon || "icon-search"} left-icon`} />
       <InputWrapper>
