@@ -84,6 +84,7 @@ const PropertyInput = ({
         <Row gap="20px">
           <TextInput
             disabled={!traits.isNew}
+            icon="without"
             error=""
             state=""
             title="Nazwa cechy"
@@ -154,6 +155,7 @@ const PropertyInput = ({
                   render={({ field }) => (
                     <TextInput
                       {...field}
+                      icon="icon-Lists"
                       state=""
                       error=""
                       title="Placeholder"
@@ -171,6 +173,7 @@ const PropertyInput = ({
                   render={({ field }) => (
                     <TextInput
                       {...field}
+                      icon="icon-Lists"
                       state=""
                       error=""
                       title="Wyświetlana nazwa"

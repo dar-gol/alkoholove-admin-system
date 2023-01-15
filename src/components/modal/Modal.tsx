@@ -28,7 +28,7 @@ const Modal: React.FC<Props> = ({ children, isOpen, onClose, isClosable }) => {
         top="15px"
         right="-20px"
         icon="icon-Exit"
-        onClick={onClose}
+        onClick={() => onClose()}
         type="secondary"
       />
       <ModalContainer>{children}</ModalContainer>

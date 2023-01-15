@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
-import ReactSelect from "react-select";
 import { Types } from "../../@types/category";
-import Breadcrumb from "../../components/Breadcrumb/breadcrumb";
 import ErrorModal from "../../components/ErrorModal/errorModal";
-import HeaderLogic from "../../components/Header/header.logic";
-import InputFactory from "../../components/InputFactory/inputFactory";
-import Modal from "../../components/modal/Modal";
-import { ModalTitle } from "../../components/modal/Modal.styled";
 import PropertyInput from "../../components/PropertyInput/propertyInput";
-import TextInput from "../../components/SimpleInput/TextInput";
 import {
   BtnPrimary,
   Col,
-  Container,
   Content,
   CriticalBar,
+  GreenBar,
   InfoBar,
-  LinkSecondary,
   Row,
   ScrollContent,
 } from "../../styles/global.styled";
@@ -28,6 +20,7 @@ import useCategory from "../../utils/hooks/useCategory";
 import useAuthReq from "../../utils/hooks/useReq";
 import { Form, SectionBar, Title } from "../AddAlcohol/addAlcohol.styled";
 import { PropertyBtn } from "./addCategory.styled";
+import TextInput from "../../components/Inputs/TextInput";
 
 export type PropertyState = {
   name: string | null;
@@ -40,6 +33,7 @@ type IModal = {
   title: string;
   text: string;
   details: string;
+  isError: boolean;
 };
 
 const generateProp = (data: any, name: any) => {
@@ -64,6 +58,7 @@ const AddCategory = () => {
     title: "",
     text: "",
     details: "",
+    isError: false,
   });
   const { ctg, getCategory, getID, update } = useCategory();
   const [names, setNames] = useState<PropertyState[]>([]);
@@ -237,18 +232,20 @@ const AddCategory = () => {
       await addOrEdit(data.kind, body.properties, body.required);
       setModal({
         open: true,
-        title: "Dodanie/Edycja kategorii przebiegło pomyślnie",
+        title: "Dodanie kategorii przebiegło pomyślnie",
         text: "",
         details: "",
+        isError: false,
       });
       update();
     } catch (e: any) {
       console.log({ e });
       setModal({
         open: true,
-        title: "Problem z dodaniem/edycja kategorii",
+        title: "Problem z dodaniem kategorii",
         text: "Upewnij się, że wypełniłeś wszystkie pola",
         details: JSON.stringify(e?.statusText),
+        isError: true,
       });
     }
   };
@@ -269,15 +266,18 @@ const AddCategory = () => {
                   control={methods.control}
                   name="kind"
                   render={({ field }) => (
-                    <InputFactory
-                      value={field.value}
-                      onChange={field.onChange}
-                      inputRef={field.ref}
-                      type="string"
+                    <TextInput
+                      type="text"
+                      icon="icon-Category"
+                      state=""
+                      error=""
                       name="kind"
                       title="Nazwa rodzaju kategorii"
                       required
                       placeholder="Piwo"
+                      value={field.value}
+                      onChange={field.onChange}
+                      inputRef={field.ref}
                     />
                   )}
                 />
@@ -340,10 +340,20 @@ const AddCategory = () => {
         details={modal.details}
         onClose={handleOpenModal}
       >
-        <CriticalBar>
+        <CriticalBar visible={modal.isError} margin="0 0 20px 0">
           <span className="icon-Error" />
           <p>{modal.text}</p>
         </CriticalBar>
+        <GreenBar visible={!modal.isError} margin="0 0 20px 0">
+          <span className="icon-Success" />
+          <p>
+            Kategoria dodana poprawnie,{" "}
+            <Link to={`/category/${methods.getValues().kind}`} target="_blank">
+              tutaj
+            </Link>{" "}
+            możesz zobaczyć dodaną kategorię
+          </p>
+        </GreenBar>
       </ErrorModal>
     </>
   );

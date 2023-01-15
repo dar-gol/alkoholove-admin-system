@@ -22,11 +22,6 @@ const ErrorModal = ({ title, children, details, isOpen, onClose }: IProps) => (
         <Details>{details}</Details>
       </>
     )}
-    <Row gap="20px" justifyContent="center">
-      <BtnPrimary onClick={() => onClose()} width="120px">
-        Zamknij
-      </BtnPrimary>
-    </Row>
   </Modal>
 );
 
