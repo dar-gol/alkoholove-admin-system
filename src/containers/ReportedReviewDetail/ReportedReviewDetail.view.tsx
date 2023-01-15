@@ -113,6 +113,8 @@ const ReportedReviewDetail = ({
       </Text>
     ));
 
+  console.log({ review });
+
   useEffect(() => getReview(), [id]);
   return (
     <>
@@ -137,10 +139,6 @@ const ReportedReviewDetail = ({
                 </Tuple>
                 <Tuple>
                   <Key>Komentarz stworzony przez </Key>
-                  <Value>{review.username}</Value>
-                </Tuple>
-                <Tuple>
-                  <Key>Komentarz stworzony przez (ID) </Key>
                   <Value>
                     <Text
                       as="a"
@@ -150,7 +148,7 @@ const ReportedReviewDetail = ({
                       href={`/user/${review.user_id}`}
                       color={theme.palette.Secondary70}
                     >
-                      {review.user_id}
+                      {review.username}
                     </Text>
                   </Value>
                 </Tuple>

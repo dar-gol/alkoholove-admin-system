@@ -7,6 +7,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
+import { useTheme } from "styled-components";
 import { Suggestion } from "../../@types/suggestions";
 import {
   BtnPrimary,
@@ -17,6 +18,7 @@ import {
   ListTitle,
   Row,
   ScrollContent,
+  Text,
   Tuple,
   Value,
 } from "../../styles/global.styled";
@@ -42,6 +44,7 @@ const SuggestionDetails = ({
   hide,
   setInput,
 }: IProps) => {
+  const theme = useTheme() as { palette: { [k: string]: string } };
   const [suggestionBlock, setSuggestionBlock] = useState<any>(null);
   const { send } = useAuthReq("GET", `${API}${URL.GET_SUGGESTIONS}/${id}`, "", {
     Accept: "application/json",
@@ -60,11 +63,16 @@ const SuggestionDetails = ({
       ));
     const users: any = await res;
     return users?.map((user: any) => (
-      <>
-        <Link to={`/users/${user.id}`} key={user.id}>
-          {user.username}
-        </Link>{" "}
-      </>
+      <Text
+        as="a"
+        type="body"
+        weight="medium"
+        size="large"
+        href={`/user/${user.id}`}
+        color={theme.palette.Secondary70}
+      >
+        {user.username}
+      </Text>
     ));
   };
 

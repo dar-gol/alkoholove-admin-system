@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useTheme } from "styled-components";
 import { Suggestion } from "../../@types/suggestions";
 import { IUser } from "../../@types/users";
 import Indicator from "../../components/Indicator/Indicator";
@@ -16,6 +17,7 @@ import {
   ListWrapper,
   Row,
   ScrollContent,
+  Text,
   Tuple,
   Value,
   WarnText,
@@ -37,6 +39,7 @@ const UserDetail = ({
   refresh,
   closeDetails,
 }: Props) => {
+  const theme = useTheme() as { palette: { [k: string]: string } };
   const { id } = useParams();
   const navigate = useNavigate();
   const [suggestionBlock, setSuggestionBlock] = useState<Suggestion | null>(
@@ -50,6 +53,7 @@ const UserDetail = ({
     send({})
       .then((data: Response) => data.json())
       .then((data: Suggestion) => {
+        console.log({ data });
         setSuggestionBlock(data);
       });
   };
@@ -66,6 +70,22 @@ const UserDetail = ({
 
   const addSuggestion = () => {
     navigate(`/add/alcohol/?suggestion=${id}`);
+  };
+
+  const getUsers = (user_ids: string[], usernames: string[]) => {
+    const links = usernames.map((username, index) => (
+      <Text
+        as="a"
+        type="body"
+        weight="medium"
+        size="large"
+        href={`/user/${user_ids[index]}`}
+        color={theme.palette.Secondary70}
+      >
+        {username}
+      </Text>
+    ));
+    return links;
   };
 
   useEffect(() => getSuggestion(), [id]);
@@ -123,7 +143,12 @@ const UserDetail = ({
                 </Tuple>
                 <Tuple>
                   <Key>Utworzone przez </Key>
-                  <Value>{suggestionBlock.user_ids.join(", ")}</Value>
+                  <Value>
+                    {getUsers(
+                      suggestionBlock.user_ids,
+                      suggestionBlock.usernames
+                    )}
+                  </Value>
                 </Tuple>
                 <Tuple>
                   <Key>Opisu uzytkownikow </Key>

@@ -7,6 +7,7 @@ export type Suggestion = {
   kind: string;
   name: string;
   user_ids: string[];
+  usernames: string[];
 };
 
 export type Suggestions = Suggestion[];
