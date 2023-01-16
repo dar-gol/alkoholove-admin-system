@@ -35,7 +35,7 @@ const ReportedReviewList = () => {
   const [collapse, setCollapse] = useState<boolean>(isSmallScreen());
 
   const goToReviewDetails = (index?: string) => {
-    setCollapse(width < 1200);
+    setCollapse(width < 1200 && !!index);
     navigate(`/reportedReview/${index ? `${index}` : ""}${location.search}`);
   };
 

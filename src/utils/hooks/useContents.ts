@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Body, Header, IReq, Method, Url } from "../../@types/fetch";
 import { IPageInfo } from "../../@types/pagination";
 import useQueryParams from "./useQueryParams";
 import useAuthReq from "./useReq";
 import useUser from "./useUser";
+import {
+  SettingsContext,
+  SettingsContextType,
+} from "../../context/settingsContext";
 
 const initalPageInfo: IPageInfo = {
   limit: 10,
@@ -30,6 +34,8 @@ const useContents = (
   listObjectName: string,
   initPageInfo?: IPageInfo
 ) => {
+  const { setSuggestionAmount, setErrorAmount, setReportedReviewAmount } =
+    useContext(SettingsContext) as SettingsContextType;
   const { get } = useUser();
   const [contents, setContents] = useState<Content[] | null>(null);
   const [name, setName] = useState<string>("");
@@ -37,6 +43,20 @@ const useContents = (
   const [page, setPage] = useState<IPageInfo>(initPageInfo || initalPageInfo);
   const { send } = useAuthReq(...initReq);
   const { query, updateParam } = useQueryParams();
+
+  const setAmount = (total: number) => {
+    if (initReq[1].includes("errors")) {
+      setErrorAmount(total || 0);
+      return;
+    }
+    if (initReq[1].includes("reviews")) {
+      setReportedReviewAmount(total);
+      return;
+    }
+    if (initReq[1].includes("suggestions")) {
+      setSuggestionAmount(total);
+    }
+  };
 
   const getKind = (kind?: string | null) => {
     if (kind) return JSON.stringify({ kind });
@@ -93,6 +113,7 @@ const useContents = (
           }
           const preparedContent = offset > total ? null : data[listObjectName];
           setContents(preparedContent);
+          setAmount(total);
           setPage((prev) => ({ ...prev, ...data.page_info, isLoading: false }));
         }
       })

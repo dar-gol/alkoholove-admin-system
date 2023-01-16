@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Col, Row } from "../../styles/global.styled";
 import Indicator from "../Indicator/Indicator";
-import { AmountObject } from "./Sidebar.logic";
 import {
   SidebarContainer,
   Header,
@@ -13,6 +12,7 @@ import {
   MenuLinkWrapper,
   MenuLink,
 } from "./Sidebar.styled";
+import { AmountObject } from "../../context/settingsContext";
 
 interface Props {
   handleCollapse: () => void;

@@ -113,8 +113,6 @@ const ReportedReviewDetail = ({
       </Text>
     ));
 
-  console.log({ review });
-
   useEffect(() => getReview(), [id]);
   return (
     <>

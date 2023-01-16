@@ -44,7 +44,7 @@ const SuggestionListView = () => {
   };
 
   const goToSuggestionDetails = (index?: string) => {
-    setCollapse(width < 1200);
+    setCollapse(width < 1200 && !!index);
     navigate(`/suggestion${index ? `/${index}` : ""}${location.search}`);
   };
 

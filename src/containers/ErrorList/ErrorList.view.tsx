@@ -27,7 +27,7 @@ const ErrorListView = () => {
   const [collapse, setCollapse] = useState<boolean>(isSmallScreen());
 
   const goToErrorDetails = (index?: string) => {
-    setCollapse(width < 1200);
+    setCollapse(width < 1200 && !!index);
     navigate(`/error/${index ? `${index}` : ""}${location.search}`);
   };
 
@@ -44,26 +44,23 @@ const ErrorListView = () => {
     listRef.current?.refresh();
   };
 
-  const drawContent = (content: IError) => {
-    console.log({ content });
-    return (
-      <TRow
-        key={content.id}
-        role="link"
-        tabIndex={0}
-        onClick={() => goToErrorDetails(content.id)}
-      >
-        <TCell padding="20px" data-label="Nazwa kategorii" verticalAlign="top">
-          <Title>Nazwa użytkownika</Title>
-          <Value>{content.username}</Value>
-        </TCell>
-        <TCell padding="20px" data-label="Dodatkowe właściwości">
-          <Title>Opis błędu</Title>
-          <Value maxWidth="300px">{content.description}</Value>
-        </TCell>
-      </TRow>
-    );
-  };
+  const drawContent = (content: IError) => (
+    <TRow
+      key={content.id}
+      role="link"
+      tabIndex={0}
+      onClick={() => goToErrorDetails(content.id)}
+    >
+      <TCell padding="20px" data-label="Nazwa kategorii" verticalAlign="top">
+        <Title>Nazwa użytkownika</Title>
+        <Value>{content.username}</Value>
+      </TCell>
+      <TCell padding="20px" data-label="Dodatkowe właściwości">
+        <Title>Opis błędu</Title>
+        <Value maxWidth="300px">{content.description}</Value>
+      </TCell>
+    </TRow>
+  );
   return (
     <ContentContainer>
       <ListContainer className={`${collapse ? "hidden" : ""}`}>

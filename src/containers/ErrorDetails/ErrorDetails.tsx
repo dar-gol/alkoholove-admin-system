@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { IError } from "../../@types/errors";
@@ -22,6 +22,10 @@ import {
 } from "../../styles/global.styled";
 import { API, URL } from "../../utils/constant";
 import useAuthReq from "../../utils/hooks/useReq";
+import {
+  SettingsContext,
+  SettingsContextType,
+} from "../../context/settingsContext";
 
 interface Props {
   onCollapse?: () => void;
@@ -36,6 +40,7 @@ const ErrorDetails = ({
   refresh,
   closeDetails,
 }: Props) => {
+  const { setErrorAmount } = useContext(SettingsContext) as SettingsContextType;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id } = useParams();
   const theme = useTheme() as { palette: { [k: string]: string } };

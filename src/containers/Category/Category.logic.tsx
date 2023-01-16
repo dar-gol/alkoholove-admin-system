@@ -27,7 +27,7 @@ const CategoryLogic = ({ listRef }: Props) => {
   };
 
   const goToCategoryDetails = (index?: string) => {
-    setCollapse(width < 1200);
+    setCollapse(width < 1200 && !!index);
     navigate(`/category${index ? `/${index}` : ""}`);
   };
 

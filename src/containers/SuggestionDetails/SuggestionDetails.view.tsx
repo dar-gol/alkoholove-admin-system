@@ -53,7 +53,6 @@ const UserDetail = ({
     send({})
       .then((data: Response) => data.json())
       .then((data: Suggestion) => {
-        console.log({ data });
         setSuggestionBlock(data);
       });
   };

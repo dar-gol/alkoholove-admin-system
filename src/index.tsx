@@ -7,6 +7,7 @@ import UserProvider from "./context/userContext";
 import CategoryProvider from "./context/categoryContext";
 import App from "./App";
 import { GlobalStyle } from "./styles/global.styled";
+import SettingsProvider from "./context/settingsContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
@@ -18,13 +19,15 @@ root.render(
   <CookiesProvider>
     <QueryClientProvider client={queryClient}>
       <GlobalStyle />
-      <UserProvider>
-        <CategoryProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </CategoryProvider>
-      </UserProvider>
+      <SettingsProvider>
+        <UserProvider>
+          <CategoryProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </CategoryProvider>
+        </UserProvider>
+      </SettingsProvider>
     </QueryClientProvider>
   </CookiesProvider>
 );

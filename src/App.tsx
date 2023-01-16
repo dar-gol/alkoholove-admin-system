@@ -61,7 +61,7 @@ const App = () => {
           <Route path="/category/:id" element={<CategoryApollo />} />
           <Route path="/user" element={<UsersListView />} />
           <Route path="/user/:id" element={<UsersListView />} />
-          <Route path="/error" element={<ErrorListView />} />
+          <Route path="/error/" element={<ErrorListView />} />
           <Route path="/error/:id" element={<ErrorListView />} />
           <Route path="/suggestion/" element={<SuggestionListView />} />
           <Route path="/suggestion/:id" element={<SuggestionListView />} />
