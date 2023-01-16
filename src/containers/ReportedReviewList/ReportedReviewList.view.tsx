@@ -95,7 +95,7 @@ const ReportedReviewList = () => {
             type="secondary"
           />
           <List
-            isSearch
+            isSearch={false}
             listObjectName="reviews"
             ref={listRef}
             listTitle="Lista zgłoszonych komentarzy"
