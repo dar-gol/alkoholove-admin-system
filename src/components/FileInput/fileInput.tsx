@@ -61,7 +61,6 @@ const FileInput = ({
             <FileUploader
               key={field.ref}
               inputRef={field.ref}
-              types={["PNG"]}
               classes="file-uploader"
               label={title}
               handleChange={(file: any) => {
