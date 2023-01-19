@@ -98,6 +98,7 @@ const AddAlcohol = () => {
     const prepareData = prop.reduce(
       (prev, curr) => {
         const { type } = getType(curr.metadata.bsonType);
+        if (curr.name === "description") return prev;
         if (data[curr.name] === undefined && type === "array")
           return { ...prev, [curr.name]: [] };
         if (type === "array")
@@ -108,6 +109,8 @@ const AddAlcohol = () => {
           return { ...prev, [curr.name]: getDouble(data[curr.name]) };
         if (type === "int" || type === "long")
           return { ...prev, [curr.name]: Number(data[curr.name]) };
+        if (type === "string")
+          return { ...prev, [curr.name]: data[curr.name].value };
         return prev;
       },
       { ...data }
