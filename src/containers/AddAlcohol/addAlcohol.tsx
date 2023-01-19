@@ -110,7 +110,7 @@ const AddAlcohol = () => {
         if (type === "int" || type === "long")
           return { ...prev, [curr.name]: Number(data[curr.name]) };
         if (type === "string")
-          return { ...prev, [curr.name]: data[curr.name].value };
+          return { ...prev, [curr.name]: data[curr.name]?.value };
         return prev;
       },
       { ...data }
