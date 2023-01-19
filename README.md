@@ -48,6 +48,8 @@ This project is for manage Alkoholove app. By this site you can manage alkohol's
 - [AlkohoLove-website](https://github.com/dar-gol/alkoholove-website)
 - [AlkohoLove-mobile](https://github.com/DamianJudek/AlkohoLove-mobile)
 - [AlkohoLove-backend-service](https://github.com/matixezor/AlkohoLove-backend-service)
+- [AlkohoLove-recommender](https://github.com/matixezor/AlkohoLove-recommender)
+- [AlkohoLove-hate-speech-detection](https://github.com/Hiiiiiku/AlkohoLove-hate-speech-detection)
 
 ### License Agreement
 
