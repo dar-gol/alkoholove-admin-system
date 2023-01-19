@@ -35,6 +35,7 @@ import withDashboardWrapper from "../../utils/hoc/withDashboardWrapper";
 import CategorySelect from "../../components/Inputs/CategorySelect";
 import Indicator from "../../components/Indicator/Indicator";
 import TemporaryAlcoholStorage from "../../components/TemporaryAlcoholStorage/TemporaryAlcoholStorage";
+import { IProps } from "../../@types/inputs";
 
 type IModal = {
   open: boolean;
@@ -57,8 +58,13 @@ const prepareToSelect = (data: any) =>
     value: el,
   }));
 
-const prepareField = (field: unknown) => {
+const getPropFromCategory = (properties: Property[], name: string) =>
+  properties.find((property) => property.name === name);
+
+const prepareField = (name: string, field: unknown, type?: Type) => {
   if (field instanceof Array) return prepareToSelect(field);
+  if (name === "description") return field;
+  if (type === "string") return { label: field, value: field };
   return field;
 };
 
@@ -136,7 +142,6 @@ const AddAlcohol = () => {
 
   const handleCompleteFields = async () => {
     if (!alcoholBarcode || !alcohol) {
-      // methods.reset(resetValues(Object.keys(alcohol)));
       return null;
     }
     const category = getCategory(alcohol.kind);
@@ -145,12 +150,19 @@ const AddAlcohol = () => {
       if (["rate_count", "rate_value", "avg_rating"].includes(name))
         return prev;
       const prop = alcohol[name as keyof typeof alcohol];
-      const value = { [name]: prepareField(prop) };
+      const metadata = getPropFromCategory(category.core.properties, name);
+      const value = {
+        [name]: prepareField(name, prop, metadata?.metadata.bsonType),
+      };
       return { ...prev, ...value };
     }, {});
     const additionalValues = alcohol.additional_properties.reduce(
       (prev, { value, name }) => {
-        const prop = prepareField(value);
+        const metadata = getPropFromCategory(
+          category.additional.properties,
+          name
+        );
+        const prop = prepareField(name, value, metadata?.metadata.bsonType);
         return { ...prev, [name]: prop };
       },
       {}
