@@ -1,11 +1,11 @@
 # Admin Alkoholove
 
-This project is for manage Alkoholove app. By this site you can manage alkohol's list (add, edit, delete) and also you can manage users, category, comments and suggestions. The main aim of the Alkoholove admin panel is to provide control over the content presented and enable direct data management. Considering the diversity of alcohols and the advanced features of the app, there are tools available here that enable effective management of all aspects of the platform. The Alkoholove Admin Panel is a powerful tool that allows for managing a fully complex alcohol review platform, while at the same time offering a user-friendly and enjoyable atmosphere. This combination makes managing Alkoholove easy and enjoyable.
-
 ## Table of contents
 
 - [Admin Alkoholove](#admin-alkoholove)
   - [Table of contents](#table-of-contents)
+  - [Description](#description)
+  - [Features](#features)
   - [Technologies](#technologies)
   - [Launch](#launch)
   - [AlkohoLove’s Source Code License Agreement](#alkoholoves-source-code-license-agreement)
@@ -13,6 +13,9 @@ This project is for manage Alkoholove app. By this site you can manage alkohol's
     - [Definitions](#definitions)
     - [License Agreement](#license-agreement)
 
+## Description
+
+This project is for manage Alkoholove app. By this site you can manage alkohol's list (add, edit, delete) and also you can manage users, category, comments and suggestions. The main aim of the Alkoholove admin panel is to provide control over the content presented and enable direct data management. Considering the diversity of alcohols and the advanced features of the app, there are tools available here that enable effective management of all aspects of the platform. The Alkoholove Admin Panel is a powerful tool that allows for managing a fully complex alcohol review platform, while at the same time offering a user-friendly and enjoyable atmosphere. This combination makes managing Alkoholove easy and enjoyable.
 
 ## Features
 
